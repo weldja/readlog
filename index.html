@@ -1070,21 +1070,16 @@ window._detailId      = null;
 
 /* ── Auth state listener ─────────────────────────────────── */
 supabase.auth.onAuthStateChange((_event, session) => {
-  const user = session?.user ?? null;
-  window._currentUser = user;
-  if (user) {
-    document.getElementById('authScreen').classList.add('hidden');
-    document.getElementById('appShell').classList.add('visible');
-    document.getElementById('menuUserEmail').textContent = user.email || '';
-    loadBooks();
-    window.dispatchEvent(new Event('rl:authed'));
-  } else {
-    document.getElementById('authScreen').classList.remove('hidden');
-    document.getElementById('appShell').classList.remove('visible');
-    window._books = [];
-    renderAll();
+  if (_event === 'PASSWORD_RECOVERY') {
+    const newPass = prompt('Enter your new password (min 6 characters):');
+    if (newPass) {
+      supabase.auth.updateUser({ password: newPass }).then(({ error }) => {
+        if (error) showToast('Error: ' + error.message);
+        else showToast('Password updated — you are now signed in ✓');
+      });
+    }
+    return;
   }
-});
 
 /* ── Auth functions ──────────────────────────────────────── */
 window.doSignup = async () => {
