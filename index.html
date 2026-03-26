@@ -538,6 +538,55 @@ img{max-width:100%;display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .book-card{animation:fadeUp .28s ease both}
 .insight-card{animation:fadeUp .3s ease both}
+
+/* ── Book search autocomplete ────────────────────────────── */
+.book-search-wrap{position:relative;margin-bottom:16px}
+.book-search-input{width:100%;border:1.5px solid var(--teal);border-radius:var(--r);padding:11px 14px 11px 38px;font-family:var(--font-b);font-size:.95rem;color:var(--charcoal);background:var(--ivory);outline:none}
+.book-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+.book-search-spinner{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid var(--light-gray);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;display:none}
+.book-search-spinner.active{display:block}
+.book-search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--ivory);border:1.5px solid var(--light-gray);border-radius:var(--rl);box-shadow:0 8px 28px var(--shadow-md);z-index:200;max-height:320px;overflow-y:auto;display:none}
+.book-search-results.open{display:block}
+.book-search-result{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--light-gray)}
+.book-search-result:last-child{border-bottom:none}
+.book-search-result:hover{background:var(--cream)}
+.bsr-cover{width:36px;height:52px;object-fit:cover;border-radius:4px;border:1px solid var(--light-gray);flex-shrink:0;background:var(--parchment)}
+.bsr-cover-placeholder{width:36px;height:52px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.bsr-info{flex:1;min-width:0}
+.bsr-title{font-family:var(--font-d);font-size:.88rem;font-weight:600;color:var(--charcoal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bsr-author{font-family:var(--font-b);font-size:.76rem;color:var(--warm-gray);margin-top:2px}
+.bsr-year{font-family:var(--font-b);font-size:.72rem;color:var(--teal);margin-top:1px}
+.book-search-no-results{padding:16px;text-align:center;font-family:var(--font-b);font-size:.84rem;color:var(--warm-gray);font-style:italic}
+.book-search-divider{display:flex;align-items:center;gap:10px;margin:12px 0 8px;font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray)}
+.book-search-divider::before,.book-search-divider::after{content:'';flex:1;height:1px;background:var(--light-gray)}
+/* ── Tags input ──────────────────────────────────────────── */
+.tags-input-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:7px 10px;background:var(--cream);min-height:42px;cursor:text;transition:border-color .2s}
+.tags-input-wrap:focus-within{border-color:var(--teal);background:var(--ivory)}
+.tag-chip{display:inline-flex;align-items:center;gap:4px;background:var(--teal-pale);color:var(--teal);border:1px solid rgba(42,122,111,.25);border-radius:20px;padding:2px 10px 2px 10px;font-family:var(--font-b);font-size:.76rem;font-weight:600;white-space:nowrap}
+.tag-chip-remove{background:none;border:none;color:var(--teal);cursor:pointer;font-size:.8rem;padding:0;line-height:1;opacity:.7}
+.tag-chip-remove:hover{opacity:1}
+.tags-input-field{border:none;background:none;outline:none;font-family:var(--font-b);font-size:.88rem;color:var(--charcoal);min-width:80px;flex:1}
+/* ── Quotes section ──────────────────────────────────────── */
+.quotes-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.quote-item{display:flex;align-items:flex-start;gap:8px;background:var(--parchment);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:8px 12px}
+.quote-text{font-family:var(--font-s);font-style:italic;font-size:.9rem;color:var(--charcoal);flex:1;line-height:1.6}
+.quote-remove{background:none;border:none;color:var(--warm-gray);cursor:pointer;font-size:.9rem;padding:0;flex-shrink:0;opacity:.6}
+.quote-remove:hover{opacity:1;color:#dc2626}
+.quote-add-row{display:flex;gap:8px}
+.quote-add-input{flex:1;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:8px 12px;font-family:var(--font-s);font-style:italic;font-size:.9rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border-color .2s}
+.quote-add-input:focus{border-color:var(--amber);background:var(--ivory)}
+.quote-add-btn{background:var(--amber);color:#fff;border:none;border-radius:var(--r);padding:8px 14px;font-family:var(--font-b);font-size:.8rem;font-weight:600;cursor:pointer;flex-shrink:0;transition:var(--tr)}
+.quote-add-btn:hover{background:var(--amber-lt)}
+/* ── 10-point rating ─────────────────────────────────────── */
+.rating-10-wrap{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rating-10-btn{width:32px;height:32px;border-radius:6px;border:1.5px solid var(--light-gray);background:var(--cream);font-family:var(--font-b);font-size:.82rem;font-weight:600;color:var(--warm-gray);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center}
+.rating-10-btn:hover{border-color:var(--amber);color:var(--amber)}
+.rating-10-btn.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.rating-10-clear{background:none;border:none;font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray);cursor:pointer;text-decoration:underline;padding:0;margin-left:4px}
+/* ── Detail modal quotes ─────────────────────────────────── */
+.detail-quotes{margin-top:14px}
+.detail-quotes-label{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:8px}
+.detail-quote{font-family:var(--font-s);font-style:italic;font-size:.92rem;color:var(--charcoal);background:var(--parchment);border-left:3px solid var(--amber);padding:9px 14px;border-radius:0 var(--r) var(--r) 0;margin-bottom:6px;line-height:1.65}
   </style>
 </head>
 <body>
@@ -825,6 +874,7 @@ img{max-width:100%;display:block}
           <button class="filter-tab" data-filter="reading" onclick="setFilter('reading',this)">📖 Reading</button>
           <button class="filter-tab" data-filter="finished" onclick="setFilter('finished',this)">✅ Finished</button>
           <button class="filter-tab" data-filter="want" onclick="setFilter('want',this)">🔖 Want to read</button>
+          <button class="filter-tab" data-filter="abandoned" onclick="setFilter('abandoned',this)">🚫 Abandoned</button>
           <button class="filter-tab" data-filter="insights" onclick="setFilter('insights',this)">📊 Insights</button>
         </div>
       </div>
@@ -929,6 +979,20 @@ img{max-width:100%;display:block}
     </div>
     <div class="modal-body">
       <input type="hidden" id="editId"/>
+      <input type="hidden" id="fCoverData"/>
+      <input type="hidden" id="fExternalId"/>
+
+      <!-- Book search -->
+      <div class="book-search-wrap" id="bookSearchWrap">
+        <span class="book-search-icon">🔍</span>
+        <input class="book-search-input" id="bookSearchInput" type="search"
+          placeholder="Search by title or author to auto-fill…"
+          autocomplete="off" oninput="onBookSearch(this.value)"/>
+        <div class="book-search-spinner" id="bookSearchSpinner"></div>
+        <div class="book-search-results" id="bookSearchResults"></div>
+      </div>
+      <div class="book-search-divider">or fill in manually</div>
+
       <div class="form-row two-col">
         <div class="form-group" style="grid-column:1/-1">
           <label>Title *</label>
@@ -963,28 +1027,66 @@ img{max-width:100%;display:block}
             <option value="finished">Finished</option>
             <option value="reading">Reading now</option>
             <option value="want">Want to read</option>
+            <option value="abandoned">Abandoned</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Date read</label>
+          <label>Pages</label>
+          <input class="form-input" id="fPages" type="number" placeholder="e.g. 320" min="1"/>
+        </div>
+      </div>
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label>Start date</label>
+          <input class="form-input" id="fStartDate" type="date"/>
+        </div>
+        <div class="form-group">
+          <label>Finish date</label>
           <input class="form-input" id="fDate" type="date"/>
         </div>
       </div>
+
       <div class="form-group" style="margin-bottom:14px">
-        <label>My Rating</label>
-        <div class="star-input" id="starInput">
-          <button type="button" class="star" data-val="1" onclick="setStar(1)">★</button>
-          <button type="button" class="star" data-val="2" onclick="setStar(2)">★</button>
-          <button type="button" class="star" data-val="3" onclick="setStar(3)">★</button>
-          <button type="button" class="star" data-val="4" onclick="setStar(4)">★</button>
-          <button type="button" class="star" data-val="5" onclick="setStar(5)">★</button>
-          <button type="button" class="star-input-clear" onclick="setStar(0)">Clear</button>
+        <label>My Rating <span style="font-weight:400;font-size:.78rem;color:var(--warm-gray)">(out of 10)</span></label>
+        <div class="rating-10-wrap" id="rating10Wrap">
+          <button type="button" class="rating-10-btn" data-val="1" onclick="setRating10(1)">1</button>
+          <button type="button" class="rating-10-btn" data-val="2" onclick="setRating10(2)">2</button>
+          <button type="button" class="rating-10-btn" data-val="3" onclick="setRating10(3)">3</button>
+          <button type="button" class="rating-10-btn" data-val="4" onclick="setRating10(4)">4</button>
+          <button type="button" class="rating-10-btn" data-val="5" onclick="setRating10(5)">5</button>
+          <button type="button" class="rating-10-btn" data-val="6" onclick="setRating10(6)">6</button>
+          <button type="button" class="rating-10-btn" data-val="7" onclick="setRating10(7)">7</button>
+          <button type="button" class="rating-10-btn" data-val="8" onclick="setRating10(8)">8</button>
+          <button type="button" class="rating-10-btn" data-val="9" onclick="setRating10(9)">9</button>
+          <button type="button" class="rating-10-btn" data-val="10" onclick="setRating10(10)">10</button>
+          <button type="button" class="rating-10-clear" onclick="setRating10(0)">Clear</button>
         </div>
       </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Tags</label>
+        <div class="tags-input-wrap" id="tagsWrap" onclick="document.getElementById('tagsField').focus()">
+          <div id="tagChips"></div>
+          <input class="tags-input-field" id="tagsField" placeholder="Add tag, press Enter…"
+            onkeydown="onTagKeydown(event)"/>
+        </div>
+      </div>
+
       <div class="form-group" style="margin-bottom:14px">
         <label>Review / Notes</label>
-        <textarea class="form-textarea" id="fNotes" placeholder="Your thoughts, favourite quotes, what you loved or hated…"></textarea>
+        <textarea class="form-textarea" id="fNotes" placeholder="Your thoughts, what you loved or hated…"></textarea>
       </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Quotes &amp; Highlights</label>
+        <div class="quotes-list" id="quotesList"></div>
+        <div class="quote-add-row">
+          <input class="quote-add-input" id="quoteInput" placeholder="Add a memorable quote…"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();addQuote()}"/>
+          <button type="button" class="quote-add-btn" onclick="addQuote()">Add</button>
+        </div>
+      </div>
+
       <div class="form-group" style="margin-bottom:14px">
         <label>Cover photo</label>
         <div class="photo-drop" id="coverDrop">
@@ -994,7 +1096,6 @@ img{max-width:100%;display:block}
         </div>
         <button class="photo-clear-btn" id="coverClearBtn" style="display:none" onclick="clearCover()">Remove photo</button>
       </div>
-      <input type="hidden" id="fCoverData"/>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary btn-sm" onclick="closeModal('addModal')">Cancel</button>
@@ -1015,6 +1116,32 @@ img{max-width:100%;display:block}
     <div class="modal-footer detail-footer">
       <button class="btn btn-secondary btn-sm" onclick="closeModal('detailModal')">Close</button>
       <button class="btn btn-primary btn-sm" id="btnEditFromDetail" onclick="editFromDetail()">Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title">🔑 Reset your password</div>
+      <button class="modal-close" onclick="closeModal('resetModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-family:var(--font-b);font-size:.88rem;color:var(--warm-gray);margin-bottom:18px;line-height:1.65">Enter your new password below.</p>
+      <div class="auth-form-group">
+        <label>New password</label>
+        <input type="password" id="newPassInput" placeholder="Minimum 6 characters" autocomplete="new-password"/>
+      </div>
+      <div class="auth-form-group">
+        <label>Confirm password</label>
+        <input type="password" id="newPassConfirm" placeholder="Repeat password" autocomplete="new-password"/>
+      </div>
+      <div class="auth-msg" id="resetModalMsg"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('resetModal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="btnSetNewPass" onclick="doSetNewPassword()">Set new password →</button>
     </div>
   </div>
 </div>
@@ -1050,36 +1177,54 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
    Replace the two values below.
    Supabase Dashboard → Settings → API
    ──────────────────────────────────────────────────────────── */
-const SUPABASE_URL = 'https://bkvjhqmtraeovgjptfki.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrdmpocW10cmFlb3ZnanB0ZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NDI1NzAsImV4cCI6MjA5MDAxODU3MH0.pFgT8XpjYRM-frxtbyupcRW7VGOcb13044epFb0zVSM';
-const WORKER_URL        = 'https://readlog.james-weld.workers.dev';
+const SUPABASE_URL      = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
 
-
+/* ── Worker URL ──────────────────────────────────────────────
+   After deploying the Cloudflare Worker, paste its URL here.
+   e.g. 'https://readlog-scan-proxy.YOUR_SUBDOMAIN.workers.dev'
+   ──────────────────────────────────────────────────────────── */
+const WORKER_URL = 'https://readlog-scan-proxy.YOUR_SUBDOMAIN.workers.dev';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ── State ───────────────────────────────────────────────── */
-window._currentUser = null;
-window._books       = [];
+window._currentUser   = null;
+window._books         = [];
 window._currentFilter = 'all';
 window._currentView   = 'grid';
 window._editingId     = null;
 window._scanImages    = {1: null, 2: null};
 window._currentRating = 0;
 window._detailId      = null;
+window._currentTags   = [];
+window._currentQuotes = [];
+window._searchCache   = {};
+window._searchTimer   = null;
+window._goalCache     = null;
 
 /* ── Auth state listener ─────────────────────────────────── */
 supabase.auth.onAuthStateChange((_event, session) => {
+  // Intercept password recovery — show reset modal instead of logging in
   if (_event === 'PASSWORD_RECOVERY') {
-    const newPass = prompt('Enter your new password (min 6 characters):');
-    if (newPass) {
-      supabase.auth.updateUser({ password: newPass }).then(({ error }) => {
-        if (error) showToast('Error: ' + error.message);
-        else showToast('Password updated — you are now signed in ✓');
-      });
-    }
+    openModal('resetModal');
     return;
   }
+  const user = session?.user ?? null;
+  window._currentUser = user;
+  if (user) {
+    document.getElementById('authScreen').classList.add('hidden');
+    document.getElementById('appShell').classList.add('visible');
+    document.getElementById('menuUserEmail').textContent = user.email || '';
+    loadBooks();
+    window.dispatchEvent(new Event('rl:authed'));
+  } else {
+    document.getElementById('authScreen').classList.remove('hidden');
+    document.getElementById('appShell').classList.remove('visible');
+    window._books = [];
+    renderAll();
+  }
+});
 
 /* ── Auth functions ──────────────────────────────────────── */
 window.doSignup = async () => {
@@ -1191,37 +1336,49 @@ async function loadBooks() {
 // Map DB row (snake_case) → app object (camelCase)
 function dbToApp(row) {
   return {
-    id:       row.id,
-    title:    row.title,
-    author:   row.author,
-    genre:    row.genre,
-    year:     row.year,
-    status:   row.status,
-    dateRead: row.date_read || '',
-    rating:   row.rating || 0,
-    notes:    row.notes,
-    cover:    row.cover,
-    fav:      row.fav,
-    createdAt:row.created_at,
+    id:         row.id,
+    title:      row.title,
+    author:     row.author,
+    genre:      row.genre,
+    year:       row.year,
+    status:     row.status,
+    dateRead:   row.date_read   || '',
+    startDate:  row.start_date  || '',
+    rating:     row.rating      || 0,
+    notes:      row.notes,
+    cover:      row.cover,
+    coverUrl:   row.cover_url   || '',
+    externalId: row.external_id || '',
+    tags:       row.tags        || [],
+    pages:      row.pages       || '',
+    publisher:  row.publisher   || '',
+    fav:        row.fav,
+    quotes:     [],  // loaded separately
+    createdAt:  row.created_at,
   };
 }
 
 // Map app object (camelCase) → DB row (snake_case)
 function appToDB(data) {
-  const row = {
-    user_id:   window._currentUser.id,
-    title:     data.title,
-    author:    data.author   || '',
-    genre:     data.genre    || '',
-    year:      data.year     || '',
-    status:    data.status   || 'finished',
-    date_read: data.dateRead || null,
-    rating:    data.rating   || null,
-    notes:     data.notes    || '',
-    cover:     data.cover    || '',
-    fav:       data.fav      || false,
+  return {
+    user_id:     window._currentUser.id,
+    title:       data.title,
+    author:      data.author      || '',
+    genre:       data.genre       || '',
+    year:        data.year        || '',
+    status:      data.status      || 'finished',
+    date_read:   data.dateRead    || null,
+    start_date:  data.startDate   || null,
+    rating:      data.rating      || null,
+    notes:       data.notes       || '',
+    cover:       data.cover       || '',
+    cover_url:   data.coverUrl    || '',
+    external_id: data.externalId  || '',
+    tags:        data.tags        || [],
+    pages:       data.pages       || null,
+    publisher:   data.publisher   || '',
+    fav:         data.fav         || false,
   };
-  return row;
 }
 
 async function persistBook(data) {
@@ -1253,15 +1410,20 @@ window.saveBook = async () => {
   const data = {
     id,
     title,
-    author:  author || '',
-    genre:   document.getElementById('fGenre').value,
-    year:    document.getElementById('fYear').value,
-    status:  document.getElementById('fStatus').value,
-    dateRead:document.getElementById('fDate').value,
-    rating:  window._currentRating || null,
-    notes:   document.getElementById('fNotes').value.trim(),
-    cover:   document.getElementById('fCoverData').value || '',
-    fav:     false,
+    author:     author || '',
+    genre:      document.getElementById('fGenre').value,
+    year:       document.getElementById('fYear').value,
+    status:     document.getElementById('fStatus').value,
+    dateRead:   document.getElementById('fDate').value,
+    startDate:  document.getElementById('fStartDate').value,
+    rating:     window._currentRating || null,
+    notes:      document.getElementById('fNotes').value.trim(),
+    cover:      document.getElementById('fCoverData').value || '',
+    coverUrl:   window._pendingCoverUrl || '',
+    externalId: document.getElementById('fExternalId').value || '',
+    tags:       [...window._currentTags],
+    pages:      parseInt(document.getElementById('fPages').value)||null,
+    fav:        id ? (window._books.find(b=>b.id===id)?.fav||false) : false,
   };
 
   const btn = document.getElementById('btnSaveBook');
@@ -1269,6 +1431,18 @@ window.saveBook = async () => {
   try {
     const savedId = await persistBook(data);
     data.id = savedId;
+    // Save quotes
+    if (window._currentQuotes.length > 0) {
+      // Delete old quotes for this book then re-insert
+      if (id) await supabase.from('quotes').delete().eq('book_id', id);
+      const quoteRows = window._currentQuotes.map(q=>({
+        book_id: savedId, user_id: window._currentUser.id, quote_text: q
+      }));
+      await supabase.from('quotes').insert(quoteRows);
+    } else if (id) {
+      await supabase.from('quotes').delete().eq('book_id', id);
+    }
+    data.quotes = [...window._currentQuotes];
     const idx = window._books.findIndex(b=>b.id===savedId);
     if (idx>=0) window._books[idx]={...window._books[idx],...data};
     else window._books.unshift(data);
@@ -1306,9 +1480,10 @@ window.renderBooks = () => {
 
   let books = window._books.slice();
 
-  if (filter==='reading')  books=books.filter(b=>b.status==='reading');
-  else if (filter==='finished') books=books.filter(b=>b.status==='finished');
-  else if (filter==='want') books=books.filter(b=>b.status==='want');
+  if (filter==='reading')   books=books.filter(b=>b.status==='reading');
+  else if (filter==='finished')  books=books.filter(b=>b.status==='finished');
+  else if (filter==='want')      books=books.filter(b=>b.status==='want');
+  else if (filter==='abandoned') books=books.filter(b=>b.status==='abandoned');
 
   if (search) books=books.filter(b=>
     (b.title||'').toLowerCase().includes(search)||
@@ -1359,12 +1534,17 @@ window.renderBooks = () => {
 };
 
 function renderCard(b, i) {
-  const stars = b.rating ? '★'.repeat(b.rating)+'☆'.repeat(5-b.rating) : '';
-  const coverHtml = b.cover
-    ? `<img class="card-cover" src="${b.cover}" alt="Cover"/>`
+  const coverSrc = b.cover || b.coverUrl || '';
+  const coverHtml = coverSrc
+    ? `<img class="card-cover" src="${coverSrc}" alt="Cover" onerror="this.style.display='none'"/>`
     : `<div class="card-cover-placeholder">📖</div>`;
-  const statusLabel = {reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read'}[b.status]||'';
+  const statusMap = {reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read',abandoned:'🚫 Abandoned'};
+  const statusLabel = statusMap[b.status]||'';
   const statusCls   = b.status||'finished';
+  const ratingHtml  = b.rating
+    ? `<span style="font-family:var(--font-b);font-size:.82rem;font-weight:700;color:var(--amber)">${b.rating}<span style="font-size:.68rem;color:var(--warm-gray);font-weight:400">/10</span></span>`
+    : '';
+  const tagsHtml = (b.tags||[]).slice(0,3).map(t=>`<span class="tag-chip" style="font-size:.62rem;padding:1px 7px">${escHtml(t)}</span>`).join('');
   const notesPreview = b.notes ? `<div class="card-notes-preview">${escHtml(b.notes)}</div>` : '';
 
   return `<div class="book-card" style="animation-delay:${i*0.04}s" onclick="openDetail('${b.id}')">
@@ -1375,10 +1555,11 @@ function renderCard(b, i) {
         <div class="card-title">${escHtml(b.title||'Untitled')}</div>
         <div class="card-author">${escHtml(b.author||'Unknown author')}</div>
         <div class="card-meta">
-          ${stars?`<span class="card-stars">${stars}</span>`:''}
+          ${ratingHtml}
           ${b.year?`<span class="card-year">${b.year}</span>`:''}
           <span class="card-status ${statusCls}">${statusLabel}</span>
         </div>
+        ${tagsHtml ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px">${tagsHtml}</div>` : ''}
       </div>
     </div>
     ${notesPreview}
@@ -1405,15 +1586,37 @@ function updateStats() {
   document.getElementById('statRead').textContent    = books.filter(b=>b.status==='finished').length;
   document.getElementById('statReading').textContent = books.filter(b=>b.status==='reading').length;
   document.getElementById('statWant').textContent    = books.filter(b=>b.status==='want').length;
+  const streakEl = document.getElementById('statStreak');
+  if (streakEl) streakEl.textContent = calcStreak();
+}
+
+function calcStreak() {
+  // Streak = consecutive days on which a book was finished (by date_read)
+  const finished = window._books
+    .filter(b => b.status==='finished' && b.dateRead)
+    .map(b => b.dateRead.slice(0,10))
+    .sort()
+    .reverse();
+  if (!finished.length) return 0;
+  const unique = [...new Set(finished)];
+  let streak = 0;
+  let check = new Date(); check.setHours(0,0,0,0);
+  for (const d of unique) {
+    const day = new Date(d); day.setHours(0,0,0,0);
+    const diff = Math.round((check - day) / 86400000);
+    if (diff > 1) break;
+    streak++;
+    check = day;
+  }
+  return streak;
 }
 
 function updateStreak() {
-  // Simple streak: count how many of the last N days had a book added/read
-  // For a real app this would track daily reading log entries
-  const streak = Math.min(window._books.filter(b=>b.status==='finished').length, 7);
-  document.getElementById('statStreak').textContent = streak;
-  if (streak>0) {
-    const badge = document.getElementById('streakBadge');
+  const streak = calcStreak();
+  const el = document.getElementById('statStreak');
+  if (el) el.textContent = streak;
+  const badge = document.getElementById('streakBadge');
+  if (badge && streak > 0) {
     badge.innerHTML = `<span class="streak-badge">🔥 ${streak} day streak</span>`;
   }
 }
@@ -1441,12 +1644,12 @@ function renderInsights() {
   const rated = finished.filter(b=>b.rating>0);
   const avgRating = rated.length ? (rated.reduce((s,b)=>s+(b.rating||0),0)/rated.length).toFixed(1) : '–';
 
-  // Top rated
-  const topRated = finished.filter(b=>b.rating===5).slice(0,3);
+  // Top rated (10/10)
+  const topRated = finished.filter(b=>b.rating===10).slice(0,3);
 
   // Yearly goal
   const thisYear = new Date().getFullYear();
-  const yearlyCount = finished.filter(b=>b.dateRead&&b.dateRead.startsWith(thisYear)).length;
+  const yearlyCount = finished.filter(b=>b.dateRead&&b.dateRead.startsWith(String(thisYear))).length;
   const goal = 24;
   const pct = Math.min(100, Math.round((yearlyCount/goal)*100));
 
@@ -1495,13 +1698,13 @@ function renderInsights() {
       </ul>
     </div>
     <div class="insight-card">
-      <div class="insight-card-title"><span>🌟</span> Five-star reads</div>
-      ${topRated.length===0?'<div class="insight-empty">No five-star books yet</div>':''}
+      <div class="insight-card-title"><span>🌟</span> Perfect 10s</div>
+      ${topRated.length===0?'<div class="insight-empty">No 10/10 books yet</div>':''}
       <ul class="insight-list">
         ${topRated.map(b=>`
           <li class="insight-list-item">
             <span class="insight-list-item-name">${escHtml(b.title||'Untitled')}</span>
-            <span class="insight-list-item-meta">★★★★★</span>
+            <span class="insight-list-item-meta" style="color:var(--amber);font-weight:700">10/10</span>
           </li>`).join('')}
       </ul>
     </div>
@@ -1522,24 +1725,38 @@ function renderInsights() {
 window.openAddModal = () => {
   window._editingId = null;
   window._currentRating = 0;
+  window._currentTags = [];
+  window._currentQuotes = [];
+  window._pendingCoverUrl = '';
   document.getElementById('addModalTitle').textContent = 'Add Book';
   document.getElementById('btnDeleteBook').style.display='none';
   document.getElementById('btnSaveBook').textContent='Save to Journal';
-  ['fTitle','fAuthor','fYear','fNotes','fDate'].forEach(id=>document.getElementById(id).value='');
+  ['fTitle','fAuthor','fYear','fNotes','fDate','fStartDate','fPages','fExternalId'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
   document.getElementById('editId').value='';
   document.getElementById('fGenre').value='';
   document.getElementById('fStatus').value='finished';
   document.getElementById('fCoverData').value='';
+  // Clear search box
+  const si = document.getElementById('bookSearchInput');
+  if(si) si.value='';
+  const sr = document.getElementById('bookSearchResults');
+  if(sr) sr.classList.remove('open');
   clearCover();
-  updateStarUI(0);
+  updateRating10UI(0);
+  renderTagChips();
+  renderQuotesList();
   openModal('addModal');
 };
 
-window.openEdit = (id) => {
+window.openEdit = async (id) => {
   const b = window._books.find(x=>x.id===id);
   if (!b) return;
   window._editingId = id;
   window._currentRating = b.rating||0;
+  window._currentTags   = [...(b.tags||[])];
+  window._pendingCoverUrl = b.coverUrl||'';
   document.getElementById('addModalTitle').textContent='Edit Book';
   document.getElementById('btnDeleteBook').style.display='';
   document.getElementById('editId').value=id;
@@ -1549,46 +1766,74 @@ window.openEdit = (id) => {
   document.getElementById('fYear').value=b.year||'';
   document.getElementById('fStatus').value=b.status||'finished';
   document.getElementById('fDate').value=b.dateRead||'';
+  document.getElementById('fStartDate').value=b.startDate||'';
   document.getElementById('fNotes').value=b.notes||'';
+  document.getElementById('fPages').value=b.pages||'';
+  document.getElementById('fExternalId').value=b.externalId||'';
   document.getElementById('fCoverData').value=b.cover||'';
+  const si=document.getElementById('bookSearchInput'); if(si) si.value='';
+  // Load quotes from DB
+  const {data:qs} = await supabase.from('quotes').select('quote_text').eq('book_id',id).order('created_at');
+  window._currentQuotes = (qs||[]).map(q=>q.quote_text);
   if (b.cover) {
     document.getElementById('coverPreview').src=b.cover;
+    document.getElementById('coverPreview').classList.add('visible');
+    document.getElementById('coverDrop').classList.add('has-photo');
+    document.getElementById('coverClearBtn').style.display='';
+  } else if (b.coverUrl) {
+    document.getElementById('coverPreview').src=b.coverUrl;
     document.getElementById('coverPreview').classList.add('visible');
     document.getElementById('coverDrop').classList.add('has-photo');
     document.getElementById('coverClearBtn').style.display='';
   } else {
     clearCover();
   }
-  updateStarUI(window._currentRating);
+  updateRating10UI(window._currentRating);
+  renderTagChips();
+  renderQuotesList();
   openModal('addModal');
 };
 
-window.openDetail = (id) => {
+window.openDetail = async (id) => {
   const b = window._books.find(x=>x.id===id);
   if (!b) return;
   window._detailId = id;
   document.getElementById('detailModalTitle').textContent = escHtml(b.title||'Book Details');
-  const stars = b.rating ? '★'.repeat(b.rating)+'☆'.repeat(5-b.rating) : '';
-  const coverHtml = b.cover
-    ? `<img class="detail-cover" src="${b.cover}" alt="Cover"/>`
+  const ratingLabel = b.rating ? `${b.rating}/10` : 'Not rated';
+  const coverSrc = b.cover || b.coverUrl || '';
+  const coverHtml = coverSrc
+    ? `<img class="detail-cover" src="${coverSrc}" alt="Cover" onerror="this.style.display='none'"/>`
     : `<div class="detail-cover-placeholder">📖</div>`;
+  const statusMap = {reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read',abandoned:'🚫 Abandoned'};
+  const tagsHtml = (b.tags||[]).length
+    ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${(b.tags).map(t=>`<span class="tag-chip">${escHtml(t)}</span>`).join('')}</div>` : '';
+  // Load quotes
+  const {data:qs} = await supabase.from('quotes').select('quote_text').eq('book_id',id).order('created_at');
+  const quotesHtml = (qs||[]).length ? `
+    <div class="detail-quotes">
+      <div class="detail-quotes-label">Quotes &amp; Highlights</div>
+      ${(qs).map(q=>`<div class="detail-quote">"${escHtml(q.quote_text)}"</div>`).join('')}
+    </div>` : '';
   document.getElementById('detailBody').innerHTML = `
     <div class="detail-header-wrap">
       ${coverHtml}
       <div class="detail-info">
         <div class="detail-title">${escHtml(b.title||'Untitled')}</div>
         <div class="detail-author">${escHtml(b.author||'Unknown author')}</div>
-        ${stars?`<div class="detail-stars">${stars}</div>`:''}
-        <span class="card-status ${b.status||'finished'}">${{reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read'}[b.status]||''}</span>
+        <div style="margin:8px 0"><span class="card-status ${b.status||'finished'}">${statusMap[b.status]||''}</span></div>
+        ${b.rating?`<div style="font-family:var(--font-b);font-size:1.1rem;font-weight:700;color:var(--amber)">${b.rating}<span style="font-size:.75rem;color:var(--warm-gray);font-weight:400">/10</span></div>`:''}
       </div>
     </div>
     <div class="detail-grid">
       <div class="detail-field"><label>Genre</label><p>${escHtml(b.genre||'—')}</p></div>
       <div class="detail-field"><label>Year</label><p>${b.year||'—'}</p></div>
-      <div class="detail-field"><label>Date read</label><p>${b.dateRead||'—'}</p></div>
-      <div class="detail-field"><label>Rating</label><p>${b.rating?'★'.repeat(b.rating)+' ('+b.rating+'/5)':'Not rated'}</p></div>
+      ${b.pages?`<div class="detail-field"><label>Pages</label><p>${b.pages}</p></div>`:''}
+      ${b.startDate?`<div class="detail-field"><label>Started</label><p>${b.startDate}</p></div>`:''}
+      ${b.dateRead?`<div class="detail-field"><label>Finished</label><p>${b.dateRead}</p></div>`:''}
     </div>
-    ${b.notes?`<div class="detail-notes-label">My Notes &amp; Review</div><div class="detail-notes">${escHtml(b.notes)}</div>`:''}
+    ${tagsHtml}
+    ${b.notes?`<div class="detail-notes-label" style="margin-top:14px">My Notes &amp; Review</div><div class="detail-notes">${escHtml(b.notes)}</div>`:''}
+    ${quotesHtml}
   `;
   openModal('detailModal');
 };
@@ -1644,14 +1889,19 @@ window.setView = (v) => {
   renderBooks();
 };
 
-/* ── Stars ───────────────────────────────────────────────── */
-window.setStar = (n) => {
+/* ── 10-point Rating ────────────────────────────────────── */
+window.setRating10 = (n) => {
   window._currentRating = n;
-  updateStarUI(n);
+  updateRating10UI(n);
 };
-function updateStarUI(n) {
-  document.querySelectorAll('#starInput .star').forEach((s,i)=>s.classList.toggle('active',i<n));
+function updateRating10UI(n) {
+  document.querySelectorAll('.rating-10-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.val) === n);
+  });
 }
+// Legacy star functions kept for compatibility
+window.setStar = window.setRating10;
+function updateStarUI(n) { updateRating10UI(n); }
 
 /* ── Cover photo ─────────────────────────────────────────── */
 window.handleCoverFile = (input) => {
@@ -1688,6 +1938,7 @@ window.clearCover = () => {
   document.getElementById('coverDrop').classList.remove('has-photo');
   document.getElementById('coverClearBtn').style.display='none';
   document.getElementById('coverFile').value='';
+  window._pendingCoverUrl = '';
 };
 
 /* ── Scan ────────────────────────────────────────────────── */
@@ -1823,11 +2074,13 @@ window.useScanResult = (jsonStr) => {
   closeModal('scanModal');
   setTimeout(()=>{
     openAddModal();
-    document.getElementById('fTitle').value = b.title||'';
+    document.getElementById('fTitle').value  = b.title||'';
     document.getElementById('fAuthor').value = b.author||'';
-    document.getElementById('fGenre').value = b.genre||'';
-    document.getElementById('fYear').value = b.year||'';
-    document.getElementById('fNotes').value = b.synopsis ? `Synopsis: ${b.synopsis}` : '';
+    document.getElementById('fGenre').value  = b.genre||'';
+    document.getElementById('fYear').value   = b.year||'';
+    if(b.pages) document.getElementById('fPages').value = b.pages;
+    if(b.publisher) { /* store in notes for now */ }
+    document.getElementById('fNotes').value  = b.synopsis ? `Synopsis: ${b.synopsis}` : '';
     // Pre-fill cover from scan image
     const img = window._scanImages[1]||window._scanImages[2];
     if (img) {
@@ -1837,6 +2090,8 @@ window.useScanResult = (jsonStr) => {
       document.getElementById('coverDrop').classList.add('has-photo');
       document.getElementById('coverClearBtn').style.display='';
     }
+    // Clear search input
+    const si=document.getElementById('bookSearchInput'); if(si) si.value='';
   }, 250);
 };
 
@@ -1852,6 +2107,219 @@ function checkOnboarding() {
 window.closeOnboarding = () => {
   document.getElementById('onboardingHint').style.display='none';
   localStorage.setItem('rl_ob_dismissed','1');
+};
+
+/* ── Book Search (Open Library) ─────────────────────────── */
+window.onBookSearch = (val) => {
+  const results = document.getElementById('bookSearchResults');
+  clearTimeout(window._searchTimer);
+  if (!val || val.length < 2) { results.classList.remove('open'); return; }
+  window._searchTimer = setTimeout(() => searchOpenLibrary(val), 350);
+};
+
+async function searchOpenLibrary(q) {
+  const results = document.getElementById('bookSearchResults');
+  const spinner = document.getElementById('bookSearchSpinner');
+
+  // Check cache
+  if (window._searchCache[q]) {
+    renderSearchResults(window._searchCache[q]);
+    return;
+  }
+
+  spinner.classList.add('active');
+  try {
+    const res = await fetch(
+      `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i,number_of_pages_median,publisher,subject&limit=8`
+    );
+    const data = await res.json();
+    const items = (data.docs || []).slice(0, 8).map(d => ({
+      key:       d.key,
+      title:     d.title || '',
+      author:    (d.author_name || [])[0] || '',
+      year:      d.first_publish_year ? String(d.first_publish_year) : '',
+      coverId:   d.cover_i || null,
+      pages:     d.number_of_pages_median || null,
+      publisher: (d.publisher || [])[0] || '',
+      genre:     guessGenre(d.subject || []),
+    }));
+    window._searchCache[q] = items;
+    renderSearchResults(items);
+  } catch(e) {
+    results.innerHTML = '<div class="book-search-no-results">Search unavailable — add manually</div>';
+    results.classList.add('open');
+  } finally {
+    spinner.classList.remove('active');
+  }
+}
+
+function guessGenre(subjects) {
+  const s = subjects.join(' ').toLowerCase();
+  if (s.includes('fiction') && (s.includes('literary') || s.includes('literature'))) return 'Literary Fiction';
+  if (s.includes('crime') || s.includes('mystery') || s.includes('thriller')) return 'Mystery / Thriller';
+  if (s.includes('science fiction') || s.includes('sci-fi')) return 'Science Fiction';
+  if (s.includes('fantasy')) return 'Fantasy';
+  if (s.includes('horror')) return 'Horror';
+  if (s.includes('romance')) return 'Romance';
+  if (s.includes('biography') || s.includes('memoir')) return 'Biography';
+  if (s.includes('history') || s.includes('historical')) return 'History';
+  if (s.includes('self-help') || s.includes('self help') || s.includes('personal development')) return 'Self-Help';
+  if (s.includes('business') || s.includes('economics')) return 'Business';
+  if (s.includes('science') || s.includes('physics') || s.includes('biology')) return 'Science';
+  if (s.includes('travel')) return 'Travel';
+  if (s.includes('poetry') || s.includes('poems')) return 'Poetry';
+  if (s.includes('fiction')) return 'Fiction';
+  if (subjects.length) return 'Non-Fiction';
+  return '';
+}
+
+function renderSearchResults(items) {
+  const results = document.getElementById('bookSearchResults');
+  if (!items.length) {
+    results.innerHTML = '<div class="book-search-no-results">No books found — try different keywords</div>';
+    results.classList.add('open');
+    return;
+  }
+  results.innerHTML = items.map((item, i) => {
+    const coverUrl = item.coverId
+      ? `https://covers.openlibrary.org/b/id/${item.coverId}-S.jpg`
+      : null;
+    const coverHtml = coverUrl
+      ? `<img class="bsr-cover" src="${coverUrl}" alt="" onerror="this.style.display='none'"/>`
+      : `<div class="bsr-cover-placeholder">📖</div>`;
+    return `<div class="book-search-result" onclick="selectSearchResult(${i})">
+      ${coverHtml}
+      <div class="bsr-info">
+        <div class="bsr-title">${escHtml(item.title)}</div>
+        <div class="bsr-author">${escHtml(item.author)}</div>
+        ${item.year ? `<div class="bsr-year">${item.year}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  results.classList.add('open');
+  // Store items for selection
+  results._items = items;
+}
+
+window.selectSearchResult = (idx) => {
+  const results = document.getElementById('bookSearchResults');
+  const item = results._items[idx];
+  if (!item) return;
+
+  // Fill form fields
+  document.getElementById('fTitle').value  = item.title;
+  document.getElementById('fAuthor').value = item.author;
+  document.getElementById('fYear').value   = item.year;
+  if (item.pages) document.getElementById('fPages').value = item.pages;
+  if (item.genre) document.getElementById('fGenre').value = item.genre;
+  document.getElementById('fExternalId').value = item.key || '';
+
+  // Fill cover from Open Library (large version)
+  if (item.coverId) {
+    const largeUrl = `https://covers.openlibrary.org/b/id/${item.coverId}-M.jpg`;
+    window._pendingCoverUrl = largeUrl;
+    // Show preview
+    const prev = document.getElementById('coverPreview');
+    prev.src = largeUrl;
+    prev.classList.add('visible');
+    document.getElementById('coverDrop').classList.add('has-photo');
+    document.getElementById('coverClearBtn').style.display='';
+  }
+
+  // Update search box and close results
+  document.getElementById('bookSearchInput').value = item.title + (item.author ? ' — '+item.author : '');
+  results.classList.remove('open');
+  document.getElementById('fTitle').focus();
+};
+
+// Close search results when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.book-search-wrap')) {
+    const r = document.getElementById('bookSearchResults');
+    if (r) r.classList.remove('open');
+  }
+});
+
+/* ── Tags ────────────────────────────────────────────────── */
+window.onTagKeydown = (e) => {
+  const input = e.target;
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = input.value.trim().replace(/,/g,'');
+    if (val && !window._currentTags.includes(val)) {
+      window._currentTags.push(val);
+      renderTagChips();
+    }
+    input.value = '';
+  } else if (e.key === 'Backspace' && !input.value && window._currentTags.length) {
+    window._currentTags.pop();
+    renderTagChips();
+  }
+};
+
+window.removeTag = (idx) => {
+  window._currentTags.splice(idx, 1);
+  renderTagChips();
+};
+
+function renderTagChips() {
+  const wrap = document.getElementById('tagChips');
+  if (!wrap) return;
+  wrap.innerHTML = window._currentTags.map((t, i) =>
+    `<span class="tag-chip">${escHtml(t)}<button class="tag-chip-remove" onclick="removeTag(${i})">×</button></span>`
+  ).join('');
+}
+
+/* ── Quotes ──────────────────────────────────────────────── */
+window.addQuote = () => {
+  const input = document.getElementById('quoteInput');
+  const val = input.value.trim();
+  if (!val) return;
+  window._currentQuotes.push(val);
+  renderQuotesList();
+  input.value = '';
+  input.focus();
+};
+
+window.removeQuote = (idx) => {
+  window._currentQuotes.splice(idx, 1);
+  renderQuotesList();
+};
+
+function renderQuotesList() {
+  const list = document.getElementById('quotesList');
+  if (!list) return;
+  if (!window._currentQuotes.length) { list.innerHTML=''; return; }
+  list.innerHTML = window._currentQuotes.map((q, i) =>
+    `<div class="quote-item">
+      <div class="quote-text">"${escHtml(q)}"</div>
+      <button class="quote-remove" onclick="removeQuote(${i})">✕</button>
+    </div>`
+  ).join('');
+}
+
+/* ── Password Reset ──────────────────────────────────────── */
+window.doSetNewPassword = async () => {
+  const pass    = document.getElementById('newPassInput').value;
+  const confirm = document.getElementById('newPassConfirm').value;
+  const msg     = document.getElementById('resetModalMsg');
+  const btn     = document.getElementById('btnSetNewPass');
+  msg.className = 'auth-msg';
+  if (!pass || pass.length < 6) {
+    msg.className='auth-msg err'; msg.textContent='Password must be at least 6 characters.'; return;
+  }
+  if (pass !== confirm) {
+    msg.className='auth-msg err'; msg.textContent='Passwords do not match.'; return;
+  }
+  btn.disabled=true; btn.textContent='Saving…';
+  try {
+    const { error } = await supabase.auth.updateUser({ password: pass });
+    if (error) throw error;
+    msg.className='auth-msg ok'; msg.textContent='Password updated! You are now signed in.';
+    setTimeout(() => closeModal('resetModal'), 1800);
+  } catch(e) {
+    msg.className='auth-msg err'; msg.textContent=e.message||'Something went wrong.';
+  } finally { btn.disabled=false; btn.textContent='Set new password →'; }
 };
 
 /* ── Helpers ─────────────────────────────────────────────── */
