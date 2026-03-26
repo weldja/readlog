@@ -723,7 +723,24 @@ img{max-width:100%;display:block}
           </div>
           <button class="auth-btn-primary" id="btnSignin" onclick="doSignin()">Sign in →</button>
           <div class="auth-msg" id="siMsg"></div>
+          <div style="text-align:center;margin-top:12px">
+            <button onclick="switchTab('reset')" style="background:none;border:none;font-family:var(--font-b);font-size:.8rem;color:var(--teal);cursor:pointer;text-decoration:underline">Forgot your password?</button>
+          </div>
           <div class="auth-footer">Welcome back, reader 📖</div>
+        </div>
+
+        <!-- Reset password -->
+        <div id="formReset" style="display:none">
+          <p style="font-family:var(--font-b);font-size:.85rem;color:var(--warm-gray);margin-bottom:16px;line-height:1.6">Enter your email and we'll send you a link to reset your password.</p>
+          <div class="auth-form-group">
+            <label>Email address</label>
+            <input type="email" id="resetEmail" placeholder="you@example.com" autocomplete="email"/>
+          </div>
+          <button class="auth-btn-primary" id="btnReset" onclick="doResetPassword()">Send reset link →</button>
+          <div class="auth-msg" id="resetMsg"></div>
+          <div style="text-align:center;margin-top:12px">
+            <button onclick="switchTab('signin')" style="background:none;border:none;font-family:var(--font-b);font-size:.8rem;color:var(--teal);cursor:pointer;text-decoration:underline">Back to sign in</button>
+          </div>
         </div>
       </div>
     </div>
@@ -870,11 +887,11 @@ img{max-width:100%;display:block}
         <div class="scan-panel">
           <div class="scan-panel-title">Front cover</div>
           <div class="scan-upload-area" id="scanArea1">
-            <input type="file" id="scanFile1" accept="image/*" capture="environment" onchange="handleScanFile(this,1)"/>
+            <input type="file" id="scanFile1" accept="image/*,image/heic,image/heif" onchange="handleScanFile(this,1)"/>
             <div class="scan-upload-inner">
               <span class="scan-upload-icon">📸</span>
-              <span class="scan-upload-title">Take photo</span>
-              <span class="scan-upload-sub">or tap to browse</span>
+              <span class="scan-upload-title">Take photo or choose image</span>
+              <span class="scan-upload-sub">camera or gallery</span>
             </div>
             <img class="scan-thumb" id="scanThumb1"/>
           </div>
@@ -883,7 +900,7 @@ img{max-width:100%;display:block}
         <div class="scan-panel">
           <div class="scan-panel-title">Spine (optional)</div>
           <div class="scan-upload-area" id="scanArea2">
-            <input type="file" id="scanFile2" accept="image/*" capture="environment" onchange="handleScanFile(this,2)"/>
+            <input type="file" id="scanFile2" accept="image/*,image/heic,image/heif" onchange="handleScanFile(this,2)"/>
             <div class="scan-upload-inner">
               <span class="scan-upload-icon">📚</span>
               <span class="scan-upload-title">Add spine</span>
@@ -971,7 +988,7 @@ img{max-width:100%;display:block}
       <div class="form-group" style="margin-bottom:14px">
         <label>Cover photo</label>
         <div class="photo-drop" id="coverDrop">
-          <input type="file" id="coverFile" accept="image/*" onchange="handleCoverFile(this)"/>
+          <input type="file" id="coverFile" accept="image/*,image/heic,image/heif" onchange="handleCoverFile(this)"/>
           <div class="photo-drop-inner"><span>📖</span><span>Upload cover photo</span></div>
           <img class="photo-drop-preview" id="coverPreview"/>
         </div>
@@ -1036,6 +1053,8 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = 'https://bkvjhqmtraeovgjptfki.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrdmpocW10cmFlb3ZnanB0ZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NDI1NzAsImV4cCI6MjA5MDAxODU3MH0.pFgT8XpjYRM-frxtbyupcRW7VGOcb13044epFb0zVSM';
 const WORKER_URL        = 'https://readlog.james-weld.workers.dev';
+
+
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -1110,6 +1129,25 @@ window.doSignin = async () => {
 
 window.doSignout = async () => { await supabase.auth.signOut(); };
 
+window.doResetPassword = async () => {
+  const email = document.getElementById('resetEmail').value.trim();
+  const msg   = document.getElementById('resetMsg');
+  const btn   = document.getElementById('btnReset');
+  msg.className = 'auth-msg';
+  if (!email) { msg.className='auth-msg err'; msg.textContent='Please enter your email address.'; return; }
+  btn.disabled=true; btn.textContent='Sending…';
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://readlog.co.uk',
+    });
+    if (error) throw error;
+    msg.className='auth-msg ok';
+    msg.textContent='Reset link sent! Check your email.';
+  } catch(e) {
+    msg.className='auth-msg err'; msg.textContent=e.message||'Something went wrong.';
+  } finally { btn.disabled=false; btn.textContent='Send reset link →'; }
+};
+
 function friendlyAuthError(e) {
   const msg = e.message || '';
   if (msg.includes('already registered') || msg.includes('already exists')) return 'That email is already registered. Try signing in.';
@@ -1123,6 +1161,7 @@ function friendlyAuthError(e) {
 window.switchTab = (tab) => {
   document.getElementById('formSignup').style.display = tab==='signup'?'':'none';
   document.getElementById('formSignin').style.display = tab==='signin'?'':'none';
+  document.getElementById('formReset').style.display  = tab==='reset'?'':'none';
   document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
   document.getElementById('tabSignin').classList.toggle('active', tab==='signin');
 };
@@ -1624,12 +1663,25 @@ window.handleCoverFile = (input) => {
   const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    const data = e.target.result;
-    document.getElementById('fCoverData').value = data;
-    document.getElementById('coverPreview').src = data;
-    document.getElementById('coverPreview').classList.add('visible');
-    document.getElementById('coverDrop').classList.add('has-photo');
-    document.getElementById('coverClearBtn').style.display='';
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const max = 800;
+      let w = img.width, h = img.height;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else       { w = Math.round(w * max / h); h = max; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const jpeg = canvas.toDataURL('image/jpeg', 0.85);
+      document.getElementById('fCoverData').value = jpeg;
+      document.getElementById('coverPreview').src = jpeg;
+      document.getElementById('coverPreview').classList.add('visible');
+      document.getElementById('coverDrop').classList.add('has-photo');
+      document.getElementById('coverClearBtn').style.display='';
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 };
@@ -1648,12 +1700,38 @@ window.handleScanFile = (input, n) => {
   const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    window._scanImages[n] = e.target.result;
-    const thumb = document.getElementById('scanThumb'+n);
-    thumb.src = e.target.result;
-    thumb.classList.add('visible');
-    document.getElementById('retake'+n).style.display='';
-    document.getElementById('btnAnalyse').disabled = false;
+    const dataUrl = e.target.result;
+    // Normalise to JPEG via canvas — handles HEIC, HEIF, WebP, PNG etc.
+    // This ensures the image is always in a format the API accepts
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      // Cap at 1600px on longest side to keep payload small
+      const max = 1600;
+      let w = img.width, h = img.height;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else       { w = Math.round(w * max / h); h = max; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const jpeg = canvas.toDataURL('image/jpeg', 0.85);
+      window._scanImages[n] = jpeg;
+      const thumb = document.getElementById('scanThumb'+n);
+      thumb.src = jpeg;
+      thumb.classList.add('visible');
+      document.getElementById('retake'+n).style.display='';
+      document.getElementById('btnAnalyse').disabled = false;
+    };
+    img.onerror = () => {
+      // Fallback: use raw data URL as-is
+      window._scanImages[n] = dataUrl;
+      document.getElementById('scanThumb'+n).src = dataUrl;
+      document.getElementById('scanThumb'+n).classList.add('visible');
+      document.getElementById('retake'+n).style.display='';
+      document.getElementById('btnAnalyse').disabled = false;
+    };
+    img.src = dataUrl;
   };
   reader.readAsDataURL(file);
 };
