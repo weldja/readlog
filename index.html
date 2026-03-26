@@ -30,10 +30,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="ReadLog"/>
-  <link rel="manifest" href="/manifest.json"/>
-  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="32x32"  href="/icons/icon-96.png"/>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -1038,14 +1034,8 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
    Supabase Dashboard → Settings → API
    ──────────────────────────────────────────────────────────── */
 const SUPABASE_URL = 'https://bkvjhqmtraeovgjptfki.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jWm6RaaLphdcUwDWg_F7RA_kncyrFA';
-
-
-/* ── Worker URL ──────────────────────────────────────────────
-   After deploying the Cloudflare Worker, paste its URL here.
-   e.g. 'https://readlog-scan-proxy.YOUR_SUBDOMAIN.workers.dev'
-   ──────────────────────────────────────────────────────────── */
-const WORKER_URL = 'https://readlog-scan-proxy.YOUR_SUBDOMAIN.workers.dev';
+const SUPABASE_ANON_KEY = 'sb_publishable_jWm6RaaLphdcUwDWg_F7RA_kncyrFA';
+const WORKER_URL        = 'https://readlog.james-weld.workers.dev';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -1803,27 +1793,6 @@ window.showToast = (msg) => {
 
 window.escHtml = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-/* ── Service Worker registration ─────────────────────────── */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(err => {
-      console.warn('SW registration failed:', err);
-    });
-  });
-}
-
-/* ── PWA shortcut action handling ────────────────────────── */
-// Handles /?action=scan and /?action=add from manifest shortcuts
-const _startAction = new URLSearchParams(window.location.search).get('action');
-if (_startAction) {
-  // Clean the URL without reloading
-  history.replaceState({}, '', '/');
-  // Fire after auth resolves
-  window.addEventListener('rl:authed', () => {
-    if (_startAction === 'scan') openScanModal();
-    if (_startAction === 'add')  openAddModal();
-  }, { once: true });
-}
 
 </script>
 
