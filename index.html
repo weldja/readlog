@@ -2,2433 +2,1682 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ReadLog — Your Personal Reading Journal & Book Scanner</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Scan book covers with your camera, log what you read, track your reading goals and discover your next great book. The reading journal that makes your library come alive."/>
-  <meta name="keywords" content="reading journal app, book tracker, book log, reading list, book scanner, books read tracker, reading goals, book review app, personal library, book diary"/>
-  <meta name="author" content="ReadLog"/>
-  <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://readlog.co.uk/"/>
-
-  <!-- OG -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="ReadLog"/>
-  <meta property="og:title" content="ReadLog — Your Personal Reading Journal & Book Scanner"/>
-  <meta property="og:description" content="Scan any book cover and AI fills in all the details instantly. Rate books, write reviews, track your reading streak and set yearly goals. Your library, beautifully organised."/>
-  <meta property="og:url" content="https://readlog.co.uk/"/>
-  <meta property="og:locale" content="en_GB"/>
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="ReadLog — Your Personal Reading Journal & Book Scanner"/>
-  <meta name="twitter:description" content="Scan books, track reading, set goals. Your personal reading journal in your pocket."/>
-
-  <!-- PWA -->
-  <meta name="theme-color" content="#1A2744"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>SnapReceipt — Scan & Log Receipts Instantly</title>
+  <meta name="description" content="The fastest way to scan receipts and log expenses. AI extracts merchant, amount and date instantly. Built for UK freelancers."/>
+  <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#0c1117" media="(prefers-color-scheme: dark)"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="ReadLog"/>
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"ReadLog","url":"https://readlog.co.uk/","description":"A personal reading journal and book scanner. Photograph any book cover, get AI-powered recognition, rate books, record reviews, and track your reading goals.","applicationCategory":"LifestyleApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"featureList":["AI book cover scanner","Star rating system","Reading journal & reviews","Reading goals tracker","Reading streak counter","Book statistics & insights","Genre breakdown charts","Author collection tracking"],"inLanguage":"en-GB"}
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="SnapReceipt"/>
+  <link rel="canonical" href="https://snap.readlog.co.uk/"/>
 
   <style>
-/* ═══════════════════════════════════════════════════════════
-   ReadLog — Design System
-   ═══════════════════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────────
+   DESIGN TOKENS — light & dark via prefers-color-scheme
+───────────────────────────────────────────────────────── */
 :root {
-  --navy:       #1A2744;
-  --navy-deep:  #0F1A32;
-  --navy-mid:   #243154;
-  --teal:       #2A7A6F;
-  --teal-lt:    #3A9A8C;
-  --teal-pale:  rgba(42,122,111,.12);
-  --amber:      #D4952A;
-  --amber-lt:   #E8AF4A;
-  --ivory:      #FAF7F2;
-  --cream:      #F3EEE6;
-  --parchment:  #EDE5D8;
-  --charcoal:   #2C2C2C;
-  --warm-gray:  #7A7068;
-  --light-gray: #DDD7CE;
-  --shadow:     rgba(26,39,68,.08);
-  --shadow-md:  rgba(26,39,68,.14);
-  --shadow-lg:  rgba(26,39,68,.22);
-
-  --font-d: 'Playfair Display', Georgia, serif;
-  --font-b: 'DM Sans', system-ui, sans-serif;
-  --font-s: 'Crimson Pro', Georgia, serif;
-
-  --r:  8px;
-  --rl: 14px;
-  --tr: all .18s ease;
+  --bg:          #ffffff;
+  --bg-2:        #f4f6f8;
+  --bg-3:        #e8ecf0;
+  --border:      #d1d9e0;
+  --border-strong:#b0bec8;
+  --text:        #0d1117;
+  --text-2:      #4a5568;
+  --text-3:      #8a9ab0;
+  --accent:      #0ea5e9;
+  --accent-dark: #0284c7;
+  --accent-pale: #e0f2fe;
+  --green:       #10b981;
+  --green-pale:  #d1fae5;
+  --amber:       #f59e0b;
+  --amber-pale:  #fef3c7;
+  --red:         #ef4444;
+  --red-pale:    #fee2e2;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:   0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:   0 12px 40px rgba(0,0,0,.14);
+  --r:           10px;
+  --r-lg:        16px;
+  --font:        -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:var(--font-b);background:var(--cream);color:var(--charcoal);-webkit-font-smoothing:antialiased}
-button{cursor:pointer;font-family:var(--font-b)}
-input,textarea,select{font-family:var(--font-b)}
-img{max-width:100%;display:block}
-
-/* ── Scrollbar ─────────────────────────────────────────── */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--cream)}
-::-webkit-scrollbar-thumb{background:var(--light-gray);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{color:var(--teal)}
-
-/* ══════════════════════════════════════════════════════════
-   AUTH / LANDING SCREEN
-══════════════════════════════════════════════════════════ */
-#authScreen{position:fixed;inset:0;background:var(--navy-deep);z-index:1000;display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
-#authScreen.hidden{display:none}
-
-/* Nav */
-.landing-nav{background:var(--navy-deep);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
-.landing-nav-logo{display:flex;align-items:center;gap:10px}
-.landing-nav-logo-icon{font-size:1.4rem;line-height:1}
-.landing-nav-logo-text{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--ivory);letter-spacing:.03em}
-.landing-nav-right{display:flex;align-items:center;gap:8px}
-.landing-nav-signin{background:none;border:1px solid rgba(250,247,242,.22);color:rgba(250,247,242,.72);border-radius:var(--r);padding:7px 16px;font-family:var(--font-b);font-size:.83rem;cursor:pointer;transition:var(--tr)}
-.landing-nav-signin:hover{border-color:var(--teal-lt);color:var(--ivory)}
-
-/* Hero */
-.landing-hero{background:var(--navy-deep);padding:52px 24px 56px;text-align:center;flex-shrink:0;position:relative;overflow:hidden}
-.landing-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 0%,rgba(42,122,111,.18) 0%,transparent 65%),radial-gradient(ellipse at 20% 100%,rgba(212,149,42,.1) 0%,transparent 60%);pointer-events:none}
-.landing-eyebrow{display:inline-block;background:rgba(42,122,111,.18);border:1px solid rgba(42,122,111,.35);color:#6DD4C8;font-family:var(--font-b);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:22px}
-.landing-headline{font-family:var(--font-d);font-size:2.5rem;font-weight:700;color:var(--ivory);line-height:1.12;margin-bottom:14px}
-.landing-headline em{color:var(--amber);font-style:normal}
-.landing-sub{font-family:var(--font-b);font-size:1rem;color:rgba(250,247,242,.6);line-height:1.7;margin-bottom:38px;max-width:420px;margin-left:auto;margin-right:auto}
-
-/* Scan CTA box */
-.landing-scan-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px;max-width:360px;margin:0 auto 22px;text-align:left;backdrop-filter:blur(8px)}
-.landing-scan-box-top{display:flex;align-items:center;gap:13px;margin-bottom:16px}
-.landing-scan-icon{width:48px;height:48px;background:var(--teal);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
-.landing-scan-title{font-family:var(--font-d);font-size:1.05rem;font-weight:600;color:var(--ivory)}
-.landing-scan-sub{font-family:var(--font-b);font-size:.78rem;color:rgba(250,247,242,.48);margin-top:2px}
-.landing-scan-btn{width:100%;background:var(--amber);color:var(--navy-deep);border:none;border-radius:var(--r);padding:14px;font-family:var(--font-b);font-size:.95rem;font-weight:600;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px;-webkit-tap-highlight-color:transparent}
-.landing-scan-btn:hover{background:var(--amber-lt)}
-.landing-scan-btn:active{transform:scale(.98)}
-.landing-scan-note{text-align:center;font-family:var(--font-b);font-size:.72rem;color:rgba(250,247,242,.3);margin-top:10px}
-
-/* Proof strip */
-.landing-proof{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;flex-shrink:0}
-.landing-proof-item{display:flex;align-items:center;gap:6px;font-family:var(--font-b);font-size:.75rem;color:rgba(250,247,242,.48)}
-.landing-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--teal-lt);flex-shrink:0;opacity:.8}
-
-/* Landing body */
-.landing-body{background:var(--cream);flex:1}
-.landing-section{padding:40px 22px;max-width:500px;margin:0 auto}
-.landing-section-label{font-family:var(--font-b);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;font-weight:600}
-.landing-section-title{font-family:var(--font-d);font-size:1.45rem;font-weight:600;color:var(--charcoal);margin-bottom:8px}
-.landing-section-body{font-family:var(--font-b);font-size:.9rem;color:var(--warm-gray);line-height:1.72;margin-bottom:24px}
-
-/* Demo card */
-.landing-demo-card{background:var(--navy);border-radius:var(--rl);border:1px solid rgba(255,255,255,.1);overflow:hidden}
-.landing-demo-header{background:var(--navy-deep);padding:10px 14px;display:flex;align-items:center;gap:8px}
-.landing-demo-header-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0}
-.landing-demo-header-text{font-family:var(--font-b);font-size:.72rem;color:rgba(250,247,242,.55);letter-spacing:.04em}
-.landing-demo-header-badge{background:rgba(42,122,111,.25);color:#6DD4C8;font-family:var(--font-b);font-size:.65rem;padding:2px 8px;border-radius:10px;margin-left:auto;letter-spacing:.06em}
-.landing-demo-body{padding:14px;display:flex;gap:12px;align-items:flex-start}
-.landing-demo-img{width:72px;height:102px;background:var(--navy-mid);border-radius:8px;border:1px solid rgba(255,255,255,.1);flex-shrink:0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.landing-demo-spine{width:48px;height:78px;background:rgba(255,255,255,.05);border-radius:4px;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:6px}
-.landing-demo-beam{position:absolute;left:0;right:0;height:2px;background:var(--teal-lt);opacity:0;top:0;pointer-events:none}
-.landing-demo-corner{position:absolute;border-color:var(--teal-lt);border-style:solid;width:10px;height:10px;opacity:.7}
-.landing-demo-corner.tl{top:4px;left:4px;border-width:1.5px 0 0 1.5px}
-.landing-demo-corner.tr{top:4px;right:4px;border-width:1.5px 1.5px 0 0}
-.landing-demo-corner.bl{bottom:4px;left:4px;border-width:0 0 1.5px 1.5px}
-.landing-demo-corner.br{bottom:4px;right:4px;border-width:0 1.5px 1.5px 0}
-.landing-demo-fields{flex:1;display:flex;flex-direction:column;gap:8px}
-.landing-demo-field{opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s}
-.landing-demo-field.ld-visible{opacity:1;transform:translateX(0)}
-.landing-demo-field-label{font-family:var(--font-b);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,247,242,.4);margin-bottom:2px}
-.landing-demo-field-value{font-family:var(--font-b);font-size:.83rem;font-weight:500;color:#FAF7F2}
-.landing-demo-field-value.ld-typing::after{content:"|";animation:ldBlink .6s step-end infinite;color:var(--teal-lt)}
-@keyframes ldBlink{0%,100%{opacity:1}50%{opacity:0}}
-.landing-demo-ai-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(42,122,111,.2);border:1px solid rgba(42,122,111,.4);border-radius:6px;padding:2px 7px;font-family:var(--font-b);font-size:.65rem;color:#6DD4C8;opacity:0;transition:opacity .4s;margin-top:2px}
-.landing-demo-ai-pill.ld-visible{opacity:1}
-.landing-demo-actions{padding:0 14px 14px;display:flex;gap:8px;opacity:0;transition:opacity .4s}
-.landing-demo-actions.ld-visible{opacity:1}
-.landing-demo-save{flex:1;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:9px;font-family:var(--font-b);font-size:.82rem;font-weight:600;cursor:pointer}
-.landing-demo-edit{background:none;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:9px 12px;font-family:var(--font-b);font-size:.82rem;color:rgba(250,247,242,.5);cursor:pointer}
-.landing-phase-label{font-family:var(--font-b);font-size:.68rem;color:var(--teal-lt);letter-spacing:.1em;text-transform:uppercase;text-align:center;min-height:16px;margin-bottom:6px;opacity:.8}
-
-/* Steps */
-.landing-steps{display:flex;flex-direction:column;gap:0}
-.landing-step{display:flex;gap:16px;padding:14px 0;position:relative}
-.landing-step:not(:last-child)::after{content:'';position:absolute;left:18px;top:48px;bottom:0;width:1px;background:var(--light-gray)}
-.landing-step-num{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--amber);font-family:var(--font-b);font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
-.landing-step-body{padding-top:8px}
-.landing-step-title{font-family:var(--font-d);font-size:.98rem;font-weight:600;color:var(--charcoal);margin-bottom:3px}
-.landing-step-text{font-family:var(--font-b);font-size:.84rem;color:var(--warm-gray);line-height:1.6}
-
-/* Bottom CTA */
-.landing-bottom-cta{background:var(--navy-deep);padding:48px 24px;text-align:center;flex-shrink:0}
-.landing-bottom-title{font-family:var(--font-d);font-size:1.55rem;font-weight:600;color:var(--ivory);margin-bottom:10px}
-.landing-bottom-sub{font-family:var(--font-b);font-size:.9rem;color:rgba(250,247,242,.52);line-height:1.65;margin-bottom:26px}
-.landing-bottom-btn{display:inline-block;background:var(--amber);color:var(--navy-deep);border:none;border-radius:var(--r);padding:14px 30px;font-family:var(--font-b);font-size:.95rem;font-weight:600;cursor:pointer;transition:var(--tr)}
-.landing-bottom-btn:hover{background:var(--amber-lt)}
-.landing-bottom-note{font-family:var(--font-b);font-size:.72rem;color:rgba(250,247,242,.28);margin-top:12px}
-
-/* Auth panel */
-.auth-panel{background:var(--ivory);padding:38px 28px 46px;flex-shrink:0}
-.auth-panel-logo{text-align:center;margin-bottom:26px}
-.auth-panel-logo-icon{font-size:2rem;display:block;margin-bottom:8px}
-.auth-panel-logo-title{font-family:var(--font-d);font-size:1.25rem;font-weight:700;color:var(--navy);letter-spacing:.03em}
-.auth-panel-logo-sub{font-family:var(--font-b);font-size:.68rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
-.auth-card{width:100%;max-width:400px;margin:0 auto}
-.auth-tabs{display:flex;background:var(--light-gray);border-radius:var(--r);padding:3px;gap:2px;margin-bottom:22px}
-.auth-tab{flex:1;background:none;border:none;padding:9px;font-family:var(--font-b);font-size:.9rem;color:var(--warm-gray);cursor:pointer;border-radius:6px;transition:var(--tr)}
-.auth-tab.active{background:var(--ivory);color:var(--navy);box-shadow:0 1px 4px var(--shadow)}
-.auth-form-group{margin-bottom:14px}
-.auth-form-group label{display:block;font-family:var(--font-b);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:5px}
-.auth-form-group input{width:100%;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:11px 12px;font-family:var(--font-b);font-size:.95rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border-color .2s;-webkit-appearance:none}
-.auth-form-group input:focus{border-color:var(--teal);background:var(--ivory)}
-.auth-btn-primary{width:100%;background:var(--navy);color:var(--ivory);border:none;border-radius:var(--r);padding:14px;font-family:var(--font-d);font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:var(--tr);margin-top:4px;-webkit-tap-highlight-color:transparent}
-.auth-btn-primary:hover{background:var(--navy-mid)}
-.auth-btn-primary:active{transform:scale(.98)}
-.auth-btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--light-gray);font-family:var(--font-b);font-size:.8rem}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--light-gray)}
-.auth-msg{font-family:var(--font-b);font-size:.82rem;margin-top:12px;padding:9px 12px;border-radius:var(--r);text-align:center;display:none}
-.auth-msg.ok{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;display:block}
-.auth-msg.err{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;display:block}
-.auth-footer{margin-top:16px;text-align:center;font-family:var(--font-b);font-size:.78rem;color:var(--warm-gray);font-style:italic}
-
-/* Responsive landing */
-@media(min-width:700px){
-  #authScreen{flex-direction:row;align-items:stretch}
-  .landing-scrollable{flex:1;overflow-y:auto;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
-  .auth-panel{width:420px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding:52px 44px;overflow-y:auto}
-  .landing-nav{display:none}
-  .landing-headline{font-size:3rem}
-  .landing-body{background:var(--navy-deep)}
-  .landing-section-title{color:var(--ivory)}
-  .landing-section-body{color:rgba(250,247,242,.58)}
-  .landing-step-title{color:var(--ivory)}
-  .landing-step-text{color:rgba(250,247,242,.58)}
-  .landing-step:not(:last-child)::after{background:rgba(255,255,255,.1)}
-  .landing-step-num{background:rgba(255,255,255,.08);color:var(--amber)}
-  .landing-demo-actions{display:none}
-  .landing-bottom-cta{display:none}
-  .landing-proof{background:rgba(0,0,0,.15);border-color:rgba(255,255,255,.06)}
-}
-@media(max-width:699px){
-  .auth-panel-logo{display:none}
-  .landing-headline{font-size:1.95rem}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #0c1117;
+    --bg-2:        #161b22;
+    --bg-3:        #21262d;
+    --border:      #30363d;
+    --border-strong:#484f58;
+    --text:        #e6edf3;
+    --text-2:      #8b949e;
+    --text-3:      #484f58;
+    --accent:      #38bdf8;
+    --accent-dark: #0ea5e9;
+    --accent-pale: rgba(56,189,248,.12);
+    --green:       #3fb950;
+    --green-pale:  rgba(63,185,80,.12);
+    --amber:       #d29922;
+    --amber-pale:  rgba(210,153,34,.12);
+    --red:         #f85149;
+    --red-pale:    rgba(248,81,73,.12);
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.3);
+    --shadow-md:   0 4px 16px rgba(0,0,0,.4);
+    --shadow-lg:   0 12px 40px rgba(0,0,0,.6);
+  }
 }
 
-/* ══════════════════════════════════════════════════════════
-   MAIN APP SHELL
-══════════════════════════════════════════════════════════ */
-#appShell{display:none;flex-direction:column;min-height:100vh}
-#appShell.visible{display:flex}
+/* ─────────────────────────────────────────────────────────
+   RESET + BASE
+───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Header */
-.header{background:var(--navy-deep);border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:100}
-.header-inner{max-width:1280px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:12px}
-.logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-.logo-icon{font-size:1.4rem;line-height:1}
-.logo-title{font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--ivory);letter-spacing:.03em}
-.logo-sub{font-family:var(--font-b);font-size:.65rem;color:rgba(250,247,242,.4);letter-spacing:.1em;text-transform:uppercase;margin-left:3px}
-.header-spacer{flex:1}
-.header-actions{display:flex;align-items:center;gap:8px}
-.btn-scan-primary{background:var(--teal);color:#fff;border:none;border-radius:var(--r);padding:9px 18px;font-family:var(--font-b);font-size:.87rem;font-weight:600;cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:7px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
-.btn-scan-primary:hover{background:var(--teal-lt)}
-.btn-scan-primary:active{transform:scale(.97)}
-.btn-add-subtle{background:rgba(255,255,255,.07);color:rgba(250,247,242,.75);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:8px 14px;font-family:var(--font-b);font-size:.83rem;cursor:pointer;transition:var(--tr);white-space:nowrap}
-.btn-add-subtle:hover{background:rgba(255,255,255,.12);color:var(--ivory)}
-.btn-hamburger{background:none;border:none;color:rgba(250,247,242,.7);font-size:1.3rem;padding:6px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;transition:var(--tr)}
-.btn-hamburger:hover{background:rgba(255,255,255,.08);color:var(--ivory)}
-.scan-hint{font-family:var(--font-b);font-size:.78rem;color:rgba(250,247,242,.38);font-style:italic;white-space:nowrap}
-.scan-label-short{display:none}
-.scan-label-full{display:inline}
-.user-badge{display:flex;align-items:center;gap:6px;color:rgba(250,247,242,.65);font-family:var(--font-b);font-size:.8rem}
-.user-badge-avatar{width:30px;height:30px;border-radius:50%;background:var(--teal);border:1px solid rgba(42,122,111,.5);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:#fff;flex-shrink:0;font-weight:600}
-.btn-signout{background:none;border:1px solid rgba(42,122,111,.3);border-radius:var(--r);padding:5px 12px;color:rgba(250,247,242,.6);font-family:var(--font-b);font-size:.75rem;cursor:pointer;transition:var(--tr)}
-.btn-signout:hover{border-color:var(--teal-lt);color:var(--ivory)}
+html {
+  font-family: var(--font);
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
 
-/* Toolbar */
-.toolbar{background:var(--ivory);border-bottom:1px solid var(--light-gray);position:sticky;top:60px;z-index:90}
-.toolbar-inner{max-width:1280px;margin:0 auto;display:flex;flex-direction:column}
-.toolbar-filters{padding:8px 20px 0;display:flex;gap:0}
-.filter-tabs{display:flex;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.filter-tabs::-webkit-scrollbar{display:none}
-.filter-tab{background:none;border:none;padding:8px 15px;font-family:var(--font-b);font-size:.85rem;color:var(--warm-gray);cursor:pointer;border-bottom:2px solid transparent;transition:var(--tr);white-space:nowrap;border-radius:var(--r) var(--r) 0 0}
-.filter-tab:hover{color:var(--charcoal);background:rgba(0,0,0,.03)}
-.filter-tab.active{color:var(--navy);border-bottom-color:var(--teal);font-weight:600}
-.toolbar-controls{height:46px;display:flex;align-items:center;gap:10px;padding:0 20px;border-top:1px solid var(--light-gray)}
-.sort-wrap{display:flex;align-items:center;gap:6px}
-.sort-wrap label{font-family:var(--font-b);font-size:.78rem;color:var(--warm-gray)}
-.sort-select{background:var(--cream);border:1px solid var(--light-gray);border-radius:var(--r);padding:5px 10px;font-family:var(--font-b);font-size:.82rem;color:var(--charcoal);cursor:pointer;outline:none}
-.view-toggle{display:flex;background:var(--cream);border:1px solid var(--light-gray);border-radius:var(--r);overflow:hidden}
-.view-btn{background:none;border:none;padding:5px 9px;font-size:.88rem;color:var(--warm-gray);cursor:pointer;transition:var(--tr)}
-.view-btn.active{background:var(--navy);color:#fff}
-.toolbar-search{padding:6px 20px 8px}
-.search-input-wrap{position:relative;max-width:480px}
-.search-input{width:100%;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:8px 12px 8px 34px;font-family:var(--font-b);font-size:.88rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border-color .2s}
-.search-input:focus{border-color:var(--teal);background:var(--ivory)}
-.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--warm-gray);pointer-events:none}
+body {
+  min-height: 100dvh;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow-x: hidden;
+}
 
-/* Stats bar */
-.stats-bar{background:var(--navy-deep);border-bottom:1px solid rgba(255,255,255,.07)}
-.stats-inner{max-width:1280px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.stats-inner::-webkit-scrollbar{display:none}
-.stat{display:flex;flex-direction:column;align-items:center;padding:4px 20px;flex-shrink:0}
-.stat-divider{width:1px;height:32px;background:rgba(255,255,255,.1);flex-shrink:0}
-.stat-num{font-family:var(--font-d);font-size:1.35rem;font-weight:600;color:var(--amber);line-height:1}
-.stat-label{font-family:var(--font-b);font-size:.68rem;color:rgba(250,247,242,.45);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;white-space:nowrap}
+button { font-family: var(--font); cursor: pointer; }
+input, textarea, select { font-family: var(--font); }
+img { display: block; max-width: 100%; }
 
-/* Onboarding hint */
-#onboardingHint{background:linear-gradient(135deg,rgba(26,39,68,.06),rgba(42,122,111,.09));border-bottom:1px solid rgba(42,122,111,.2)}
-.onboarding-inner{max-width:1280px;margin:0 auto;padding:12px 20px;display:flex;align-items:flex-start;gap:12px}
-.onboarding-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px}
-.onboarding-text{font-family:var(--font-b);font-size:.88rem;color:var(--charcoal);line-height:1.6;flex:1}
-.onboarding-text strong{font-weight:600;color:var(--navy)}
-.onboarding-close{background:none;border:none;color:var(--warm-gray);cursor:pointer;font-size:.9rem;padding:2px 6px;border-radius:var(--r);flex-shrink:0;transition:var(--tr);margin-top:1px}
-.onboarding-close:hover{background:var(--light-gray);color:var(--charcoal)}
+/* ─────────────────────────────────────────────────────────
+   APP SHELL — three screens, only one visible at a time
+───────────────────────────────────────────────────────── */
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-height: 100vh;
+}
+.screen.active { display: flex; }
 
-/* Main content */
-.main-content{max-width:1280px;margin:0 auto;padding:24px 20px 60px;flex:1}
+/* ─────────────────────────────────────────────────────────
+   AUTH SCREEN
+───────────────────────────────────────────────────────── */
+#authScreen {
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.auth-logo-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.auth-logo-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+.auth-logo-tag {
+  font-size: .75rem;
+  color: var(--text-2);
+  margin-top: 1px;
+}
+
+.auth-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+
+.auth-sub {
+  font-size: .9rem;
+  color: var(--text-2);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.auth-tabs {
+  display: flex;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 3px;
+  gap: 3px;
+  margin-bottom: 22px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: 7px;
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: all .15s;
+}
+
+.auth-tab.active {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-field { margin-bottom: 14px; }
+
+.form-label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg-2);
+  color: var(--text);
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .15s, background .15s;
+  -webkit-appearance: none;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  border-radius: var(--r);
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 13px 20px;
+}
+
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  background: var(--bg-2);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  padding: 11px 18px;
+}
+
+.btn-secondary:hover { background: var(--bg-3); border-color: var(--border-strong); }
+
+.btn-danger {
+  background: var(--red-pale);
+  color: var(--red);
+  border: 1.5px solid var(--red);
+  padding: 11px 18px;
+}
+
+.btn-danger:hover { background: var(--red); color: #fff; }
+
+.btn-full { width: 100%; }
+
+.btn-sm { padding: 8px 14px; font-size: .85rem; }
+
+.auth-msg {
+  font-size: .85rem;
+  padding: 10px 13px;
+  border-radius: var(--r);
+  margin-top: 12px;
+  display: none;
+  line-height: 1.4;
+}
+
+.auth-msg.ok  { display: block; background: var(--green-pale); color: var(--green); }
+.auth-msg.err { display: block; background: var(--red-pale);   color: var(--red);   }
+
+.auth-footer-link {
+  text-align: center;
+  margin-top: 14px;
+  font-size: .82rem;
+  color: var(--text-2);
+}
+
+.auth-footer-link button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
+   HOME SCREEN
+───────────────────────────────────────────────────────── */
+#homeScreen {
+  background: var(--bg);
+}
+
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+.home-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+}
+
+.header-actions { display: flex; align-items: center; gap: 8px; }
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--bg-2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-icon:hover { background: var(--bg-3); }
+
+/* Scan FAB */
+.scan-fab {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom, 24px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 16px 32px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 4px 20px rgba(14,165,233,.45);
+  cursor: pointer;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+
+.scan-fab:hover  { background: var(--accent-dark); box-shadow: 0 6px 24px rgba(14,165,233,.55); }
+.scan-fab:active { transform: translateX(-50%) scale(.96); }
+
+/* Summary strip */
+.summary-strip {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.summary-strip::-webkit-scrollbar { display: none; }
+
+.summary-item {
+  flex: 1;
+  min-width: 100px;
+  padding: 12px 16px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.summary-item:last-child { border-right: none; }
+
+.summary-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.summary-val.accent { color: var(--accent); }
+
+.summary-key {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Receipt list */
+.receipt-list {
+  flex: 1;
+  padding: 12px 12px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.receipt-item {
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.receipt-item:hover  { border-color: var(--accent); background: var(--bg); }
+.receipt-item:active { transform: scale(.99); }
+
+.receipt-thumb {
+  width: 44px;
+  height: 56px;
+  border-radius: 7px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--bg-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--text-3);
+  overflow: hidden;
+}
+
+.receipt-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.receipt-info { flex: 1; min-width: 0; }
+
+.receipt-merchant {
+  font-size: .97rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.receipt-date {
+  font-size: .78rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.receipt-amount {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.receipt-currency {
+  font-size: .7rem;
+  color: var(--text-3);
+  margin-top: 2px;
+}
 
 /* Empty state */
-.empty-state{text-align:center;padding:76px 20px}
-.empty-icon{font-size:3.2rem;margin-bottom:16px;opacity:.5}
-.empty-state h2{font-family:var(--font-d);font-size:1.55rem;color:var(--warm-gray);font-weight:400;margin-bottom:10px}
-.empty-state p{font-family:var(--font-b);font-style:italic;color:var(--warm-gray);font-size:.95rem;margin-bottom:28px;opacity:.8;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.65}
-
-/* Book grid */
-.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.book-grid.list-view{grid-template-columns:1fr}
-
-/* Book card */
-.book-card{background:var(--ivory);border:1.5px solid var(--light-gray);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:var(--tr);box-shadow:0 1px 4px var(--shadow);display:flex;flex-direction:column}
-.book-card:hover{box-shadow:0 6px 24px var(--shadow-md);border-color:rgba(26,39,68,.2);transform:translateY(-2px)}
-.book-card-inner{display:flex;gap:14px;padding:14px 14px 10px}
-.card-cover-wrap{width:72px;flex-shrink:0}
-.card-cover{width:72px;height:100px;object-fit:cover;border-radius:6px;border:1px solid var(--light-gray)}
-.card-cover-placeholder{width:72px;height:100px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:1px solid rgba(255,255,255,.08)}
-.card-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.card-genre-badge{display:inline-flex;align-items:center;background:var(--teal-pale);color:var(--teal);font-family:var(--font-b);font-size:.64rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-bottom:2px;width:fit-content}
-.card-title{font-family:var(--font-d);font-size:1rem;font-weight:600;color:var(--charcoal);line-height:1.2;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.card-author{font-family:var(--font-b);font-size:.8rem;color:var(--warm-gray);font-style:italic}
-.card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
-.card-stars{font-size:.9rem;color:var(--amber);letter-spacing:1px;line-height:1}
-.card-year{font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray)}
-.card-status{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-b);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px}
-.card-status.reading{background:rgba(42,122,111,.12);color:var(--teal)}
-.card-status.finished{background:rgba(26,39,68,.08);color:var(--navy-mid)}
-.card-status.want{background:rgba(212,149,42,.12);color:var(--amber)}
-.card-actions{display:flex;align-items:center;gap:6px;padding:8px 14px 12px;border-top:1px solid var(--light-gray)}
-.card-btn{background:var(--cream);border:1px solid var(--light-gray);border-radius:6px;padding:5px 10px;font-family:var(--font-b);font-size:.75rem;color:var(--warm-gray);cursor:pointer;transition:var(--tr)}
-.card-btn:hover{background:var(--parchment);color:var(--navy);border-color:rgba(26,39,68,.2)}
-.card-btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
-.card-btn.primary:hover{background:var(--navy-mid)}
-.card-fav-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:var(--light-gray);padding:0 2px;transition:color .15s,transform .15s;line-height:1;flex-shrink:0}
-.card-fav-btn:hover,.card-fav-btn.active{color:#e05c7a;transform:scale(1.2)}
-.card-notes-preview{font-family:var(--font-s);font-style:italic;font-size:.85rem;color:var(--warm-gray);line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 14px 10px}
-
-/* Reading goal progress */
-.reading-goal{background:var(--navy-deep);border-radius:var(--rl);padding:20px 22px;margin-bottom:28px;display:flex;gap:16px;align-items:center}
-.goal-text{flex:1;min-width:0}
-.goal-label{font-family:var(--font-b);font-size:.72rem;color:rgba(250,247,242,.45);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.goal-headline{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--ivory);margin-bottom:8px}
-.goal-bar-track{background:rgba(255,255,255,.1);border-radius:4px;height:8px;overflow:hidden}
-.goal-bar-fill{background:linear-gradient(90deg,var(--teal),var(--teal-lt));height:100%;border-radius:4px;transition:width .6s ease}
-.goal-fraction{font-family:var(--font-b);font-size:.8rem;color:rgba(250,247,242,.5);margin-top:5px}
-.goal-pct{font-family:var(--font-d);font-size:1.8rem;font-weight:600;color:var(--amber);flex-shrink:0}
-
-/* Insights */
-.insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.insight-card{background:var(--ivory);border:1px solid var(--light-gray);border-radius:var(--rl);padding:22px 24px}
-.insight-card-title{font-family:var(--font-d);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:14px;display:flex;align-items:center;gap:7px}
-.insight-card-title span{font-size:1rem}
-.insight-stat-big{font-family:var(--font-d);font-size:2.8rem;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px}
-.insight-stat-label{font-family:var(--font-b);font-size:.88rem;color:var(--warm-gray);font-style:italic}
-.insight-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.insight-list-item{display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:var(--font-b);font-size:.9rem}
-.insight-list-item-name{color:var(--charcoal);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.insight-list-item-meta{color:var(--warm-gray);font-size:.82rem;white-space:nowrap;flex-shrink:0}
-.insight-bar-wrap{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-.insight-bar-row{display:flex;align-items:center;gap:8px;font-family:var(--font-b);font-size:.82rem}
-.insight-bar-label{width:100px;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
-.insight-bar-track{flex:1;height:8px;background:var(--light-gray);border-radius:4px;overflow:hidden}
-.insight-bar-fill{height:100%;background:var(--teal);border-radius:4px;transition:width .45s ease}
-.insight-bar-count{color:var(--warm-gray);width:24px;text-align:right;flex-shrink:0}
-.insight-empty{font-family:var(--font-b);font-style:italic;color:var(--warm-gray);font-size:.9rem;text-align:center;padding:20px 0;opacity:.7}
-.insight-streak{display:flex;align-items:center;gap:14px}
-.streak-flame{font-size:2.4rem}
-.streak-text{flex:1}
-.streak-days{font-family:var(--font-d);font-size:2.2rem;font-weight:700;color:var(--navy);line-height:1}
-.streak-label{font-family:var(--font-b);font-size:.8rem;color:var(--warm-gray);margin-top:2px}
-
-/* Currently reading */
-.currently-reading{margin-bottom:32px}
-.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--light-gray)}
-.section-title{font-family:var(--font-d);font-size:1.25rem;font-weight:600;color:var(--charcoal)}
-.section-sub{font-family:var(--font-b);font-size:.8rem;color:var(--warm-gray)}
-.section-action{font-family:var(--font-b);font-size:.82rem;color:var(--teal);background:none;border:none;cursor:pointer;padding:0;transition:var(--tr)}
-.section-action:hover{color:var(--teal-lt)}
-
-/* Modals */
-.modal-overlay{position:fixed;inset:0;background:rgba(15,26,50,.55);backdrop-filter:blur(3px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .22s ease}
-.modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--ivory);border-radius:var(--rl);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.32);transform:translateY(14px) scale(.98);transition:transform .22s ease,opacity .22s ease;opacity:0;-webkit-overflow-scrolling:touch}
-.modal-overlay.open .modal{transform:none;opacity:1}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--light-gray);position:sticky;top:0;background:var(--ivory);z-index:1}
-.modal-title{font-family:var(--font-d);font-size:1.05rem;font-weight:600;color:var(--charcoal)}
-.modal-close{background:none;border:none;color:var(--warm-gray);font-size:1.2rem;cursor:pointer;padding:4px 8px;border-radius:var(--r);transition:var(--tr)}
-.modal-close:hover{background:var(--light-gray);color:var(--charcoal)}
-.modal-body{padding:20px}
-.modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--light-gray)}
-
-/* Forms */
-.form-row{display:grid;gap:12px;margin-bottom:14px}
-.form-row.two-col{grid-template-columns:1fr 1fr}
-.form-group label{display:block;font-family:var(--font-b);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:5px}
-.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:10px 12px;font-family:var(--font-b);font-size:.92rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border-color .2s;-webkit-appearance:none}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--teal);background:var(--ivory)}
-.form-textarea{resize:vertical;min-height:90px;line-height:1.6;font-family:var(--font-s);font-style:italic;font-size:.95rem}
-
-/* Star rating input */
-.star-input{display:flex;align-items:center;gap:4px}
-.star-input .star{background:none;border:none;font-size:.85rem;cursor:pointer;padding:4px;opacity:.35;transition:opacity .12s,transform .12s}
-.star-input .star.active,.star-input .star:hover{opacity:1;transform:scale(1.1)}
-.star-input-clear{font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray);background:none;border:none;cursor:pointer;margin-left:6px;text-decoration:underline}
-.star-input-clear:hover{color:var(--navy)}
-
-/* Photo drop */
-.photo-drop{position:relative;border:2px dashed var(--light-gray);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:border-color .2s;background:var(--cream);min-height:90px}
-.photo-drop:hover{border-color:var(--teal);background:rgba(42,122,111,.03)}
-.photo-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
-.photo-drop-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:18px 8px;color:var(--warm-gray);font-family:var(--font-b);font-size:.8rem;font-style:italic;pointer-events:none;min-height:90px}
-.photo-drop-inner span:first-child{font-size:1.6rem;line-height:1}
-.photo-drop-preview{display:none;width:100%;height:130px;object-fit:cover;border-radius:calc(var(--rl) - 2px);pointer-events:none}
-.photo-drop-preview.visible{display:block}
-.photo-drop.has-photo{border-style:solid;border-color:var(--light-gray)}
-.photo-drop.has-photo .photo-drop-inner{display:none}
-.photo-clear-btn{background:none;border:none;color:var(--warm-gray);font-family:var(--font-b);font-size:.74rem;cursor:pointer;padding:2px 0;text-decoration:underline;margin-top:4px}
-.photo-clear-btn:hover{color:#dc2626}
-
-/* Scan modal */
-.scan-instruction{font-family:var(--font-b);font-style:italic;color:var(--warm-gray);font-size:.9rem;line-height:1.6;margin-bottom:16px;text-align:center}
-.scan-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px}
-.scan-panel-title{font-family:var(--font-d);font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-gray);text-align:center;margin-bottom:4px}
-.scan-upload-area{position:relative;border:2px dashed var(--light-gray);border-radius:var(--rl);cursor:pointer;transition:border-color .2s,background .2s;overflow:hidden;background:var(--cream)}
-.scan-upload-area:hover,.scan-upload-area.dragover{border-color:var(--teal);background:rgba(42,122,111,.04)}
-.scan-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
-.scan-upload-inner{display:flex;flex-direction:column;align-items:center;gap:4px;padding:22px 12px;pointer-events:none}
-.scan-upload-icon{font-size:1.7rem;line-height:1}
-.scan-upload-title{font-family:var(--font-b);font-size:.8rem;color:var(--charcoal);text-align:center}
-.scan-upload-sub{font-family:var(--font-b);font-size:.7rem;color:var(--warm-gray);font-style:italic;text-align:center}
-.scan-thumb{width:100%;height:90px;object-fit:cover;border-radius:var(--r);border:1px solid var(--light-gray);display:none}
-.scan-thumb.visible{display:block}
-.scan-retake-link{background:none;border:none;color:var(--warm-gray);font-family:var(--font-b);font-size:.74rem;cursor:pointer;text-decoration:underline;padding:0;text-align:center;width:100%}
-.scan-loader-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:30px 0 20px}
-.scan-spinner{width:40px;height:40px;border:3px solid var(--light-gray);border-top-color:var(--teal);border-radius:50%;animation:spin .85s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.scan-loader-title{font-family:var(--font-d);font-size:.98rem;font-weight:600;color:var(--charcoal)}
-.scan-loader-sub{font-family:var(--font-b);font-style:italic;font-size:.84rem;color:var(--warm-gray)}
-.scan-results-header{display:flex;align-items:center;gap:12px;background:var(--cream);border:1px solid var(--light-gray);border-radius:var(--rl);padding:12px 16px;margin-bottom:14px}
-.scan-results-icon{font-size:1.1rem;color:#16a34a;flex-shrink:0;background:#f0fdf4;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #bbf7d0}
-.scan-results-title{font-family:var(--font-d);font-weight:600;font-size:.9rem;color:var(--charcoal)}
-.scan-results-sub{font-family:var(--font-b);font-size:.76rem;color:var(--warm-gray);font-style:italic;margin-top:1px}
-.scan-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;margin-bottom:12px}
-.scan-field{background:var(--cream);border:1px solid var(--light-gray);border-radius:var(--r);padding:6px 10px}
-.scan-field-label{font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:2px}
-.scan-field-value{font-family:var(--font-b);font-size:.86rem;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.scan-conf-badge{display:inline-flex;align-items:center;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:20px;font-family:var(--font-b);margin-left:6px}
-.scan-conf-badge.high{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
-.scan-conf-badge.medium{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
-.scan-conf-badge.low{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
-.scan-error-msg{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--charcoal);text-align:center;margin-bottom:6px}
-.scan-error-detail{font-family:var(--font-b);font-size:.84rem;color:var(--warm-gray);font-style:italic;text-align:center;line-height:1.5}
-
-/* Detail modal */
-.detail-cover{width:100px;height:140px;object-fit:cover;border-radius:8px;border:1px solid var(--light-gray);flex-shrink:0}
-.detail-cover-placeholder{width:100px;height:140px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
-.detail-header-wrap{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
-.detail-info{flex:1;min-width:0}
-.detail-title{font-family:var(--font-d);font-size:1.2rem;font-weight:700;color:var(--charcoal);line-height:1.2;margin-bottom:4px}
-.detail-author{font-family:var(--font-s);font-style:italic;font-size:.95rem;color:var(--warm-gray);margin-bottom:10px}
-.detail-stars{font-size:1.2rem;color:var(--amber);margin-bottom:14px;letter-spacing:2px}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:16px}
-.detail-field label{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:2px}
-.detail-field p{font-family:var(--font-b);font-size:.9rem;color:var(--charcoal)}
-.detail-notes-label{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:5px}
-.detail-notes{font-family:var(--font-s);font-style:italic;font-size:.95rem;line-height:1.72;color:var(--charcoal);background:var(--parchment);border-left:3px solid var(--teal);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin-bottom:16px}
-.detail-footer{display:flex;justify-content:flex-end;gap:8px;padding-top:14px;border-top:1px solid var(--light-gray)}
-
-/* Btn styles */
-.btn{border:none;border-radius:var(--r);padding:10px 20px;font-family:var(--font-b);font-size:.88rem;font-weight:500;cursor:pointer;transition:var(--tr)}
-.btn-primary{background:var(--navy);color:#fff}
-.btn-primary:hover{background:var(--navy-mid)}
-.btn-secondary{background:var(--cream);color:var(--charcoal);border:1.5px solid var(--light-gray)}
-.btn-secondary:hover{background:var(--parchment)}
-.btn-danger{background:#dc2626;color:#fff}
-.btn-danger:hover{background:#b91c1c}
-.btn-sm{padding:7px 14px;font-size:.8rem}
-
-/* Toast */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--navy);color:var(--ivory);padding:10px 24px;border-radius:30px;font-family:var(--font-b);font-size:.88rem;z-index:9999;transition:transform .28s ease;white-space:nowrap;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.28)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* Footer */
-.site-footer{text-align:center;padding:20px;font-family:var(--font-b);font-size:.78rem;color:var(--warm-gray);display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--light-gray);background:var(--ivory)}
-.footer-sep{color:var(--light-gray)}
-.footer-link{color:var(--warm-gray);text-decoration:none;font-family:var(--font-b);font-size:.78rem;transition:color .2s}
-.footer-link:hover{color:var(--navy)}
-
-/* Mobile overrides */
-@media(max-width:768px){
-  .header-inner{height:56px;padding:0 14px;gap:8px}
-  .scan-label-full{display:none}
-  .scan-label-short{display:inline}
-  .btn-scan-primary{padding:8px 14px;font-size:.8rem}
-  .btn-add-subtle{display:none}
-  .scan-hint{display:none}
-  .logo-sub{display:none}
-  .toolbar-controls{padding:0 14px;gap:7px;overflow-x:auto}
-  .toolbar-filters{padding:8px 14px 0}
-  .toolbar-search{padding:6px 14px 8px}
-  .main-content{padding:16px 14px 48px}
-  .book-grid{grid-template-columns:1fr}
-  .form-row.two-col{grid-template-columns:1fr}
-  .modal{max-width:100%;border-radius:var(--rl) var(--rl) 0 0}
-  .modal-overlay{align-items:flex-end;padding:0}
-  .scan-panels{grid-template-columns:1fr}
-  .detail-grid{grid-template-columns:1fr}
-  .detail-header-wrap{flex-direction:column;align-items:flex-start}
-  .reading-goal{flex-direction:column;align-items:flex-start}
-  .goal-pct{align-self:flex-end}
-}
-@media(max-width:520px){
-  .header-inner{padding:0 12px}
-  .stats-inner{padding:8px 14px}
-  .stat{padding:4px 12px}
-}
-@media(hover:none){
-  .card-btn{padding:7px 12px;min-height:38px}
-  .filter-tab{min-height:40px}
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 120px;
+  text-align: center;
 }
 
-/* Mobile menu overlay */
-#mobileMenuOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,26,50,.65);align-items:flex-end}
-#mobileMenuOverlay.open{display:flex}
-.mobile-menu-sheet{background:var(--ivory);border-radius:var(--rl) var(--rl) 0 0;width:100%;padding:8px 0 32px;box-shadow:0 -8px 40px rgba(0,0,0,.2)}
-.mobile-menu-handle{width:40px;height:4px;background:var(--light-gray);border-radius:2px;margin:10px auto 18px}
-.mobile-menu-user{padding:14px 20px 16px;border-bottom:1px solid var(--light-gray);margin-bottom:8px}
-.mobile-menu-email{font-family:var(--font-b);font-size:.82rem;color:var(--warm-gray);margin-top:2px}
-.mobile-menu-btn{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;padding:13px 20px;font-family:var(--font-b);font-size:.92rem;color:var(--charcoal);cursor:pointer;transition:background .15s;text-align:left}
-.mobile-menu-btn:hover{background:var(--cream)}
-.mobile-menu-btn .menu-icon{font-size:1.1rem;width:20px;text-align:center}
-.mobile-menu-divider{height:1px;background:var(--light-gray);margin:8px 0}
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  opacity: .4;
+}
 
-/* Streak badge */
-.streak-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(212,149,42,.12);color:var(--amber);border:1px solid rgba(212,149,42,.3);border-radius:20px;padding:3px 10px;font-family:var(--font-b);font-size:.75rem;font-weight:600;flex-shrink:0}
+.empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
 
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.book-card{animation:fadeUp .28s ease both}
-.insight-card{animation:fadeUp .3s ease both}
+.empty-sub {
+  font-size: .88rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 260px;
+}
 
-/* ── Book search autocomplete ────────────────────────────── */
-.book-search-wrap{position:relative;margin-bottom:16px}
-.book-search-input{width:100%;border:1.5px solid var(--teal);border-radius:var(--r);padding:11px 14px 11px 38px;font-family:var(--font-b);font-size:.95rem;color:var(--charcoal);background:var(--ivory);outline:none}
-.book-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
-.book-search-spinner{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid var(--light-gray);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;display:none}
-.book-search-spinner.active{display:block}
-.book-search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--ivory);border:1.5px solid var(--light-gray);border-radius:var(--rl);box-shadow:0 8px 28px var(--shadow-md);z-index:200;max-height:320px;overflow-y:auto;display:none}
-.book-search-results.open{display:block}
-.book-search-result{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--light-gray)}
-.book-search-result:last-child{border-bottom:none}
-.book-search-result:hover{background:var(--cream)}
-.bsr-cover{width:36px;height:52px;object-fit:cover;border-radius:4px;border:1px solid var(--light-gray);flex-shrink:0;background:var(--parchment)}
-.bsr-cover-placeholder{width:36px;height:52px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-.bsr-info{flex:1;min-width:0}
-.bsr-title{font-family:var(--font-d);font-size:.88rem;font-weight:600;color:var(--charcoal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bsr-author{font-family:var(--font-b);font-size:.76rem;color:var(--warm-gray);margin-top:2px}
-.bsr-year{font-family:var(--font-b);font-size:.72rem;color:var(--teal);margin-top:1px}
-.book-search-no-results{padding:16px;text-align:center;font-family:var(--font-b);font-size:.84rem;color:var(--warm-gray);font-style:italic}
-.book-search-divider{display:flex;align-items:center;gap:10px;margin:12px 0 8px;font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray)}
-.book-search-divider::before,.book-search-divider::after{content:'';flex:1;height:1px;background:var(--light-gray)}
-/* ── Tags input ──────────────────────────────────────────── */
-.tags-input-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:7px 10px;background:var(--cream);min-height:42px;cursor:text;transition:border-color .2s}
-.tags-input-wrap:focus-within{border-color:var(--teal);background:var(--ivory)}
-.tag-chip{display:inline-flex;align-items:center;gap:4px;background:var(--teal-pale);color:var(--teal);border:1px solid rgba(42,122,111,.25);border-radius:20px;padding:2px 10px 2px 10px;font-family:var(--font-b);font-size:.76rem;font-weight:600;white-space:nowrap}
-.tag-chip-remove{background:none;border:none;color:var(--teal);cursor:pointer;font-size:.8rem;padding:0;line-height:1;opacity:.7}
-.tag-chip-remove:hover{opacity:1}
-.tags-input-field{border:none;background:none;outline:none;font-family:var(--font-b);font-size:.88rem;color:var(--charcoal);min-width:80px;flex:1}
-/* ── Quotes section ──────────────────────────────────────── */
-.quotes-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-.quote-item{display:flex;align-items:flex-start;gap:8px;background:var(--parchment);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:8px 12px}
-.quote-text{font-family:var(--font-s);font-style:italic;font-size:.9rem;color:var(--charcoal);flex:1;line-height:1.6}
-.quote-remove{background:none;border:none;color:var(--warm-gray);cursor:pointer;font-size:.9rem;padding:0;flex-shrink:0;opacity:.6}
-.quote-remove:hover{opacity:1;color:#dc2626}
-.quote-add-row{display:flex;gap:8px}
-.quote-add-input{flex:1;border:1.5px solid var(--light-gray);border-radius:var(--r);padding:8px 12px;font-family:var(--font-s);font-style:italic;font-size:.9rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border-color .2s}
-.quote-add-input:focus{border-color:var(--amber);background:var(--ivory)}
-.quote-add-btn{background:var(--amber);color:#fff;border:none;border-radius:var(--r);padding:8px 14px;font-family:var(--font-b);font-size:.8rem;font-weight:600;cursor:pointer;flex-shrink:0;transition:var(--tr)}
-.quote-add-btn:hover{background:var(--amber-lt)}
-/* ── 10-point rating ─────────────────────────────────────── */
-.rating-10-wrap{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.rating-10-btn{width:32px;height:32px;border-radius:6px;border:1.5px solid var(--light-gray);background:var(--cream);font-family:var(--font-b);font-size:.82rem;font-weight:600;color:var(--warm-gray);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center}
-.rating-10-btn:hover{border-color:var(--amber);color:var(--amber)}
-.rating-10-btn.active{background:var(--amber);border-color:var(--amber);color:#fff}
-.rating-10-clear{background:none;border:none;font-family:var(--font-b);font-size:.74rem;color:var(--warm-gray);cursor:pointer;text-decoration:underline;padding:0;margin-left:4px}
-/* ── Detail modal quotes ─────────────────────────────────── */
-.detail-quotes{margin-top:14px}
-.detail-quotes-label{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:8px}
-.detail-quote{font-family:var(--font-s);font-style:italic;font-size:.92rem;color:var(--charcoal);background:var(--parchment);border-left:3px solid var(--amber);padding:9px 14px;border-radius:0 var(--r) var(--r) 0;margin-bottom:6px;line-height:1.65}
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-2) 25%, var(--bg-3) 50%, var(--bg-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ─────────────────────────────────────────────────────────
+   SCAN / CONFIRM SCREEN
+   Single screen: camera → OCR results → confirm → save
+───────────────────────────────────────────────────────── */
+#scanScreen {
+  background: var(--bg);
+}
+
+.scan-header {
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.scan-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.scan-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Capture area */
+.capture-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-2);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .15s, background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.capture-area:hover, .capture-area.dragover {
+  border-color: var(--accent);
+  background: var(--accent-pale);
+}
+
+.capture-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.capture-icon { font-size: 2.2rem; line-height: 1; }
+.capture-title { font-size: .95rem; font-weight: 600; color: var(--text); }
+.capture-sub   { font-size: .8rem; color: var(--text-2); }
+
+.capture-preview {
+  display: none;
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: calc(var(--r-lg) - 2px);
+}
+
+.capture-preview.visible { display: block; }
+
+.capture-retake {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 3;
+  display: none;
+}
+
+.capture-retake.visible { display: block; }
+
+/* OCR state */
+.ocr-loading {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.ocr-loading.active { display: flex; }
+
+.ocr-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.ocr-loading-text {
+  font-size: .9rem;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* Confirm fields */
+.confirm-section {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.confirm-section.active { display: flex; }
+
+.confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  width: fit-content;
+}
+
+.confidence-badge.high   { background: var(--green-pale); color: var(--green); }
+.confidence-badge.medium { background: var(--amber-pale); color: var(--amber); }
+.confidence-badge.low    { background: var(--red-pale);   color: var(--red);   }
+
+.field-group { display: flex; flex-direction: column; gap: 5px; }
+
+.field-label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.amount-wrap { position: relative; }
+.amount-prefix {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  color: var(--text-2);
+  font-size: .95rem;
+  pointer-events: none;
+}
+.form-input.indented { padding-left: 26px; }
+
+/* Save bar */
+.save-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
+   DETAIL SHEET (slide up overlay)
+───────────────────────────────────────────────────────── */
+.sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,.45);
+  display: none;
+  align-items: flex-end;
+}
+
+.sheet-overlay.open { display: flex; }
+
+.sheet {
+  background: var(--bg);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-height: 85dvh;
+  max-height: 85vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
+}
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border-strong);
+  border-radius: 2px;
+  margin: 12px auto 20px;
+}
+
+.sheet-body { padding: 0 20px 20px; }
+
+.sheet-merchant {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -.02em;
+}
+
+.sheet-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.03em;
+  margin-bottom: 16px;
+}
+
+.sheet-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sheet-meta-item {}
+
+.sheet-meta-label {
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+
+.sheet-meta-val {
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sheet-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  background: var(--bg-2);
+}
+
+.sheet-ocr {
+  font-size: .8rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.sheet-ocr.visible { display: block; }
+
+.sheet-actions { display: flex; gap: 10px; }
+
+/* ─────────────────────────────────────────────────────────
+   TOAST
+───────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: max(80px, calc(env(safe-area-inset-bottom, 0px) + 80px));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─────────────────────────────────────────────────────────
+   MENU SHEET
+───────────────────────────────────────────────────────── */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 20px;
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: background .12s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-item:hover { background: var(--bg-2); }
+.menu-item .mi-icon { font-size: 1.15rem; width: 22px; text-align: center; flex-shrink: 0; }
+.menu-item.danger { color: var(--red); }
+.menu-divider { height: 1px; background: var(--border); margin: 6px 0; }
+
+/* ─────────────────────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+
+@media (min-width: 480px) {
+  .scan-body { max-width: 480px; margin: 0 auto; width: 100%; }
+  .save-bar  { max-width: 480px; margin: 0 auto; width: 100%; }
+}
   </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════════════
-     AUTH / LANDING SCREEN
-════════════════════════════════════════════════════════════ -->
-<div id="authScreen">
-  <nav class="landing-nav">
-    <div class="landing-nav-logo">
-      <span class="landing-nav-logo-icon">📚</span>
-      <span class="landing-nav-logo-text">ReadLog</span>
-    </div>
-    <div class="landing-nav-right">
-      <button class="landing-nav-signin" onclick="scrollToAuth()">Sign in</button>
-    </div>
-  </nav>
-
-  <div class="landing-scrollable" id="landingScrollable">
-    <!-- Hero -->
-    <div class="landing-hero">
-      <div class="landing-eyebrow">📖 Reading Journal &amp; Book Scanner</div>
-      <h1 class="landing-headline">Your books deserve<br><em>more than a shelf</em></h1>
-      <p class="landing-sub">Scan any cover, log your thoughts, track your reading goals. Every book you've ever read — beautifully organised and always with you.</p>
-
-      <div class="landing-scan-box">
-        <div class="landing-scan-box-top">
-          <div class="landing-scan-icon">📷</div>
-          <div>
-            <div class="landing-scan-title">Scan a book cover</div>
-            <div class="landing-scan-sub">AI reads the title, author &amp; more instantly</div>
-          </div>
-        </div>
-        <div class="landing-phase-label" id="ldPhaseLabel">ready to scan...</div>
-        <!-- Animated demo card -->
-        <div class="landing-demo-card">
-          <div class="landing-demo-header">
-            <div class="landing-demo-header-dot"></div>
-            <span class="landing-demo-header-text" id="ldPhaseText">scanning cover...</span>
-            <span class="landing-demo-header-badge" id="ldHeaderBadge">reading...</span>
-          </div>
-          <div class="landing-demo-body">
-            <div class="landing-demo-img">
-              <div class="landing-demo-spine">
-                <div style="width:32px;height:40px;background:rgba(42,122,111,.2);border-radius:3px;border:1px solid rgba(42,122,111,.3)"></div>
-                <div style="width:28px;height:3px;background:rgba(255,255,255,.1);border-radius:2px"></div>
-                <div style="width:22px;height:3px;background:rgba(255,255,255,.08);border-radius:2px"></div>
-              </div>
-              <div class="landing-demo-beam" id="ldBeam"></div>
-              <div class="landing-demo-corner tl"></div>
-              <div class="landing-demo-corner tr"></div>
-              <div class="landing-demo-corner bl"></div>
-              <div class="landing-demo-corner br"></div>
-            </div>
-            <div class="landing-demo-fields">
-              <div class="landing-demo-field" id="ldf0">
-                <div class="landing-demo-field-label">Title</div>
-                <div class="landing-demo-field-value" id="ldv0"></div>
-              </div>
-              <div class="landing-demo-field" id="ldf1">
-                <div class="landing-demo-field-label">Author</div>
-                <div class="landing-demo-field-value" id="ldv1"></div>
-              </div>
-              <div class="landing-demo-field" id="ldf2">
-                <div class="landing-demo-field-label">Genre · Year</div>
-                <div class="landing-demo-field-value" id="ldv2"></div>
-              </div>
-              <div class="landing-demo-field" id="ldf3">
-                <div class="landing-demo-field-label">Description</div>
-                <div class="landing-demo-field-value" id="ldv3" style="white-space:normal;font-size:.76rem"></div>
-              </div>
-              <div class="landing-demo-ai-pill" id="ldAiPill">✦ AI-filled</div>
-            </div>
-          </div>
-          <div class="landing-demo-actions" id="ldActions">
-            <button class="landing-demo-save">Save to Journal</button>
-            <button class="landing-demo-edit">Edit</button>
-          </div>
-        </div>
-        <button class="landing-scan-btn" onclick="scrollToAuth()">
-          📚 Start My Reading Journal
-        </button>
-        <div class="landing-scan-note">Free forever · No credit card</div>
+<!-- ══════════════════════════════════════════════════════
+     AUTH SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="authScreen" class="screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🧾</div>
+      <div>
+        <div class="auth-logo-name">SnapReceipt</div>
+        <div class="auth-logo-tag">Scan → Log → Done</div>
       </div>
     </div>
 
-    <!-- Proof strip -->
-    <div class="landing-proof">
-      <div class="landing-proof-item"><div class="landing-proof-dot"></div>AI book recognition</div>
-      <div class="landing-proof-item"><div class="landing-proof-dot"></div>Reading streak tracker</div>
-      <div class="landing-proof-item"><div class="landing-proof-dot"></div>Yearly goal progress</div>
-      <div class="landing-proof-item"><div class="landing-proof-dot"></div>Genre insights</div>
+    <h1 class="auth-heading">Sign in to continue</h1>
+    <p class="auth-sub">Your receipts are stored securely to your account.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabSignin"  onclick="authTab('signin')">Sign in</button>
+      <button class="auth-tab"        id="tabSignup"  onclick="authTab('signup')">Create account</button>
+      <button class="auth-tab"        id="tabReset"   onclick="authTab('reset')">Reset</button>
     </div>
 
-    <!-- Landing body -->
-    <div class="landing-body">
-
-      <!-- Why ReadLog -->
-      <div class="landing-section">
-        <div class="landing-section-label">Why ReadLog</div>
-        <h2 class="landing-section-title">Remember every book you've read</h2>
-        <p class="landing-section-body">Most readers forget 80% of what they've read within a year. ReadLog gives every book a permanent home — your rating, your notes, your memories — so your reading life becomes a story you can look back on.</p>
-
-        <div class="landing-steps">
-          <div class="landing-step">
-            <div class="landing-step-num">1</div>
-            <div class="landing-step-body">
-              <div class="landing-step-title">Point your camera at any book</div>
-              <div class="landing-step-text">Our AI reads the cover instantly — title, author, genre, publication year, even a synopsis. No typing needed.</div>
-            </div>
-          </div>
-          <div class="landing-step">
-            <div class="landing-step-num">2</div>
-            <div class="landing-step-body">
-              <div class="landing-step-title">Rate it and jot your thoughts</div>
-              <div class="landing-step-text">Give it a star rating, write a review or just a single memorable quote. Your future self will thank you.</div>
-            </div>
-          </div>
-          <div class="landing-step">
-            <div class="landing-step-num">3</div>
-            <div class="landing-step-body">
-              <div class="landing-step-title">Watch your reading life come alive</div>
-              <div class="landing-step-text">Track your yearly goal, maintain a reading streak, discover your favourite genres and authors through beautiful insights.</div>
-            </div>
-          </div>
-          <div class="landing-step">
-            <div class="landing-step-num">4</div>
-            <div class="landing-step-body">
-              <div class="landing-step-title">Never lose a recommendation again</div>
-              <div class="landing-step-text">Add books to your Want to Read list the moment someone mentions one. Scan it, save it, read it when you're ready.</div>
-            </div>
-          </div>
-        </div>
+    <!-- Sign in -->
+    <div id="formSignin">
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="siEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
       </div>
-
-    </div>
-
-    <!-- Bottom CTA -->
-    <div class="landing-bottom-cta">
-      <div class="landing-bottom-title">Ready to remember everything you read?</div>
-      <p class="landing-bottom-sub">Join thousands of readers building their personal library. Your first 50 books are always free.</p>
-      <button class="landing-bottom-btn" onclick="scrollToAuth()">📚 Create My Reading Journal</button>
-      <div class="landing-bottom-note">No credit card required · Instant access</div>
-    </div>
-
-    <!-- Auth panel (mobile: below hero; desktop: right column) -->
-    <div class="auth-panel" id="authPanel">
-      <div class="auth-panel-logo">
-        <span class="auth-panel-logo-icon">📚</span>
-        <div class="auth-panel-logo-title">ReadLog</div>
-        <div class="auth-panel-logo-sub">Your Reading Journal</div>
+      <div class="form-field">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="siPass"  type="password" placeholder="Your password" autocomplete="current-password"/>
       </div>
-      <div class="auth-card">
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="tabSignup" onclick="switchTab('signup')">Create account</button>
-          <button class="auth-tab" id="tabSignin" onclick="switchTab('signin')">Sign in</button>
-        </div>
-
-        <!-- Sign up -->
-        <div id="formSignup">
-          <div class="auth-form-group">
-            <label>Email address</label>
-            <input type="email" id="suEmail" placeholder="you@example.com" autocomplete="email"/>
-          </div>
-          <div class="auth-form-group">
-            <label>Password</label>
-            <input type="password" id="suPass" placeholder="Minimum 6 characters" autocomplete="new-password"/>
-          </div>
-          <button class="auth-btn-primary" id="btnSignup" onclick="doSignup()">Create my journal →</button>
-          <div class="auth-msg" id="suMsg"></div>
-          <div class="auth-footer">Free forever · No credit card required</div>
-        </div>
-
-        <!-- Sign in -->
-        <div id="formSignin" style="display:none">
-          <div class="auth-form-group">
-            <label>Email address</label>
-            <input type="email" id="siEmail" placeholder="you@example.com" autocomplete="email"/>
-          </div>
-          <div class="auth-form-group">
-            <label>Password</label>
-            <input type="password" id="siPass" placeholder="Your password" autocomplete="current-password"/>
-          </div>
-          <button class="auth-btn-primary" id="btnSignin" onclick="doSignin()">Sign in →</button>
-          <div class="auth-msg" id="siMsg"></div>
-          <div style="text-align:center;margin-top:12px">
-            <button onclick="switchTab('reset')" style="background:none;border:none;font-family:var(--font-b);font-size:.8rem;color:var(--teal);cursor:pointer;text-decoration:underline">Forgot your password?</button>
-          </div>
-          <div class="auth-footer">Welcome back, reader 📖</div>
-        </div>
-
-        <!-- Reset password -->
-        <div id="formReset" style="display:none">
-          <p style="font-family:var(--font-b);font-size:.85rem;color:var(--warm-gray);margin-bottom:16px;line-height:1.6">Enter your email and we'll send you a link to reset your password.</p>
-          <div class="auth-form-group">
-            <label>Email address</label>
-            <input type="email" id="resetEmail" placeholder="you@example.com" autocomplete="email"/>
-          </div>
-          <button class="auth-btn-primary" id="btnReset" onclick="doResetPassword()">Send reset link →</button>
-          <div class="auth-msg" id="resetMsg"></div>
-          <div style="text-align:center;margin-top:12px">
-            <button onclick="switchTab('signin')" style="background:none;border:none;font-family:var(--font-b);font-size:.8rem;color:var(--teal);cursor:pointer;text-decoration:underline">Back to sign in</button>
-          </div>
-        </div>
+      <button class="btn btn-primary btn-full" id="btnSignin" onclick="doSignin()">Sign in →</button>
+      <div class="auth-msg" id="siMsg"></div>
+      <div class="auth-footer-link">
+        <button onclick="authTab('reset')">Forgot password?</button>
       </div>
     </div>
-  </div><!-- /landing-scrollable -->
-</div><!-- /authScreen -->
 
-
-<!-- ════════════════════════════════════════════════════════════
-     MAIN APP
-════════════════════════════════════════════════════════════ -->
-<div id="appShell">
-
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <a class="logo" href="#">
-        <span class="logo-icon">📚</span>
-        <span class="logo-title">ReadLog</span>
-        <span class="logo-sub">Journal</span>
-      </a>
-      <div class="header-spacer"></div>
-      <div class="header-actions">
-        <span class="scan-hint" id="streakBadge"></span>
-        <button class="btn-add-subtle" onclick="openAddModal()">+ Add manually</button>
-        <button class="btn-scan-primary" onclick="openScanModal()">
-          <span>📷</span>
-          <span class="scan-label-full">Scan book</span>
-          <span class="scan-label-short">Scan</span>
-        </button>
-        <button class="btn-hamburger" onclick="openMobileMenu()">☰</button>
+    <!-- Sign up -->
+    <div id="formSignup" class="hidden">
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="suEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
       </div>
+      <div class="form-field">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="suPass" type="password" placeholder="Min. 6 characters" autocomplete="new-password"/>
+      </div>
+      <button class="btn btn-primary btn-full" id="btnSignup" onclick="doSignup()">Create account →</button>
+      <div class="auth-msg" id="suMsg"></div>
+    </div>
+
+    <!-- Reset -->
+    <div id="formReset" class="hidden">
+      <p style="font-size:.88rem;color:var(--text-2);margin-bottom:16px;line-height:1.5">
+        Enter your email and we'll send a reset link.
+      </p>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="rstEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <button class="btn btn-primary btn-full" id="btnReset" onclick="doReset()">Send reset link →</button>
+      <div class="auth-msg" id="rstMsg"></div>
+      <div class="auth-footer-link">
+        <button onclick="authTab('signin')">← Back to sign in</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HOME SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="homeScreen" class="screen">
+  <header class="home-header">
+    <div class="home-logo">
+      <div class="home-logo-icon">🧾</div>
+      SnapReceipt
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" title="Export CSV" onclick="exportCSV()">⬇</button>
+      <button class="btn-icon" title="Menu" onclick="openMenu()">⋯</button>
     </div>
   </header>
 
-  <!-- Stats bar -->
-  <div class="stats-bar">
-    <div class="stats-inner">
-      <div class="stat">
-        <div class="stat-num" id="statTotal">0</div>
-        <div class="stat-label">Books Logged</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num" id="statRead">0</div>
-        <div class="stat-label">Finished</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num" id="statReading">0</div>
-        <div class="stat-label">Reading Now</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num" id="statWant">0</div>
-        <div class="stat-label">Want to Read</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num" id="statStreak">0</div>
-        <div class="stat-label">Day Streak 🔥</div>
-      </div>
+  <!-- Summary -->
+  <div class="summary-strip" id="summaryStrip">
+    <div class="summary-item">
+      <div class="summary-val" id="sumTotal">0</div>
+      <div class="summary-key">Receipts</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-val accent" id="sumMonth">£0.00</div>
+      <div class="summary-key">This month</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-val accent" id="sumYear">£0.00</div>
+      <div class="summary-key">This tax year</div>
     </div>
   </div>
 
-  <!-- Onboarding hint -->
-  <div id="onboardingHint" style="display:none">
-    <div class="onboarding-inner">
-      <span class="onboarding-icon">👋</span>
-      <div class="onboarding-text">
-        <strong>Welcome to ReadLog!</strong> Start by scanning a book cover — tap <em>Scan book</em> above and point your camera at any book. Or add your first book manually.
-      </div>
-      <button class="onboarding-close" onclick="closeOnboarding()">✕</button>
-    </div>
-  </div>
+  <!-- Receipt list / empty state -->
+  <div id="receiptList" class="receipt-list"></div>
 
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <div class="toolbar-inner">
-      <div class="toolbar-filters">
-        <div class="filter-tabs" id="filterTabs">
-          <button class="filter-tab active" data-filter="all" onclick="setFilter('all',this)">All books</button>
-          <button class="filter-tab" data-filter="reading" onclick="setFilter('reading',this)">📖 Reading</button>
-          <button class="filter-tab" data-filter="finished" onclick="setFilter('finished',this)">✅ Finished</button>
-          <button class="filter-tab" data-filter="want" onclick="setFilter('want',this)">🔖 Want to read</button>
-          <button class="filter-tab" data-filter="abandoned" onclick="setFilter('abandoned',this)">🚫 Abandoned</button>
-          <button class="filter-tab" data-filter="insights" onclick="setFilter('insights',this)">📊 Insights</button>
-        </div>
-      </div>
-      <div class="toolbar-controls" id="toolbarControls">
-        <div class="sort-wrap">
-          <label>Sort:</label>
-          <select class="sort-select" id="sortSelect" onchange="renderBooks()">
-            <option value="recent">Recently added</option>
-            <option value="title">Title A–Z</option>
-            <option value="author">Author A–Z</option>
-            <option value="rating">Highest rated</option>
-            <option value="year">Year (newest)</option>
-          </select>
-        </div>
-        <div class="view-toggle">
-          <button class="view-btn active" id="viewGrid" onclick="setView('grid')">⊞</button>
-          <button class="view-btn" id="viewList" onclick="setView('list')">☰</button>
-        </div>
-      </div>
-      <div class="toolbar-search" id="toolbarSearch">
-        <div class="search-input-wrap">
-          <span class="search-icon">🔍</span>
-          <input class="search-input" id="searchInput" type="search" placeholder="Search by title, author or genre…" oninput="renderBooks()"/>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main -->
-  <main class="main-content" id="mainContent">
-    <!-- Rendered dynamically -->
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <span>© 2025 ReadLog</span>
-    <span class="footer-sep">·</span>
-    <a class="footer-link" href="#">Privacy</a>
-    <span class="footer-sep">·</span>
-    <a class="footer-link" href="#">Terms</a>
-    <span class="footer-sep">·</span>
-    <a class="footer-link" href="#">Contact</a>
-  </footer>
+  <!-- Scan FAB -->
+  <button class="scan-fab" onclick="openScan()">
+    <span>📷</span> Scan Receipt
+  </button>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     MODALS
-════════════════════════════════════════════════════════════ -->
 
-<!-- Scan Modal -->
-<div class="modal-overlay" id="scanModal">
-  <div class="modal" style="max-width:520px">
-    <div class="modal-header">
-      <div class="modal-title">📷 Scan Book Cover</div>
-      <button class="modal-close" onclick="closeModal('scanModal')">✕</button>
+<!-- ══════════════════════════════════════════════════════
+     SCAN / CONFIRM SCREEN
+════════════════════════════════════════════════════════ -->
+<div id="scanScreen" class="screen">
+  <header class="scan-header">
+    <button class="btn btn-secondary btn-sm" onclick="goHome()">← Back</button>
+    <span class="scan-title" id="scanTitle">Scan Receipt</span>
+    <div style="width:64px"></div><!-- spacer -->
+  </header>
+
+  <div class="scan-body">
+    <!-- Capture -->
+    <div>
+      <div class="capture-area" id="captureArea">
+        <input type="file" id="captureInput"
+          accept="image/*,image/heic,image/heif"
+          onchange="onImageSelected(this)"/>
+        <img class="capture-preview" id="capturePreview" alt="Receipt"/>
+        <button class="capture-retake" id="captureRetake" onclick="retakePhoto(event)">Retake ✕</button>
+        <span class="capture-icon">📷</span>
+        <span class="capture-title">Take photo or choose image</span>
+        <span class="capture-sub">Camera or gallery — any format</span>
+      </div>
     </div>
-    <div class="modal-body" id="scanModalBody">
-      <p class="scan-instruction">Point your camera at the front cover or spine of any book. Our AI will recognise the title, author, genre and more.</p>
-      <div class="scan-panels" id="scanPanels">
-        <div class="scan-panel">
-          <div class="scan-panel-title">Front cover</div>
-          <div class="scan-upload-area" id="scanArea1">
-            <input type="file" id="scanFile1" accept="image/*,image/heic,image/heif" onchange="handleScanFile(this,1)"/>
-            <div class="scan-upload-inner">
-              <span class="scan-upload-icon">📸</span>
-              <span class="scan-upload-title">Take photo or choose image</span>
-              <span class="scan-upload-sub">camera or gallery</span>
-            </div>
-            <img class="scan-thumb" id="scanThumb1"/>
+
+    <!-- OCR loading -->
+    <div class="ocr-loading" id="ocrLoading">
+      <div class="ocr-spinner"></div>
+      <div class="ocr-loading-text">Reading receipt…</div>
+    </div>
+
+    <!-- Confirm fields -->
+    <div class="confirm-section" id="confirmSection">
+      <div id="confidenceBadge"></div>
+
+      <div class="field-group">
+        <label class="field-label">Merchant / Supplier *</label>
+        <input class="form-input" id="cfMerchant" placeholder="e.g. Tesco, Screwfix, AWS"/>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Total Amount *</label>
+          <div class="amount-wrap">
+            <span class="amount-prefix">£</span>
+            <input class="form-input indented" id="cfAmount" type="number"
+              placeholder="0.00" step="0.01" min="0" inputmode="decimal"/>
           </div>
-          <button class="scan-retake-link" id="retake1" style="display:none" onclick="retakeScan(1)">Remove &amp; retake</button>
         </div>
-        <div class="scan-panel">
-          <div class="scan-panel-title">Spine (optional)</div>
-          <div class="scan-upload-area" id="scanArea2">
-            <input type="file" id="scanFile2" accept="image/*,image/heic,image/heif" onchange="handleScanFile(this,2)"/>
-            <div class="scan-upload-inner">
-              <span class="scan-upload-icon">📚</span>
-              <span class="scan-upload-title">Add spine</span>
-              <span class="scan-upload-sub">helps with accuracy</span>
-            </div>
-            <img class="scan-thumb" id="scanThumb2"/>
-          </div>
-          <button class="scan-retake-link" id="retake2" style="display:none" onclick="retakeScan(2)">Remove &amp; retake</button>
-        </div>
-      </div>
-      <div id="scanResults" style="display:none"></div>
-    </div>
-    <div class="modal-footer scan-modal-footer" id="scanModalFooter">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('scanModal')">Cancel</button>
-      <button class="btn btn-primary btn-sm" id="btnAnalyse" onclick="doScan()" disabled>✦ Analyse with AI</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add / Edit Modal -->
-<div class="modal-overlay" id="addModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="addModalTitle">Add Book</div>
-      <button class="modal-close" onclick="closeModal('addModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="editId"/>
-      <input type="hidden" id="fCoverData"/>
-      <input type="hidden" id="fExternalId"/>
-
-      <!-- Book search -->
-      <div class="book-search-wrap" id="bookSearchWrap">
-        <span class="book-search-icon">🔍</span>
-        <input class="book-search-input" id="bookSearchInput" type="search"
-          placeholder="Search by title or author to auto-fill…"
-          autocomplete="off" oninput="onBookSearch(this.value)"/>
-        <div class="book-search-spinner" id="bookSearchSpinner"></div>
-        <div class="book-search-results" id="bookSearchResults"></div>
-      </div>
-      <div class="book-search-divider">or fill in manually</div>
-
-      <div class="form-row two-col">
-        <div class="form-group" style="grid-column:1/-1">
-          <label>Title *</label>
-          <input class="form-input" id="fTitle" placeholder="Book title" required/>
-        </div>
-        <div class="form-group" style="grid-column:1/-1">
-          <label>Author *</label>
-          <input class="form-input" id="fAuthor" placeholder="Author name"/>
-        </div>
-      </div>
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>Genre</label>
-          <select class="form-select" id="fGenre">
-            <option value="">Select genre</option>
-            <option>Fiction</option><option>Non-Fiction</option><option>Mystery / Thriller</option>
-            <option>Science Fiction</option><option>Fantasy</option><option>Biography</option>
-            <option>History</option><option>Self-Help</option><option>Romance</option>
-            <option>Horror</option><option>Literary Fiction</option><option>Business</option>
-            <option>Science</option><option>Travel</option><option>Poetry</option><option>Other</option>
+        <div class="field-group">
+          <label class="field-label">Currency</label>
+          <select class="form-input" id="cfCurrency">
+            <option value="GBP" selected>GBP £</option>
+            <option value="USD">USD $</option>
+            <option value="EUR">EUR €</option>
+            <option value="OTHER">Other</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Year Published</label>
-          <input class="form-input" id="fYear" type="number" placeholder="e.g. 2024" min="1000" max="2100"/>
-        </div>
-      </div>
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>Status</label>
-          <select class="form-select" id="fStatus">
-            <option value="finished">Finished</option>
-            <option value="reading">Reading now</option>
-            <option value="want">Want to read</option>
-            <option value="abandoned">Abandoned</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Pages</label>
-          <input class="form-input" id="fPages" type="number" placeholder="e.g. 320" min="1"/>
-        </div>
-      </div>
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>Start date</label>
-          <input class="form-input" id="fStartDate" type="date"/>
-        </div>
-        <div class="form-group">
-          <label>Finish date</label>
-          <input class="form-input" id="fDate" type="date"/>
-        </div>
       </div>
 
-      <div class="form-group" style="margin-bottom:14px">
-        <label>My Rating <span style="font-weight:400;font-size:.78rem;color:var(--warm-gray)">(out of 10)</span></label>
-        <div class="rating-10-wrap" id="rating10Wrap">
-          <button type="button" class="rating-10-btn" data-val="1" onclick="setRating10(1)">1</button>
-          <button type="button" class="rating-10-btn" data-val="2" onclick="setRating10(2)">2</button>
-          <button type="button" class="rating-10-btn" data-val="3" onclick="setRating10(3)">3</button>
-          <button type="button" class="rating-10-btn" data-val="4" onclick="setRating10(4)">4</button>
-          <button type="button" class="rating-10-btn" data-val="5" onclick="setRating10(5)">5</button>
-          <button type="button" class="rating-10-btn" data-val="6" onclick="setRating10(6)">6</button>
-          <button type="button" class="rating-10-btn" data-val="7" onclick="setRating10(7)">7</button>
-          <button type="button" class="rating-10-btn" data-val="8" onclick="setRating10(8)">8</button>
-          <button type="button" class="rating-10-btn" data-val="9" onclick="setRating10(9)">9</button>
-          <button type="button" class="rating-10-btn" data-val="10" onclick="setRating10(10)">10</button>
-          <button type="button" class="rating-10-clear" onclick="setRating10(0)">Clear</button>
-        </div>
+      <div class="field-group">
+        <label class="field-label">Date</label>
+        <input class="form-input" id="cfDate" type="date"/>
       </div>
 
-      <div class="form-group" style="margin-bottom:14px">
-        <label>Tags</label>
-        <div class="tags-input-wrap" id="tagsWrap" onclick="document.getElementById('tagsField').focus()">
-          <div id="tagChips"></div>
-          <input class="tags-input-field" id="tagsField" placeholder="Add tag, press Enter…"
-            onkeydown="onTagKeydown(event)"/>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:14px">
-        <label>Review / Notes</label>
-        <textarea class="form-textarea" id="fNotes" placeholder="Your thoughts, what you loved or hated…"></textarea>
-      </div>
-
-      <div class="form-group" style="margin-bottom:14px">
-        <label>Quotes &amp; Highlights</label>
-        <div class="quotes-list" id="quotesList"></div>
-        <div class="quote-add-row">
-          <input class="quote-add-input" id="quoteInput" placeholder="Add a memorable quote…"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();addQuote()}"/>
-          <button type="button" class="quote-add-btn" onclick="addQuote()">Add</button>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:14px">
-        <label>Cover photo</label>
-        <div class="photo-drop" id="coverDrop">
-          <input type="file" id="coverFile" accept="image/*,image/heic,image/heif" onchange="handleCoverFile(this)"/>
-          <div class="photo-drop-inner"><span>📖</span><span>Upload cover photo</span></div>
-          <img class="photo-drop-preview" id="coverPreview"/>
-        </div>
-        <button class="photo-clear-btn" id="coverClearBtn" style="display:none" onclick="clearCover()">Remove photo</button>
+      <div class="field-group">
+        <label class="field-label">Notes <span style="font-weight:400;text-transform:none;font-size:.78rem">(optional)</span></label>
+        <input class="form-input" id="cfNotes" placeholder="Business purpose, project, etc."/>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('addModal')">Cancel</button>
-      <button class="btn btn-danger btn-sm" id="btnDeleteBook" style="display:none;margin-right:auto" onclick="deleteCurrentBook()">Delete</button>
-      <button class="btn btn-primary btn-sm" id="btnSaveBook" onclick="saveBook()">Save to Journal</button>
+  </div>
+
+  <!-- Save bar -->
+  <div class="save-bar" id="saveBar" style="display:none">
+    <button class="btn btn-secondary" style="flex:0 0 auto" onclick="goHome()">Cancel</button>
+    <button class="btn btn-primary btn-full" id="btnSave" onclick="saveReceipt()">
+      Save Receipt
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     DETAIL SHEET
+════════════════════════════════════════════════════════ -->
+<div class="sheet-overlay" id="detailSheet" onclick="closeDetail(event)">
+  <div class="sheet" id="detailSheetInner">
+    <div class="sheet-handle"></div>
+    <div class="sheet-body" id="detailBody"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU SHEET
+════════════════════════════════════════════════════════ -->
+<div class="sheet-overlay" id="menuSheet" onclick="closeMenu(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <button class="menu-item" onclick="openScan();closeMenuNow()">
+      <span class="mi-icon">📷</span> Scan new receipt
+    </button>
+    <button class="menu-item" onclick="exportCSV();closeMenuNow()">
+      <span class="mi-icon">⬇</span> Export CSV
+    </button>
+    <div class="menu-divider"></div>
+    <button class="menu-item" id="menuUserBtn" style="cursor:default;color:var(--text-2);font-size:.85rem">
+      <span class="mi-icon">👤</span> <span id="menuEmail">—</span>
+    </button>
+    <button class="menu-item danger" onclick="doSignout()">
+      <span class="mi-icon">→</span> Sign out
+    </button>
+  </div>
+</div>
+
+
+<!-- Reset password modal (triggered by email link) -->
+<div class="sheet-overlay" id="newPassSheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-body">
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px">Set new password</div>
+      <p style="font-size:.88rem;color:var(--text-2);margin-bottom:20px;line-height:1.5">Choose a new password for your account.</p>
+      <div class="form-field">
+        <label class="form-label">New password</label>
+        <input class="form-input" id="npPass" type="password" placeholder="Min. 6 characters" autocomplete="new-password"/>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Confirm password</label>
+        <input class="form-input" id="npConfirm" type="password" placeholder="Repeat password" autocomplete="new-password"/>
+      </div>
+      <div class="auth-msg" id="npMsg"></div>
+      <button class="btn btn-primary btn-full" style="margin-top:8px" id="btnNewPass" onclick="doSetPassword()">
+        Update password →
+      </button>
     </div>
   </div>
 </div>
 
-<!-- Detail Modal -->
-<div class="modal-overlay" id="detailModal">
-  <div class="modal" id="detailModalInner">
-    <div class="modal-header">
-      <div class="modal-title" id="detailModalTitle">Book Details</div>
-      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
-    </div>
-    <div class="modal-body" id="detailBody"></div>
-    <div class="modal-footer detail-footer">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('detailModal')">Close</button>
-      <button class="btn btn-primary btn-sm" id="btnEditFromDetail" onclick="editFromDetail()">Edit</button>
-    </div>
-  </div>
-</div>
 
-<!-- Reset Password Modal -->
-<div class="modal-overlay" id="resetModal">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-header">
-      <div class="modal-title">🔑 Reset your password</div>
-      <button class="modal-close" onclick="closeModal('resetModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-family:var(--font-b);font-size:.88rem;color:var(--warm-gray);margin-bottom:18px;line-height:1.65">Enter your new password below.</p>
-      <div class="auth-form-group">
-        <label>New password</label>
-        <input type="password" id="newPassInput" placeholder="Minimum 6 characters" autocomplete="new-password"/>
-      </div>
-      <div class="auth-form-group">
-        <label>Confirm password</label>
-        <input type="password" id="newPassConfirm" placeholder="Repeat password" autocomplete="new-password"/>
-      </div>
-      <div class="auth-msg" id="resetModalMsg"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('resetModal')">Cancel</button>
-      <button class="btn btn-primary btn-sm" id="btnSetNewPass" onclick="doSetNewPassword()">Set new password →</button>
-    </div>
-  </div>
-</div>
-
-<!-- Mobile menu -->
-<div id="mobileMenuOverlay">
-  <div class="mobile-menu-sheet">
-    <div class="mobile-menu-handle"></div>
-    <div class="mobile-menu-user">
-      <div style="font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--navy)">My Library</div>
-      <div class="mobile-menu-email" id="menuUserEmail"></div>
-    </div>
-    <button class="mobile-menu-btn" onclick="openScanModal();closeMobileMenu()"><span class="menu-icon">📷</span>Scan book cover</button>
-    <button class="mobile-menu-btn" onclick="openAddModal();closeMobileMenu()"><span class="menu-icon">✏️</span>Add manually</button>
-    <div class="mobile-menu-divider"></div>
-    <button class="mobile-menu-btn" onclick="setFilter('all',null);closeMobileMenu()"><span class="menu-icon">📚</span>All books</button>
-    <button class="mobile-menu-btn" onclick="setFilter('insights',null);closeMobileMenu()"><span class="menu-icon">📊</span>Insights</button>
-    <div class="mobile-menu-divider"></div>
-    <button class="mobile-menu-btn" onclick="doSignout();closeMobileMenu()"><span class="menu-icon">👋</span>Sign out</button>
-  </div>
-</div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- ════════════════════════════════════════════════════════════
-     SUPABASE + APP LOGIC
-════════════════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════
+     APP LOGIC
+════════════════════════════════════════════════════════ -->
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-/* ── Supabase config ─────────────────────────────────────────
-   Replace the two values below.
-   Supabase Dashboard → Settings → API
-   ──────────────────────────────────────────────────────────── */
+/* ─── CONFIG — fill in before deploying ───────────────────
+   Supabase: Dashboard → Settings → API
+   Worker:   your new Cloudflare Worker URL               */
+
 const SUPABASE_URL = 'https://bkvjhqmtraeovgjptfki.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrdmpocW10cmFlb3ZnanB0ZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NDI1NzAsImV4cCI6MjA5MDAxODU3MH0.pFgT8XpjYRM-frxtbyupcRW7VGOcb13044epFb0zVSM';
 const WORKER_URL        = 'https://readlog.james-weld.workers.dev';
 
 
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ── State ───────────────────────────────────────────────── */
-window._currentUser   = null;
-window._books         = [];
-window._currentFilter = 'all';
-window._currentView   = 'grid';
-window._editingId     = null;
-window._scanImages    = {1: null, 2: null};
-window._currentRating = 0;
-window._detailId      = null;
-window._currentTags   = [];
-window._currentQuotes = [];
-window._searchCache   = {};
-window._searchTimer   = null;
-window._goalCache     = null;
+/* ─── STATE ──────────────────────────────────────────────── */
+let _user      = null;
+let _receipts  = [];
+let _imageB64  = null;   // base64 of scanned image (for save)
+let _editId    = null;   // non-null when editing existing receipt
+let _detailId  = null;
 
-/* ── Auth state listener ─────────────────────────────────── */
-supabase.auth.onAuthStateChange((_event, session) => {
-  // Intercept password recovery — show reset modal instead of logging in
-  if (_event === 'PASSWORD_RECOVERY') {
-    openModal('resetModal');
+/* ─── AUTH STATE ─────────────────────────────────────────── */
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    document.getElementById('newPassSheet').classList.add('open');
     return;
   }
-  const user = session?.user ?? null;
-  window._currentUser = user;
-  if (user) {
-    document.getElementById('authScreen').classList.add('hidden');
-    document.getElementById('appShell').classList.add('visible');
-    document.getElementById('menuUserEmail').textContent = user.email || '';
-    loadBooks();
-    window.dispatchEvent(new Event('rl:authed'));
+  _user = session?.user ?? null;
+  if (_user) {
+    document.getElementById('menuEmail').textContent = _user.email || '';
+    show('homeScreen');
+    loadReceipts();
   } else {
-    document.getElementById('authScreen').classList.remove('hidden');
-    document.getElementById('appShell').classList.remove('visible');
-    window._books = [];
-    renderAll();
+    show('authScreen');
+    _receipts = [];
   }
 });
 
-/* ── Auth functions ──────────────────────────────────────── */
-window.doSignup = async () => {
-  const email = document.getElementById('suEmail').value.trim();
-  const pass  = document.getElementById('suPass').value;
-  const msg   = document.getElementById('suMsg');
-  const btn   = document.getElementById('btnSignup');
-  msg.className = 'auth-msg';
-  if (!email || !pass) { msg.className='auth-msg err'; msg.textContent='Please fill in both fields.'; return; }
-  btn.disabled = true; btn.textContent = 'Creating account…';
-  try {
-    const { error } = await supabase.auth.signUp({ email, password: pass });
-    if (error) throw error;
-    // Send welcome email via Worker (fire-and-forget)
-    fetch(`${WORKER_URL}/email`, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ type: 'welcome', to: email }),
-    }).catch(() => {});
-    msg.className='auth-msg ok';
-    msg.textContent='Account created! Check your email to confirm, then sign in.';
-  } catch(e) {
-    msg.className='auth-msg err'; msg.textContent=friendlyAuthError(e);
-  } finally { btn.disabled=false; btn.textContent='Create my journal →'; }
+/* ─── AUTH FUNCTIONS ─────────────────────────────────────── */
+window.authTab = (tab) => {
+  ['signin','signup','reset'].forEach(t => {
+    document.getElementById('form' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('hidden', t !== tab);
+    document.getElementById('tab'  + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+  });
 };
 
 window.doSignin = async () => {
-  const email = document.getElementById('siEmail').value.trim();
-  const pass  = document.getElementById('siPass').value;
-  const msg   = document.getElementById('siMsg');
-  const btn   = document.getElementById('btnSignin');
-  msg.className='auth-msg';
-  if (!email || !pass) { msg.className='auth-msg err'; msg.textContent='Please fill in both fields.'; return; }
-  btn.disabled=true; btn.textContent='Signing in…';
-  try {
-    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
-    if (error) throw error;
-  } catch(e) {
-    msg.className='auth-msg err'; msg.textContent=friendlyAuthError(e);
-  } finally { btn.disabled=false; btn.textContent='Sign in →'; }
-};
-
-window.doSignout = async () => { await supabase.auth.signOut(); };
-
-window.doResetPassword = async () => {
-  const email = document.getElementById('resetEmail').value.trim();
-  const msg   = document.getElementById('resetMsg');
-  const btn   = document.getElementById('btnReset');
+  const email = v('siEmail'), pass = v('siPass');
+  const msg = el('siMsg'), btn = el('btnSignin');
   msg.className = 'auth-msg';
-  if (!email) { msg.className='auth-msg err'; msg.textContent='Please enter your email address.'; return; }
-  btn.disabled=true; btn.textContent='Sending…';
-  try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://readlog.co.uk',
-    });
-    if (error) throw error;
-    msg.className='auth-msg ok';
-    msg.textContent='Reset link sent! Check your email.';
-  } catch(e) {
-    msg.className='auth-msg err'; msg.textContent=e.message||'Something went wrong.';
-  } finally { btn.disabled=false; btn.textContent='Send reset link →'; }
+  if (!email || !pass) return setMsg(msg, 'err', 'Please fill in both fields.');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) setMsg(msg, 'err', friendlyErr(error));
+  btn.disabled = false; btn.textContent = 'Sign in →';
 };
 
-function friendlyAuthError(e) {
-  const msg = e.message || '';
-  if (msg.includes('already registered') || msg.includes('already exists')) return 'That email is already registered. Try signing in.';
-  if (msg.includes('Invalid login') || msg.includes('Invalid email') || msg.includes('invalid_credentials')) return 'Email or password is incorrect.';
-  if (msg.includes('Password should')) return 'Password must be at least 6 characters.';
-  if (msg.includes('Email not confirmed')) return 'Please confirm your email first — check your inbox.';
-  if (msg.includes('rate limit')) return 'Too many attempts. Please wait a minute and try again.';
-  return msg || 'Something went wrong. Please try again.';
-}
-
-window.switchTab = (tab) => {
-  document.getElementById('formSignup').style.display = tab==='signup'?'':'none';
-  document.getElementById('formSignin').style.display = tab==='signin'?'':'none';
-  document.getElementById('formReset').style.display  = tab==='reset'?'':'none';
-  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
-  document.getElementById('tabSignin').classList.toggle('active', tab==='signin');
+window.doSignup = async () => {
+  const email = v('suEmail'), pass = v('suPass');
+  const msg = el('suMsg'), btn = el('btnSignup');
+  msg.className = 'auth-msg';
+  if (!email || !pass) return setMsg(msg, 'err', 'Please fill in both fields.');
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  const { error } = await sb.auth.signUp({ email, password: pass });
+  if (error) setMsg(msg, 'err', friendlyErr(error));
+  else       setMsg(msg, 'ok',  'Account created! Check your email to confirm.');
+  btn.disabled = false; btn.textContent = 'Create account →';
 };
 
-window.scrollToAuth = () => {
-  const panel = document.getElementById('authPanel');
-  if (window.innerWidth < 700) panel.scrollIntoView({behavior:'smooth'});
-  else { switchTab('signup'); }
-};
-
-/* ── Supabase DB ─────────────────────────────────────────── */
-async function loadBooks() {
-  if (!window._currentUser) return;
-  try {
-    const { data, error } = await supabase
-      .from('books')
-      .select('*')
-      .eq('user_id', window._currentUser.id)
-      .order('created_at', { ascending: false });
-    if (error) throw error;
-    // Normalise snake_case → camelCase for the rest of the app
-    window._books = (data || []).map(dbToApp);
-    renderAll();
-    checkOnboarding();
-    updateStreak();
-  } catch(e) {
-    console.error(e);
-    showToast('Error loading books — check your Supabase config.');
-  }
-}
-
-// Map DB row (snake_case) → app object (camelCase)
-function dbToApp(row) {
-  return {
-    id:         row.id,
-    title:      row.title,
-    author:     row.author,
-    genre:      row.genre,
-    year:       row.year,
-    status:     row.status,
-    dateRead:   row.date_read   || '',
-    startDate:  row.start_date  || '',
-    rating:     row.rating      || 0,
-    notes:      row.notes,
-    cover:      row.cover,
-    coverUrl:   row.cover_url   || '',
-    externalId: row.external_id || '',
-    tags:       row.tags        || [],
-    pages:      row.pages       || '',
-    publisher:  row.publisher   || '',
-    fav:        row.fav,
-    quotes:     [],  // loaded separately
-    createdAt:  row.created_at,
-  };
-}
-
-// Map app object (camelCase) → DB row (snake_case)
-function appToDB(data) {
-  return {
-    user_id:     window._currentUser.id,
-    title:       data.title,
-    author:      data.author      || '',
-    genre:       data.genre       || '',
-    year:        data.year        || '',
-    status:      data.status      || 'finished',
-    date_read:   data.dateRead    || null,
-    start_date:  data.startDate   || null,
-    rating:      data.rating      || null,
-    notes:       data.notes       || '',
-    cover:       data.cover       || '',
-    cover_url:   data.coverUrl    || '',
-    external_id: data.externalId  || '',
-    tags:        data.tags        || [],
-    pages:       data.pages       || null,
-    publisher:   data.publisher   || '',
-    fav:         data.fav         || false,
-  };
-}
-
-async function persistBook(data) {
-  if (!window._currentUser) return null;
-  const row = appToDB(data);
-  if (data.id) {
-    const { error } = await supabase.from('books').update(row).eq('id', data.id);
-    if (error) throw error;
-    return data.id;
-  } else {
-    const { data: inserted, error } = await supabase.from('books').insert(row).select().single();
-    if (error) throw error;
-    return inserted.id;
-  }
-}
-
-async function removeBook(id) {
-  const { error } = await supabase.from('books').delete().eq('id', id);
-  if (error) throw error;
-}
-
-/* ── Book CRUD ───────────────────────────────────────────── */
-window.saveBook = async () => {
-  const title  = document.getElementById('fTitle').value.trim();
-  const author = document.getElementById('fAuthor').value.trim();
-  if (!title) { showToast('Please enter a title'); return; }
-
-  const id = document.getElementById('editId').value || null;
-  const data = {
-    id,
-    title,
-    author:     author || '',
-    genre:      document.getElementById('fGenre').value,
-    year:       document.getElementById('fYear').value,
-    status:     document.getElementById('fStatus').value,
-    dateRead:   document.getElementById('fDate').value,
-    startDate:  document.getElementById('fStartDate').value,
-    rating:     window._currentRating || null,
-    notes:      document.getElementById('fNotes').value.trim(),
-    cover:      document.getElementById('fCoverData').value || '',
-    coverUrl:   window._pendingCoverUrl || '',
-    externalId: document.getElementById('fExternalId').value || '',
-    tags:       [...window._currentTags],
-    pages:      parseInt(document.getElementById('fPages').value)||null,
-    fav:        id ? (window._books.find(b=>b.id===id)?.fav||false) : false,
-  };
-
-  const btn = document.getElementById('btnSaveBook');
-  btn.disabled=true; btn.textContent='Saving…';
-  try {
-    const savedId = await persistBook(data);
-    data.id = savedId;
-    // Save quotes
-    if (window._currentQuotes.length > 0) {
-      // Delete old quotes for this book then re-insert
-      if (id) await supabase.from('quotes').delete().eq('book_id', id);
-      const quoteRows = window._currentQuotes.map(q=>({
-        book_id: savedId, user_id: window._currentUser.id, quote_text: q
-      }));
-      await supabase.from('quotes').insert(quoteRows);
-    } else if (id) {
-      await supabase.from('quotes').delete().eq('book_id', id);
-    }
-    data.quotes = [...window._currentQuotes];
-    const idx = window._books.findIndex(b=>b.id===savedId);
-    if (idx>=0) window._books[idx]={...window._books[idx],...data};
-    else window._books.unshift(data);
-    renderAll();
-    closeModal('addModal');
-    showToast(id ? 'Book updated ✓' : 'Book added to your journal ✓');
-    updateStreak();
-  } catch(e) {
-    console.error(e);
-    showToast('Error saving book. Please try again.');
-  } finally { btn.disabled=false; btn.textContent='Save to Journal'; }
-};
-
-window.deleteCurrentBook = async () => {
-  const id = document.getElementById('editId').value;
-  if (!id || !confirm('Remove this book from your journal?')) return;
-  await removeBook(id);
-  window._books = window._books.filter(b=>b.id!==id);
-  renderAll();
-  closeModal('addModal');
-  showToast('Book removed');
-};
-
-/* ── Rendering ───────────────────────────────────────────── */
-function renderAll() {
-  updateStats();
-  if (window._currentFilter === 'insights') renderInsights();
-  else renderBooks();
-}
-
-window.renderBooks = () => {
-  const filter  = window._currentFilter;
-  const search  = document.getElementById('searchInput').value.toLowerCase();
-  const sortVal = document.getElementById('sortSelect').value;
-
-  let books = window._books.slice();
-
-  if (filter==='reading')   books=books.filter(b=>b.status==='reading');
-  else if (filter==='finished')  books=books.filter(b=>b.status==='finished');
-  else if (filter==='want')      books=books.filter(b=>b.status==='want');
-  else if (filter==='abandoned') books=books.filter(b=>b.status==='abandoned');
-
-  if (search) books=books.filter(b=>
-    (b.title||'').toLowerCase().includes(search)||
-    (b.author||'').toLowerCase().includes(search)||
-    (b.genre||'').toLowerCase().includes(search)
-  );
-
-  books.sort((a,b)=>{
-    if(sortVal==='title') return (a.title||'').localeCompare(b.title||'');
-    if(sortVal==='author') return (a.author||'').localeCompare(b.author||'');
-    if(sortVal==='rating') return (b.rating||0)-(a.rating||0);
-    if(sortVal==='year') return (b.year||0)-(a.year||0);
-    // recent: sort by createdAt desc
-    const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt||0);
-    const db2 = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt||0);
-    return db2-da;
+window.doReset = async () => {
+  const email = v('rstEmail');
+  const msg = el('rstMsg'), btn = el('btnReset');
+  msg.className = 'auth-msg';
+  if (!email) return setMsg(msg, 'err', 'Please enter your email.');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://snap.readlog.co.uk'
   });
-
-  const main = document.getElementById('mainContent');
-  document.getElementById('toolbarControls').style.display='';
-  document.getElementById('toolbarSearch').style.display='';
-
-  if (books.length===0 && window._books.length===0) {
-    main.innerHTML = `<div class="empty-state">
-      <div class="empty-icon">📚</div>
-      <h2>Your journal is empty</h2>
-      <p>Scan a book cover or add your first book manually to get started.</p>
-      <button class="btn btn-primary" onclick="openScanModal()">📷 Scan my first book</button>
-    </div>`;
-    return;
-  }
-  if (books.length===0) {
-    main.innerHTML = `<div class="empty-state">
-      <div class="empty-icon">🔍</div>
-      <h2>No books found</h2>
-      <p>Try a different search or filter.</p>
-    </div>`;
-    return;
-  }
-
-  const isGrid = window._currentView==='grid';
-  let html=`<div class="book-grid${isGrid?'':' list-view'}">`;
-  books.forEach((b,i) => {
-    html += renderCard(b, i);
-  });
-  html+='</div>';
-  main.innerHTML=html;
+  if (error) setMsg(msg, 'err', error.message);
+  else       setMsg(msg, 'ok',  'Reset link sent! Check your email.');
+  btn.disabled = false; btn.textContent = 'Send reset link →';
 };
 
-function renderCard(b, i) {
-  const coverSrc = b.cover || b.coverUrl || '';
-  const coverHtml = coverSrc
-    ? `<img class="card-cover" src="${coverSrc}" alt="Cover" onerror="this.style.display='none'"/>`
-    : `<div class="card-cover-placeholder">📖</div>`;
-  const statusMap = {reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read',abandoned:'🚫 Abandoned'};
-  const statusLabel = statusMap[b.status]||'';
-  const statusCls   = b.status||'finished';
-  const ratingHtml  = b.rating
-    ? `<span style="font-family:var(--font-b);font-size:.82rem;font-weight:700;color:var(--amber)">${b.rating}<span style="font-size:.68rem;color:var(--warm-gray);font-weight:400">/10</span></span>`
-    : '';
-  const tagsHtml = (b.tags||[]).slice(0,3).map(t=>`<span class="tag-chip" style="font-size:.62rem;padding:1px 7px">${escHtml(t)}</span>`).join('');
-  const notesPreview = b.notes ? `<div class="card-notes-preview">${escHtml(b.notes)}</div>` : '';
-
-  return `<div class="book-card" style="animation-delay:${i*0.04}s" onclick="openDetail('${b.id}')">
-    <div class="book-card-inner">
-      <div class="card-cover-wrap">${coverHtml}</div>
-      <div class="card-body">
-        ${b.genre?`<div class="card-genre-badge">${escHtml(b.genre)}</div>`:''}
-        <div class="card-title">${escHtml(b.title||'Untitled')}</div>
-        <div class="card-author">${escHtml(b.author||'Unknown author')}</div>
-        <div class="card-meta">
-          ${ratingHtml}
-          ${b.year?`<span class="card-year">${b.year}</span>`:''}
-          <span class="card-status ${statusCls}">${statusLabel}</span>
-        </div>
-        ${tagsHtml ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px">${tagsHtml}</div>` : ''}
-      </div>
-    </div>
-    ${notesPreview}
-    <div class="card-actions" onclick="event.stopPropagation()">
-      <button class="card-btn" onclick="openEdit('${b.id}')">Edit</button>
-      <button class="card-btn primary" onclick="openDetail('${b.id}')">View</button>
-      <button class="card-fav-btn${b.fav?' active':''}" title="Favourite" onclick="toggleFav('${b.id}',event)">${b.fav?'❤️':'🤍'}</button>
-    </div>
-  </div>`;
-}
-
-window.toggleFav = async (id, e) => {
-  e.stopPropagation();
-  const book = window._books.find(b=>b.id===id);
-  if (!book) return;
-  book.fav = !book.fav;
-  await supabase.from('books').update({ fav: book.fav }).eq('id', id);
-  renderBooks();
-};
-
-function updateStats() {
-  const books = window._books;
-  document.getElementById('statTotal').textContent   = books.length;
-  document.getElementById('statRead').textContent    = books.filter(b=>b.status==='finished').length;
-  document.getElementById('statReading').textContent = books.filter(b=>b.status==='reading').length;
-  document.getElementById('statWant').textContent    = books.filter(b=>b.status==='want').length;
-  const streakEl = document.getElementById('statStreak');
-  if (streakEl) streakEl.textContent = calcStreak();
-}
-
-function calcStreak() {
-  // Streak = consecutive days on which a book was finished (by date_read)
-  const finished = window._books
-    .filter(b => b.status==='finished' && b.dateRead)
-    .map(b => b.dateRead.slice(0,10))
-    .sort()
-    .reverse();
-  if (!finished.length) return 0;
-  const unique = [...new Set(finished)];
-  let streak = 0;
-  let check = new Date(); check.setHours(0,0,0,0);
-  for (const d of unique) {
-    const day = new Date(d); day.setHours(0,0,0,0);
-    const diff = Math.round((check - day) / 86400000);
-    if (diff > 1) break;
-    streak++;
-    check = day;
-  }
-  return streak;
-}
-
-function updateStreak() {
-  const streak = calcStreak();
-  const el = document.getElementById('statStreak');
-  if (el) el.textContent = streak;
-  const badge = document.getElementById('streakBadge');
-  if (badge && streak > 0) {
-    badge.innerHTML = `<span class="streak-badge">🔥 ${streak} day streak</span>`;
-  }
-}
-
-/* ── Insights ─────────────────────────────────────────────── */
-function renderInsights() {
-  document.getElementById('toolbarControls').style.display='none';
-  document.getElementById('toolbarSearch').style.display='none';
-  const books = window._books;
-  const finished = books.filter(b=>b.status==='finished');
-  const main = document.getElementById('mainContent');
-
-  // Genre breakdown
-  const genres = {};
-  books.forEach(b=>{ if(b.genre) genres[b.genre]=(genres[b.genre]||0)+1; });
-  const topGenres = Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  const maxG = topGenres[0]?.[1]||1;
-
-  // Top authors
-  const authors = {};
-  finished.forEach(b=>{ if(b.author) authors[b.author]=(authors[b.author]||0)+1; });
-  const topAuthors = Object.entries(authors).sort((a,b)=>b[1]-a[1]).slice(0,5);
-
-  // Average rating
-  const rated = finished.filter(b=>b.rating>0);
-  const avgRating = rated.length ? (rated.reduce((s,b)=>s+(b.rating||0),0)/rated.length).toFixed(1) : '–';
-
-  // Top rated (10/10)
-  const topRated = finished.filter(b=>b.rating===10).slice(0,3);
-
-  // Yearly goal
-  const thisYear = new Date().getFullYear();
-  const yearlyCount = finished.filter(b=>b.dateRead&&b.dateRead.startsWith(String(thisYear))).length;
-  const goal = 24;
-  const pct = Math.min(100, Math.round((yearlyCount/goal)*100));
-
-  main.innerHTML = `
-  <div class="reading-goal" style="margin-bottom:28px">
-    <div class="goal-text">
-      <div class="goal-label">Reading Goal ${thisYear}</div>
-      <div class="goal-headline">${yearlyCount} of ${goal} books read this year</div>
-      <div class="goal-bar-track"><div class="goal-bar-fill" style="width:${pct}%"></div></div>
-      <div class="goal-fraction">${yearlyCount} / ${goal} books · on track for ${Math.round(yearlyCount/(new Date().getMonth()+1)*12)} this year</div>
-    </div>
-    <div class="goal-pct">${pct}%</div>
-  </div>
-  <div class="insights-grid">
-    <div class="insight-card">
-      <div class="insight-card-title"><span>📚</span> Total books</div>
-      <div class="insight-stat-big">${books.length}</div>
-      <div class="insight-stat-label">${finished.length} finished · ${books.filter(b=>b.status==='reading').length} in progress</div>
-    </div>
-    <div class="insight-card">
-      <div class="insight-card-title"><span>⭐</span> Average rating</div>
-      <div class="insight-stat-big">${avgRating}</div>
-      <div class="insight-stat-label">from ${rated.length} rated ${rated.length===1?'book':'books'}</div>
-    </div>
-    <div class="insight-card">
-      <div class="insight-card-title"><span>🎭</span> Genres read</div>
-      ${topGenres.length===0?'<div class="insight-empty">No genres logged yet</div>':''}
-      <div class="insight-bar-wrap">
-        ${topGenres.map(([g,c])=>`
-          <div class="insight-bar-row">
-            <div class="insight-bar-label">${escHtml(g)}</div>
-            <div class="insight-bar-track"><div class="insight-bar-fill" style="width:${Math.round((c/maxG)*100)}%"></div></div>
-            <div class="insight-bar-count">${c}</div>
-          </div>`).join('')}
-      </div>
-    </div>
-    <div class="insight-card">
-      <div class="insight-card-title"><span>✍️</span> Favourite authors</div>
-      ${topAuthors.length===0?'<div class="insight-empty">Add finished books to see your top authors</div>':''}
-      <ul class="insight-list">
-        ${topAuthors.map(([a,c])=>`
-          <li class="insight-list-item">
-            <span class="insight-list-item-name">${escHtml(a)}</span>
-            <span class="insight-list-item-meta">${c} ${c===1?'book':'books'}</span>
-          </li>`).join('')}
-      </ul>
-    </div>
-    <div class="insight-card">
-      <div class="insight-card-title"><span>🌟</span> Perfect 10s</div>
-      ${topRated.length===0?'<div class="insight-empty">No 10/10 books yet</div>':''}
-      <ul class="insight-list">
-        ${topRated.map(b=>`
-          <li class="insight-list-item">
-            <span class="insight-list-item-name">${escHtml(b.title||'Untitled')}</span>
-            <span class="insight-list-item-meta" style="color:var(--amber);font-weight:700">10/10</span>
-          </li>`).join('')}
-      </ul>
-    </div>
-    <div class="insight-card">
-      <div class="insight-card-title"><span>🔥</span> Reading streak</div>
-      <div class="insight-streak">
-        <div class="streak-flame">🔥</div>
-        <div class="streak-text">
-          <div class="streak-days">${finished.length}</div>
-          <div class="streak-label">books finished in total</div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ── Modals ───────────────────────────────────────────────── */
-window.openAddModal = () => {
-  window._editingId = null;
-  window._currentRating = 0;
-  window._currentTags = [];
-  window._currentQuotes = [];
-  window._pendingCoverUrl = '';
-  document.getElementById('addModalTitle').textContent = 'Add Book';
-  document.getElementById('btnDeleteBook').style.display='none';
-  document.getElementById('btnSaveBook').textContent='Save to Journal';
-  ['fTitle','fAuthor','fYear','fNotes','fDate','fStartDate','fPages','fExternalId'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
-  });
-  document.getElementById('editId').value='';
-  document.getElementById('fGenre').value='';
-  document.getElementById('fStatus').value='finished';
-  document.getElementById('fCoverData').value='';
-  // Clear search box
-  const si = document.getElementById('bookSearchInput');
-  if(si) si.value='';
-  const sr = document.getElementById('bookSearchResults');
-  if(sr) sr.classList.remove('open');
-  clearCover();
-  updateRating10UI(0);
-  renderTagChips();
-  renderQuotesList();
-  openModal('addModal');
-};
-
-window.openEdit = async (id) => {
-  const b = window._books.find(x=>x.id===id);
-  if (!b) return;
-  window._editingId = id;
-  window._currentRating = b.rating||0;
-  window._currentTags   = [...(b.tags||[])];
-  window._pendingCoverUrl = b.coverUrl||'';
-  document.getElementById('addModalTitle').textContent='Edit Book';
-  document.getElementById('btnDeleteBook').style.display='';
-  document.getElementById('editId').value=id;
-  document.getElementById('fTitle').value=b.title||'';
-  document.getElementById('fAuthor').value=b.author||'';
-  document.getElementById('fGenre').value=b.genre||'';
-  document.getElementById('fYear').value=b.year||'';
-  document.getElementById('fStatus').value=b.status||'finished';
-  document.getElementById('fDate').value=b.dateRead||'';
-  document.getElementById('fStartDate').value=b.startDate||'';
-  document.getElementById('fNotes').value=b.notes||'';
-  document.getElementById('fPages').value=b.pages||'';
-  document.getElementById('fExternalId').value=b.externalId||'';
-  document.getElementById('fCoverData').value=b.cover||'';
-  const si=document.getElementById('bookSearchInput'); if(si) si.value='';
-  // Load quotes from DB
-  const {data:qs} = await supabase.from('quotes').select('quote_text').eq('book_id',id).order('created_at');
-  window._currentQuotes = (qs||[]).map(q=>q.quote_text);
-  if (b.cover) {
-    document.getElementById('coverPreview').src=b.cover;
-    document.getElementById('coverPreview').classList.add('visible');
-    document.getElementById('coverDrop').classList.add('has-photo');
-    document.getElementById('coverClearBtn').style.display='';
-  } else if (b.coverUrl) {
-    document.getElementById('coverPreview').src=b.coverUrl;
-    document.getElementById('coverPreview').classList.add('visible');
-    document.getElementById('coverDrop').classList.add('has-photo');
-    document.getElementById('coverClearBtn').style.display='';
-  } else {
-    clearCover();
-  }
-  updateRating10UI(window._currentRating);
-  renderTagChips();
-  renderQuotesList();
-  openModal('addModal');
-};
-
-window.openDetail = async (id) => {
-  const b = window._books.find(x=>x.id===id);
-  if (!b) return;
-  window._detailId = id;
-  document.getElementById('detailModalTitle').textContent = escHtml(b.title||'Book Details');
-  const ratingLabel = b.rating ? `${b.rating}/10` : 'Not rated';
-  const coverSrc = b.cover || b.coverUrl || '';
-  const coverHtml = coverSrc
-    ? `<img class="detail-cover" src="${coverSrc}" alt="Cover" onerror="this.style.display='none'"/>`
-    : `<div class="detail-cover-placeholder">📖</div>`;
-  const statusMap = {reading:'📖 Reading',finished:'✅ Finished',want:'🔖 Want to read',abandoned:'🚫 Abandoned'};
-  const tagsHtml = (b.tags||[]).length
-    ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${(b.tags).map(t=>`<span class="tag-chip">${escHtml(t)}</span>`).join('')}</div>` : '';
-  // Load quotes
-  const {data:qs} = await supabase.from('quotes').select('quote_text').eq('book_id',id).order('created_at');
-  const quotesHtml = (qs||[]).length ? `
-    <div class="detail-quotes">
-      <div class="detail-quotes-label">Quotes &amp; Highlights</div>
-      ${(qs).map(q=>`<div class="detail-quote">"${escHtml(q.quote_text)}"</div>`).join('')}
-    </div>` : '';
-  document.getElementById('detailBody').innerHTML = `
-    <div class="detail-header-wrap">
-      ${coverHtml}
-      <div class="detail-info">
-        <div class="detail-title">${escHtml(b.title||'Untitled')}</div>
-        <div class="detail-author">${escHtml(b.author||'Unknown author')}</div>
-        <div style="margin:8px 0"><span class="card-status ${b.status||'finished'}">${statusMap[b.status]||''}</span></div>
-        ${b.rating?`<div style="font-family:var(--font-b);font-size:1.1rem;font-weight:700;color:var(--amber)">${b.rating}<span style="font-size:.75rem;color:var(--warm-gray);font-weight:400">/10</span></div>`:''}
-      </div>
-    </div>
-    <div class="detail-grid">
-      <div class="detail-field"><label>Genre</label><p>${escHtml(b.genre||'—')}</p></div>
-      <div class="detail-field"><label>Year</label><p>${b.year||'—'}</p></div>
-      ${b.pages?`<div class="detail-field"><label>Pages</label><p>${b.pages}</p></div>`:''}
-      ${b.startDate?`<div class="detail-field"><label>Started</label><p>${b.startDate}</p></div>`:''}
-      ${b.dateRead?`<div class="detail-field"><label>Finished</label><p>${b.dateRead}</p></div>`:''}
-    </div>
-    ${tagsHtml}
-    ${b.notes?`<div class="detail-notes-label" style="margin-top:14px">My Notes &amp; Review</div><div class="detail-notes">${escHtml(b.notes)}</div>`:''}
-    ${quotesHtml}
-  `;
-  openModal('detailModal');
-};
-
-window.editFromDetail = () => {
-  closeModal('detailModal');
-  setTimeout(()=>openEdit(window._detailId),200);
-};
-
-window.openScanModal = () => {
-  window._scanImages = {1:null, 2:null};
-  document.getElementById('scanResults').style.display='none';
-  document.getElementById('scanPanels').style.display='';
-  document.getElementById('scanModalBody').querySelector('.scan-instruction').style.display='';
-  resetScanPanel(1); resetScanPanel(2);
-  document.getElementById('btnAnalyse').disabled=true;
-  document.getElementById('scanModalFooter').innerHTML=`
-    <button class="btn btn-secondary btn-sm" onclick="closeModal('scanModal')">Cancel</button>
-    <button class="btn btn-primary btn-sm" id="btnAnalyse" onclick="doScan()" disabled>✦ Analyse with AI</button>`;
-  openModal('scanModal');
-};
-
-function resetScanPanel(n) {
-  document.getElementById('scanThumb'+n).classList.remove('visible');
-  document.getElementById('retake'+n).style.display='none';
-  document.getElementById('scanFile'+n).value='';
-}
-
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow='hidden';
-}
-window.closeModal = (id) => {
-  document.getElementById(id).classList.remove('open');
-  document.body.style.overflow='';
-};
-
-/* ── Filters & view ──────────────────────────────────────── */
-window.setFilter = (f, el) => {
-  window._currentFilter = f;
-  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
-  if (el) el.classList.add('active');
+window.doSetPassword = async () => {
+  const pass = v('npPass'), confirm = v('npConfirm');
+  const msg = el('npMsg'), btn = el('btnNewPass');
+  msg.className = 'auth-msg';
+  if (!pass || pass.length < 6) return setMsg(msg, 'err', 'Password must be at least 6 characters.');
+  if (pass !== confirm)         return setMsg(msg, 'err', 'Passwords do not match.');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const { error } = await sb.auth.updateUser({ password: pass });
+  if (error) { setMsg(msg, 'err', error.message); }
   else {
-    document.querySelectorAll(`[data-filter="${f}"]`).forEach(t=>t.classList.add('active'));
+    setMsg(msg, 'ok', 'Password updated! You are now signed in.');
+    setTimeout(() => document.getElementById('newPassSheet').classList.remove('open'), 1800);
   }
-  renderAll();
+  btn.disabled = false; btn.textContent = 'Update password →';
 };
 
-window.setView = (v) => {
-  window._currentView = v;
-  document.getElementById('viewGrid').classList.toggle('active', v==='grid');
-  document.getElementById('viewList').classList.toggle('active', v==='list');
-  renderBooks();
+window.doSignout = async () => {
+  closeMenuNow();
+  await sb.auth.signOut();
 };
 
-/* ── 10-point Rating ────────────────────────────────────── */
-window.setRating10 = (n) => {
-  window._currentRating = n;
-  updateRating10UI(n);
-};
-function updateRating10UI(n) {
-  document.querySelectorAll('.rating-10-btn').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.dataset.val) === n);
-  });
+/* ─── LOAD RECEIPTS ──────────────────────────────────────── */
+async function loadReceipts() {
+  if (!_user) return;
+  renderList(null); // show skeletons
+  const { data, error } = await sb
+    .from('receipts')
+    .select('id, merchant, amount, currency, date, image_url, ocr_raw, created_at')
+    .eq('user_id', _user.id)
+    .order('created_at', { ascending: false });
+
+  if (error) { toast('Error loading receipts'); return; }
+  _receipts = data || [];
+  renderList(_receipts);
+  updateSummary();
 }
-// Legacy star functions kept for compatibility
-window.setStar = window.setRating10;
-function updateStarUI(n) { updateRating10UI(n); }
 
-/* ── Cover photo ─────────────────────────────────────────── */
-window.handleCoverFile = (input) => {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const max = 800;
-      let w = img.width, h = img.height;
-      if (w > max || h > max) {
-        if (w > h) { h = Math.round(h * max / w); w = max; }
-        else       { w = Math.round(w * max / h); h = max; }
-      }
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      const jpeg = canvas.toDataURL('image/jpeg', 0.85);
-      document.getElementById('fCoverData').value = jpeg;
-      document.getElementById('coverPreview').src = jpeg;
-      document.getElementById('coverPreview').classList.add('visible');
-      document.getElementById('coverDrop').classList.add('has-photo');
-      document.getElementById('coverClearBtn').style.display='';
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
+/* ─── RENDER LIST ────────────────────────────────────────── */
+function renderList(receipts) {
+  const list = el('receiptList');
+
+  if (receipts === null) {
+    // Skeleton
+    list.innerHTML = [1,2,3].map(() => `
+      <div class="receipt-item" style="pointer-events:none">
+        <div class="receipt-thumb"><div class="skeleton" style="width:100%;height:100%;border-radius:7px"></div></div>
+        <div class="receipt-info">
+          <div class="skeleton" style="height:14px;width:70%;margin-bottom:8px;border-radius:4px"></div>
+          <div class="skeleton" style="height:11px;width:45%;border-radius:4px"></div>
+        </div>
+        <div class="skeleton" style="height:18px;width:52px;border-radius:4px"></div>
+      </div>`).join('');
+    return;
+  }
+
+  if (!receipts.length) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🧾</div>
+        <div class="empty-title">No receipts yet</div>
+        <div class="empty-sub">Tap the button below to scan your first receipt and start logging expenses.</div>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = receipts.map(r => {
+    const thumbHtml = r.image_url
+      ? `<div class="receipt-thumb"><img src="${r.image_url}" alt="" loading="lazy"/></div>`
+      : `<div class="receipt-thumb">🧾</div>`;
+    return `
+      <div class="receipt-item" onclick="openDetail('${r.id}')">
+        ${thumbHtml}
+        <div class="receipt-info">
+          <div class="receipt-merchant">${esc(r.merchant || 'Unknown merchant')}</div>
+          <div class="receipt-date">${fmtDate(r.date || r.created_at)}</div>
+        </div>
+        <div>
+          <div class="receipt-amount">${fmtAmount(r.amount, r.currency)}</div>
+          <div class="receipt-currency">${r.currency || 'GBP'}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function updateSummary() {
+  el('sumTotal').textContent = _receipts.length;
+
+  const now = new Date();
+  const thisMonth = _receipts.filter(r => {
+    const d = new Date(r.date || r.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const taxStart = now.getMonth() >= 3
+    ? new Date(now.getFullYear(), 3, 6)
+    : new Date(now.getFullYear() - 1, 3, 6);
+  const taxYear = _receipts.filter(r => new Date(r.date || r.created_at) >= taxStart);
+
+  el('sumMonth').textContent = '£' + sum(thisMonth).toFixed(2);
+  el('sumYear').textContent  = '£' + sum(taxYear).toFixed(2);
+}
+
+function sum(rs) {
+  return rs.reduce((s, r) => s + parseFloat(r.amount || 0), 0);
+}
+
+/* ─── DETAIL SHEET ───────────────────────────────────────── */
+window.openDetail = (id) => {
+  _detailId = id;
+  const r = _receipts.find(x => x.id === id);
+  if (!r) return;
+  const imgHtml = r.image_url
+    ? `<img class="sheet-img" src="${r.image_url}" alt="Receipt"/>`
+    : '';
+  const ocrHtml = r.ocr_raw
+    ? `<div style="font-size:.78rem;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Raw OCR text</div>
+       <div class="sheet-ocr visible">${esc(r.ocr_raw)}</div>`
+    : '';
+  el('detailBody').innerHTML = `
+    <div class="sheet-merchant">${esc(r.merchant || 'Unknown')}</div>
+    <div class="sheet-amount">${fmtAmount(r.amount, r.currency)}</div>
+    ${imgHtml}
+    <div class="sheet-meta">
+      <div class="sheet-meta-item">
+        <div class="sheet-meta-label">Date</div>
+        <div class="sheet-meta-val">${fmtDate(r.date || r.created_at)}</div>
+      </div>
+      <div class="sheet-meta-item">
+        <div class="sheet-meta-label">Currency</div>
+        <div class="sheet-meta-val">${r.currency || 'GBP'}</div>
+      </div>
+      <div class="sheet-meta-item">
+        <div class="sheet-meta-label">Added</div>
+        <div class="sheet-meta-val">${fmtDate(r.created_at)}</div>
+      </div>
+    </div>
+    ${ocrHtml}
+    <div class="sheet-actions">
+      <button class="btn btn-danger btn-sm" onclick="deleteReceipt('${r.id}')">Delete</button>
+      <button class="btn btn-secondary btn-sm" style="flex:1" onclick="closeDetail()">Close</button>
+    </div>`;
+  el('detailSheet').classList.add('open');
 };
 
-window.clearCover = () => {
-  document.getElementById('fCoverData').value='';
-  document.getElementById('coverPreview').src='';
-  document.getElementById('coverPreview').classList.remove('visible');
-  document.getElementById('coverDrop').classList.remove('has-photo');
-  document.getElementById('coverClearBtn').style.display='none';
-  document.getElementById('coverFile').value='';
-  window._pendingCoverUrl = '';
+window.closeDetail = (e) => {
+  if (e && e.target !== el('detailSheet')) return;
+  el('detailSheet').classList.remove('open');
 };
 
-/* ── Scan ────────────────────────────────────────────────── */
-window.handleScanFile = (input, n) => {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const dataUrl = e.target.result;
-    // Normalise to JPEG via canvas — handles HEIC, HEIF, WebP, PNG etc.
-    // This ensures the image is always in a format the API accepts
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      // Cap at 1600px on longest side to keep payload small
-      const max = 1600;
-      let w = img.width, h = img.height;
-      if (w > max || h > max) {
-        if (w > h) { h = Math.round(h * max / w); w = max; }
-        else       { w = Math.round(w * max / h); h = max; }
-      }
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      const jpeg = canvas.toDataURL('image/jpeg', 0.85);
-      window._scanImages[n] = jpeg;
-      const thumb = document.getElementById('scanThumb'+n);
-      thumb.src = jpeg;
-      thumb.classList.add('visible');
-      document.getElementById('retake'+n).style.display='';
-      document.getElementById('btnAnalyse').disabled = false;
-    };
-    img.onerror = () => {
-      // Fallback: use raw data URL as-is
-      window._scanImages[n] = dataUrl;
-      document.getElementById('scanThumb'+n).src = dataUrl;
-      document.getElementById('scanThumb'+n).classList.add('visible');
-      document.getElementById('retake'+n).style.display='';
-      document.getElementById('btnAnalyse').disabled = false;
-    };
-    img.src = dataUrl;
-  };
-  reader.readAsDataURL(file);
+window.deleteReceipt = async (id) => {
+  if (!confirm('Delete this receipt?')) return;
+  await sb.from('receipts').delete().eq('id', id);
+  _receipts = _receipts.filter(r => r.id !== id);
+  renderList(_receipts);
+  updateSummary();
+  el('detailSheet').classList.remove('open');
+  toast('Receipt deleted');
 };
 
-window.retakeScan = (n) => {
-  window._scanImages[n]=null;
-  resetScanPanel(n);
-  if (!window._scanImages[1] && !window._scanImages[2]) document.getElementById('btnAnalyse').disabled=true;
+/* ─── SCAN FLOW ──────────────────────────────────────────── */
+window.openScan = () => {
+  _imageB64 = null;
+  _editId   = null;
+  // Reset UI
+  el('capturePreview').classList.remove('visible');
+  el('captureRetake').classList.remove('visible');
+  el('captureArea').querySelector('input').value = '';
+  el('captureArea').querySelector('.capture-icon').style.display  = '';
+  el('captureArea').querySelector('.capture-title').style.display = '';
+  el('captureArea').querySelector('.capture-sub').style.display   = '';
+  el('ocrLoading').classList.remove('active');
+  el('confirmSection').classList.remove('active');
+  el('saveBar').style.display = 'none';
+  el('scanTitle').textContent = 'Scan Receipt';
+  // Clear fields
+  ['cfMerchant','cfAmount','cfNotes'].forEach(id => el(id).value = '');
+  el('cfDate').value     = today();
+  el('cfCurrency').value = 'GBP';
+  el('confidenceBadge').innerHTML = '';
+  show('scanScreen');
 };
 
-window.doScan = async () => {
-  const img = window._scanImages[1] || window._scanImages[2];
-  if (!img) { showToast('Please add at least one photo first'); return; }
+window.goHome = () => show('homeScreen');
 
-  // Hide panels, show loader
-  document.getElementById('scanPanels').style.display='none';
-  document.getElementById('scanModalBody').querySelector('.scan-instruction').style.display='none';
-  document.getElementById('scanModalFooter').innerHTML='<div style="font-family:var(--font-b);font-size:.8rem;color:var(--warm-gray);font-style:italic">AI is reading your book…</div>';
+window.retakePhoto = (e) => {
+  e.stopPropagation();
+  _imageB64 = null;
+  el('capturePreview').classList.remove('visible');
+  el('captureRetake').classList.remove('visible');
+  el('captureArea').querySelector('input').value = '';
+  el('captureArea').querySelector('.capture-icon').style.display  = '';
+  el('captureArea').querySelector('.capture-title').style.display = '';
+  el('captureArea').querySelector('.capture-sub').style.display   = '';
+  el('confirmSection').classList.remove('active');
+  el('saveBar').style.display = 'none';
+};
 
-  const resultsDiv = document.getElementById('scanResults');
-  resultsDiv.style.display='';
-  resultsDiv.innerHTML=`<div class="scan-loader-wrap">
-    <div class="scan-spinner"></div>
-    <div class="scan-loader-title">Identifying your book…</div>
-    <div class="scan-loader-sub">Our AI is reading the cover</div>
-  </div>`;
+window.onImageSelected = async (input) => {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Convert to JPEG via canvas (handles HEIC, WebP, etc.)
+  const b64 = await fileToJpegB64(file);
+  _imageB64 = b64;
+
+  // Show preview
+  el('capturePreview').src = b64;
+  el('capturePreview').classList.add('visible');
+  el('captureRetake').classList.add('visible');
+  el('captureArea').querySelector('.capture-icon').style.display  = 'none';
+  el('captureArea').querySelector('.capture-title').style.display = 'none';
+  el('captureArea').querySelector('.capture-sub').style.display   = 'none';
+
+  // Start OCR immediately
+  await runOCR(b64);
+};
+
+async function runOCR(b64) {
+  el('ocrLoading').classList.add('active');
+  el('confirmSection').classList.remove('active');
+  el('saveBar').style.display = 'none';
 
   try {
-    // Get current session token to authenticate the Worker request
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('Please sign in again');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error('Not signed in');
 
-    const base64    = img.split(',')[1];
-    const mimeMatch = img.match(/data:([^;]+);/);
-    const mediaType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
-
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
+    const raw = b64.split(',')[1]; // strip data:image/jpeg;base64,
+    const res = await fetch(WORKER_URL, {
+      method:  'POST',
       headers: {
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${session.access_token}`,
       },
-      body: JSON.stringify({ imageBase64: base64, mediaType }),
+      body: JSON.stringify({ imageBase64: raw, mediaType: 'image/jpeg' }),
     });
 
-    if (!response.ok) {
-      const err = await response.json().catch(()=>({error:'Unknown error'}));
-      throw new Error(err.error || `Worker error ${response.status}`);
-    }
-
-    const parsed = await response.json();
-    if (parsed.error) throw new Error(parsed.error);
-
-    // Show results
-    const confClass = parsed.confidence || 'medium';
-    resultsDiv.innerHTML=`
-      <div class="scan-results-header">
-        <div class="scan-results-icon">✓</div>
-        <div>
-          <div class="scan-results-title">Book identified <span class="scan-conf-badge ${confClass}">${confClass} confidence</span></div>
-          <div class="scan-results-sub">Review the details below before saving</div>
-        </div>
-      </div>
-      <div class="scan-fields">
-        <div class="scan-field"><div class="scan-field-label">Title</div><div class="scan-field-value">${escHtml(parsed.title||'—')}</div></div>
-        <div class="scan-field"><div class="scan-field-label">Author</div><div class="scan-field-value">${escHtml(parsed.author||'—')}</div></div>
-        <div class="scan-field"><div class="scan-field-label">Genre</div><div class="scan-field-value">${escHtml(parsed.genre||'—')}</div></div>
-        <div class="scan-field"><div class="scan-field-label">Year</div><div class="scan-field-value">${escHtml(parsed.year||'—')}</div></div>
-      </div>
-      <div class="scan-field" style="margin-bottom:12px"><div class="scan-field-label">Synopsis</div><div class="scan-field-value" style="white-space:normal;font-size:.82rem">${escHtml(parsed.synopsis||'—')}</div></div>`;
-
-    document.getElementById('scanModalFooter').innerHTML=`
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('scanModal')">Cancel</button>
-      <button class="btn btn-secondary btn-sm" onclick="openScanModal()">Rescan</button>
-      <button class="btn btn-primary btn-sm" onclick="useScanResult(${JSON.stringify(JSON.stringify(parsed))})">Use this book →</button>`;
-
-    window._scanResult = parsed;
-
-  } catch(e) {
-    resultsDiv.innerHTML=`
-      <div style="text-align:center;padding:20px 0">
-        <div style="font-size:2rem;margin-bottom:10px">😕</div>
-        <div class="scan-error-msg">Could not identify this book</div>
-        <div class="scan-error-detail">${e.message||'Please try a clearer photo or add manually'}</div>
-      </div>`;
-    document.getElementById('scanModalFooter').innerHTML=`
-      <button class="btn btn-secondary btn-sm" onclick="openScanModal()">Try again</button>
-      <button class="btn btn-primary btn-sm" onclick="openAddModal();closeModal('scanModal')">Add manually</button>`;
-  }
-};
-
-window.useScanResult = (jsonStr) => {
-  const b = JSON.parse(jsonStr);
-  closeModal('scanModal');
-  setTimeout(()=>{
-    openAddModal();
-    document.getElementById('fTitle').value  = b.title||'';
-    document.getElementById('fAuthor').value = b.author||'';
-    document.getElementById('fGenre').value  = b.genre||'';
-    document.getElementById('fYear').value   = b.year||'';
-    if(b.pages) document.getElementById('fPages').value = b.pages;
-    if(b.publisher) { /* store in notes for now */ }
-    document.getElementById('fNotes').value  = b.synopsis ? `Synopsis: ${b.synopsis}` : '';
-    // Pre-fill cover from scan image
-    const img = window._scanImages[1]||window._scanImages[2];
-    if (img) {
-      document.getElementById('fCoverData').value=img;
-      document.getElementById('coverPreview').src=img;
-      document.getElementById('coverPreview').classList.add('visible');
-      document.getElementById('coverDrop').classList.add('has-photo');
-      document.getElementById('coverClearBtn').style.display='';
-    }
-    // Clear search input
-    const si=document.getElementById('bookSearchInput'); if(si) si.value='';
-  }, 250);
-};
-
-/* ── Onboarding / banners ─────────────────────────────────── */
-function checkOnboarding() {
-  const hint = document.getElementById('onboardingHint');
-  if (window._books.length===0 && !localStorage.getItem('rl_ob_dismissed')) {
-    hint.style.display='';
-  } else {
-    hint.style.display='none';
-  }
-}
-window.closeOnboarding = () => {
-  document.getElementById('onboardingHint').style.display='none';
-  localStorage.setItem('rl_ob_dismissed','1');
-};
-
-/* ── Book Search (Open Library) ─────────────────────────── */
-window.onBookSearch = (val) => {
-  const results = document.getElementById('bookSearchResults');
-  clearTimeout(window._searchTimer);
-  if (!val || val.length < 2) { results.classList.remove('open'); return; }
-  window._searchTimer = setTimeout(() => searchOpenLibrary(val), 350);
-};
-
-async function searchOpenLibrary(q) {
-  const results = document.getElementById('bookSearchResults');
-  const spinner = document.getElementById('bookSearchSpinner');
-
-  // Check cache
-  if (window._searchCache[q]) {
-    renderSearchResults(window._searchCache[q]);
-    return;
-  }
-
-  spinner.classList.add('active');
-  try {
-    const res = await fetch(
-      `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i,number_of_pages_median,publisher,subject&limit=8`
-    );
+    if (!res.ok) throw new Error(`Worker error ${res.status}`);
     const data = await res.json();
-    const items = (data.docs || []).slice(0, 8).map(d => ({
-      key:       d.key,
-      title:     d.title || '',
-      author:    (d.author_name || [])[0] || '',
-      year:      d.first_publish_year ? String(d.first_publish_year) : '',
-      coverId:   d.cover_i || null,
-      pages:     d.number_of_pages_median || null,
-      publisher: (d.publisher || [])[0] || '',
-      genre:     guessGenre(d.subject || []),
-    }));
-    window._searchCache[q] = items;
-    renderSearchResults(items);
-  } catch(e) {
-    results.innerHTML = '<div class="book-search-no-results">Search unavailable — add manually</div>';
-    results.classList.add('open');
+    if (data.error) throw new Error(data.error);
+
+    // Populate fields
+    el('cfMerchant').value = data.merchant || '';
+    el('cfAmount').value   = data.amount   || '';
+    el('cfDate').value     = data.date     ? isoDate(data.date) : today();
+    if (data.currency) el('cfCurrency').value = data.currency;
+
+    // Confidence badge
+    const conf = (data.confidence || 'low').toLowerCase();
+    const labels = { high: '✓ High confidence', medium: '~ Review fields below', low: '⚠ Low confidence — check fields' };
+    el('confidenceBadge').innerHTML = `<div class="confidence-badge ${conf}">${labels[conf] || conf}</div>`;
+
+    el('confirmSection').classList.add('active');
+    el('saveBar').style.display = 'flex';
+
+    // Focus merchant if empty
+    if (!data.merchant) el('cfMerchant').focus();
+
+  } catch (err) {
+    console.error('OCR error:', err);
+    el('confidenceBadge').innerHTML = `<div class="confidence-badge low">⚠ Could not read receipt — enter details manually</div>`;
+    el('confirmSection').classList.add('active');
+    el('saveBar').style.display = 'flex';
+    el('cfMerchant').focus();
   } finally {
-    spinner.classList.remove('active');
+    el('ocrLoading').classList.remove('active');
   }
 }
 
-function guessGenre(subjects) {
-  const s = subjects.join(' ').toLowerCase();
-  if (s.includes('fiction') && (s.includes('literary') || s.includes('literature'))) return 'Literary Fiction';
-  if (s.includes('crime') || s.includes('mystery') || s.includes('thriller')) return 'Mystery / Thriller';
-  if (s.includes('science fiction') || s.includes('sci-fi')) return 'Science Fiction';
-  if (s.includes('fantasy')) return 'Fantasy';
-  if (s.includes('horror')) return 'Horror';
-  if (s.includes('romance')) return 'Romance';
-  if (s.includes('biography') || s.includes('memoir')) return 'Biography';
-  if (s.includes('history') || s.includes('historical')) return 'History';
-  if (s.includes('self-help') || s.includes('self help') || s.includes('personal development')) return 'Self-Help';
-  if (s.includes('business') || s.includes('economics')) return 'Business';
-  if (s.includes('science') || s.includes('physics') || s.includes('biology')) return 'Science';
-  if (s.includes('travel')) return 'Travel';
-  if (s.includes('poetry') || s.includes('poems')) return 'Poetry';
-  if (s.includes('fiction')) return 'Fiction';
-  if (subjects.length) return 'Non-Fiction';
-  return '';
-}
+window.saveReceipt = async () => {
+  const merchant = el('cfMerchant').value.trim();
+  const amount   = parseFloat(el('cfAmount').value) || 0;
+  const date     = el('cfDate').value;
 
-function renderSearchResults(items) {
-  const results = document.getElementById('bookSearchResults');
-  if (!items.length) {
-    results.innerHTML = '<div class="book-search-no-results">No books found — try different keywords</div>';
-    results.classList.add('open');
-    return;
-  }
-  results.innerHTML = items.map((item, i) => {
-    const coverUrl = item.coverId
-      ? `https://covers.openlibrary.org/b/id/${item.coverId}-S.jpg`
-      : null;
-    const coverHtml = coverUrl
-      ? `<img class="bsr-cover" src="${coverUrl}" alt="" onerror="this.style.display='none'"/>`
-      : `<div class="bsr-cover-placeholder">📖</div>`;
-    return `<div class="book-search-result" onclick="selectSearchResult(${i})">
-      ${coverHtml}
-      <div class="bsr-info">
-        <div class="bsr-title">${escHtml(item.title)}</div>
-        <div class="bsr-author">${escHtml(item.author)}</div>
-        ${item.year ? `<div class="bsr-year">${item.year}</div>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-  results.classList.add('open');
-  // Store items for selection
-  results._items = items;
-}
+  if (!merchant) { toast('Please enter a merchant name'); el('cfMerchant').focus(); return; }
+  if (!amount)   { toast('Please enter an amount');        el('cfAmount').focus();   return; }
 
-window.selectSearchResult = (idx) => {
-  const results = document.getElementById('bookSearchResults');
-  const item = results._items[idx];
-  if (!item) return;
+  const btn = el('btnSave');
+  btn.disabled = true; btn.textContent = 'Saving…';
 
-  // Fill form fields
-  document.getElementById('fTitle').value  = item.title;
-  document.getElementById('fAuthor').value = item.author;
-  document.getElementById('fYear').value   = item.year;
-  if (item.pages) document.getElementById('fPages').value = item.pages;
-  if (item.genre) document.getElementById('fGenre').value = item.genre;
-  document.getElementById('fExternalId').value = item.key || '';
-
-  // Fill cover from Open Library (large version)
-  if (item.coverId) {
-    const largeUrl = `https://covers.openlibrary.org/b/id/${item.coverId}-M.jpg`;
-    window._pendingCoverUrl = largeUrl;
-    // Show preview
-    const prev = document.getElementById('coverPreview');
-    prev.src = largeUrl;
-    prev.classList.add('visible');
-    document.getElementById('coverDrop').classList.add('has-photo');
-    document.getElementById('coverClearBtn').style.display='';
-  }
-
-  // Update search box and close results
-  document.getElementById('bookSearchInput').value = item.title + (item.author ? ' — '+item.author : '');
-  results.classList.remove('open');
-  document.getElementById('fTitle').focus();
-};
-
-// Close search results when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.book-search-wrap')) {
-    const r = document.getElementById('bookSearchResults');
-    if (r) r.classList.remove('open');
-  }
-});
-
-/* ── Tags ────────────────────────────────────────────────── */
-window.onTagKeydown = (e) => {
-  const input = e.target;
-  if (e.key === 'Enter' || e.key === ',') {
-    e.preventDefault();
-    const val = input.value.trim().replace(/,/g,'');
-    if (val && !window._currentTags.includes(val)) {
-      window._currentTags.push(val);
-      renderTagChips();
-    }
-    input.value = '';
-  } else if (e.key === 'Backspace' && !input.value && window._currentTags.length) {
-    window._currentTags.pop();
-    renderTagChips();
-  }
-};
-
-window.removeTag = (idx) => {
-  window._currentTags.splice(idx, 1);
-  renderTagChips();
-};
-
-function renderTagChips() {
-  const wrap = document.getElementById('tagChips');
-  if (!wrap) return;
-  wrap.innerHTML = window._currentTags.map((t, i) =>
-    `<span class="tag-chip">${escHtml(t)}<button class="tag-chip-remove" onclick="removeTag(${i})">×</button></span>`
-  ).join('');
-}
-
-/* ── Quotes ──────────────────────────────────────────────── */
-window.addQuote = () => {
-  const input = document.getElementById('quoteInput');
-  const val = input.value.trim();
-  if (!val) return;
-  window._currentQuotes.push(val);
-  renderQuotesList();
-  input.value = '';
-  input.focus();
-};
-
-window.removeQuote = (idx) => {
-  window._currentQuotes.splice(idx, 1);
-  renderQuotesList();
-};
-
-function renderQuotesList() {
-  const list = document.getElementById('quotesList');
-  if (!list) return;
-  if (!window._currentQuotes.length) { list.innerHTML=''; return; }
-  list.innerHTML = window._currentQuotes.map((q, i) =>
-    `<div class="quote-item">
-      <div class="quote-text">"${escHtml(q)}"</div>
-      <button class="quote-remove" onclick="removeQuote(${i})">✕</button>
-    </div>`
-  ).join('');
-}
-
-/* ── Password Reset ──────────────────────────────────────── */
-window.doSetNewPassword = async () => {
-  const pass    = document.getElementById('newPassInput').value;
-  const confirm = document.getElementById('newPassConfirm').value;
-  const msg     = document.getElementById('resetModalMsg');
-  const btn     = document.getElementById('btnSetNewPass');
-  msg.className = 'auth-msg';
-  if (!pass || pass.length < 6) {
-    msg.className='auth-msg err'; msg.textContent='Password must be at least 6 characters.'; return;
-  }
-  if (pass !== confirm) {
-    msg.className='auth-msg err'; msg.textContent='Passwords do not match.'; return;
-  }
-  btn.disabled=true; btn.textContent='Saving…';
   try {
-    const { error } = await supabase.auth.updateUser({ password: pass });
+    const row = {
+      user_id:   _user.id,
+      merchant,
+      amount,
+      currency:  el('cfCurrency').value || 'GBP',
+      date:      date || null,
+      image_url: _imageB64 || null,
+      ocr_raw:   null, // stored in worker if needed
+    };
+
+    const { data, error } = await sb.from('receipts').insert(row).select().single();
     if (error) throw error;
-    msg.className='auth-msg ok'; msg.textContent='Password updated! You are now signed in.';
-    setTimeout(() => closeModal('resetModal'), 1800);
-  } catch(e) {
-    msg.className='auth-msg err'; msg.textContent=e.message||'Something went wrong.';
-  } finally { btn.disabled=false; btn.textContent='Set new password →'; }
+
+    _receipts.unshift(data);
+    renderList(_receipts);
+    updateSummary();
+    toast('Receipt saved ✓');
+    show('homeScreen');
+
+  } catch (e) {
+    console.error(e);
+    toast('Error saving — please try again');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Save Receipt';
+  }
 };
 
-/* ── Helpers ─────────────────────────────────────────────── */
+/* ─── EXPORT CSV ─────────────────────────────────────────── */
+window.exportCSV = () => {
+  if (!_receipts.length) { toast('No receipts to export'); return; }
+  const headers = ['Date', 'Merchant', 'Amount', 'Currency', 'Added'];
+  const rows = _receipts.map(r => [
+    r.date || '',
+    `"${(r.merchant || '').replace(/"/g, '""')}"`,
+    (r.amount || 0).toFixed(2),
+    r.currency || 'GBP',
+    new Date(r.created_at).toISOString().slice(0, 10),
+  ]);
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `snapreceipt-${today()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV exported ✓');
+};
+
+/* ─── MENU ───────────────────────────────────────────────── */
+window.openMenu    = () => el('menuSheet').classList.add('open');
+window.closeMenu   = (e) => { if (e.target === el('menuSheet')) closeMenuNow(); };
+window.closeMenuNow = () => el('menuSheet').classList.remove('open');
+
+/* ─── HELPERS ────────────────────────────────────────────── */
+function show(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  el(screenId).classList.add('active');
+}
+
+function el(id) { return document.getElementById(id); }
+function v(id)  { return el(id).value.trim(); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }); }
+  catch { return d; }
+}
+
+function fmtAmount(amount, currency) {
+  const n = parseFloat(amount || 0);
+  const sym = { GBP:'£', USD:'$', EUR:'€' }[currency] || '';
+  return sym + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function today() { return new Date().toISOString().slice(0, 10); }
+
+function isoDate(s) {
+  // Try to parse various date formats into YYYY-MM-DD
+  if (!s) return today();
+  // If already ISO
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  // UK format DD/MM/YYYY or DD-MM-YYYY
+  const uk = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (uk) {
+    const [, d, m, y] = uk;
+    const year = y.length === 2 ? '20' + y : y;
+    return `${year}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+  }
+  try { return new Date(s).toISOString().slice(0,10); }
+  catch { return today(); }
+}
+
+function setMsg(el, type, text) {
+  el.className = 'auth-msg ' + type;
+  el.textContent = text;
+}
+
+function friendlyErr(e) {
+  const m = e.message || '';
+  if (m.includes('already registered') || m.includes('already exists')) return 'That email is already registered.';
+  if (m.includes('Invalid login') || m.includes('invalid_credentials'))  return 'Email or password is incorrect.';
+  if (m.includes('Password should')) return 'Password must be at least 6 characters.';
+  if (m.includes('Email not confirmed'))  return 'Please confirm your email first.';
+  return m || 'Something went wrong.';
+}
+
 let _toastTimer;
-window.showToast = (msg) => {
-  const t = document.getElementById('toast');
-  t.textContent=msg;
+function toast(msg) {
+  const t = el('toast');
+  t.textContent = msg;
   t.classList.add('show');
   clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
-};
+  _toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+window.toast = toast;
 
-window.escHtml = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
+async function fileToJpegB64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 1600;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else       { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => resolve(e.target.result); // fallback raw
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 </script>
 
-<!-- Landing animation script -->
+<!-- FILE INTEGRITY CHECK -->
 <script>
-(function(){
-  var ldData=[
-    {f:'ldf0',v:'ldv0',t:'Atomic Habits'},
-    {f:'ldf1',v:'ldv1',t:'James Clear'},
-    {f:'ldf2',v:'ldv2',t:'Self-Help · 2018'},
-    {f:'ldf3',v:'ldv3',t:'Tiny changes that lead to remarkable results'}
-  ];
-  function ldType(el,text,cb){
-    el.textContent='';el.classList.add('ld-typing');
-    var i=0,iv=setInterval(function(){
-      el.textContent=text.slice(0,++i);
-      if(i>=text.length){clearInterval(iv);el.classList.remove('ld-typing');if(cb)cb();}
-    },34);
-  }
-  function ldReset(){
-    ldData.forEach(function(d){
-      var fe=document.getElementById(d.f),ve=document.getElementById(d.v);
-      if(fe)fe.classList.remove('ld-visible');
-      if(ve)ve.textContent='';
-    });
-    var pill=document.getElementById('ldAiPill'),act=document.getElementById('ldActions');
-    var badge=document.getElementById('ldHeaderBadge'),phase=document.getElementById('ldPhaseLabel');
-    if(pill)pill.classList.remove('ld-visible');
-    if(act)act.classList.remove('ld-visible');
-    if(badge)badge.textContent='reading...';
-    if(phase)phase.textContent='scanning cover...';
-  }
-  function ldRun(){
-    var beam=document.getElementById('ldBeam');
-    if(!beam)return;
-    ldReset();
-    beam.style.transition='none';beam.style.top='0';beam.style.opacity='0.85';
-    setTimeout(function(){beam.style.transition='top 1.6s linear';beam.style.top='100px';},60);
-    setTimeout(function(){beam.style.transition='top 1.6s linear';beam.style.top='0';},1700);
-    setTimeout(function(){
-      beam.style.transition='top 1.6s linear';beam.style.top='100px';
-      var p=document.getElementById('ldPhaseLabel');if(p)p.textContent='reading with AI...';
-    },3350);
-    setTimeout(function(){
-      beam.style.transition='opacity .4s';beam.style.opacity='0';
-      var b=document.getElementById('ldHeaderBadge');if(b)b.textContent='AI filled';
-      var p=document.getElementById('ldPhaseLabel');if(p)p.textContent='fields extracted';
-    },4950);
-    function showField(idx,cb){
-      var d=ldData[idx],fe=document.getElementById(d.f),ve=document.getElementById(d.v);
-      if(!fe||!ve){if(cb)cb();return;}
-      fe.classList.add('ld-visible');
-      setTimeout(function(){ldType(ve,d.t,cb);},100);
-    }
-    setTimeout(function(){
-      showField(0,function(){setTimeout(function(){
-        showField(1,function(){setTimeout(function(){
-          showField(2,function(){setTimeout(function(){
-            showField(3,function(){
-              setTimeout(function(){
-                var pill=document.getElementById('ldAiPill'),act=document.getElementById('ldActions');
-                var p=document.getElementById('ldPhaseLabel');
-                if(pill)pill.classList.add('ld-visible');
-                if(act)act.classList.add('ld-visible');
-                if(p)p.textContent='ready to save';
-                setTimeout(ldRun,3500);
-              },250);
-            });
-          },180);});
-        },180);});
-      },180);});
-    },5200);
-  }
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',function(){setTimeout(ldRun,700);});
-  }else{
-    setTimeout(ldRun,700);
-  }
-})();
-
-function openMobileMenu(e){
-  if(e)e.stopPropagation();
-  var el=document.getElementById('mobileMenuOverlay');
-  if(!el)return;
-  var emailEl=document.getElementById('menuUserEmail');
-  if(emailEl&&window._currentUser)emailEl.textContent=window._currentUser.email||'';
-  el.style.display='flex';el.classList.add('open');
-  document.body.style.overflow='hidden';
-  setTimeout(function(){
-    el.addEventListener('click',function(e){if(e.target===el)closeMobileMenu();},{once:true});
-  },100);
-}
-function closeMobileMenu(){
-  var el=document.getElementById('mobileMenuOverlay');
-  if(!el)return;
-  el.style.display='none';el.classList.remove('open');
-  document.body.style.overflow='';
-}
+if (typeof toast !== 'function') console.error('CRITICAL: index.html is truncated');
 </script>
 
 </body>
